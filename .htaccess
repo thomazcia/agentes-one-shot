@@ -1,0 +1,124 @@
+# Security Configuration for Agentes One-Shot v1.1
+
+# Prevent directory listing
+Options -Indexes
+
+# Prevent access to sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to configuration files
+<FilesMatch "^(config|security|.*\.log|security_logs)\.(php|json|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to backup files
+<FilesMatch "\.(bak|backup|old|orig|save)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to composer files
+<FilesMatch "^(composer|package|\.env)\.(json|lock|dist)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to documentation in production (comment out for development)
+# <FilesMatch "^(README|COMO|INSTALL|CHANGELOG)\.(md|txt)$">
+#     Order allow,deny
+#     Deny from all
+# </FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options nosniff
+
+    # XSS Protection
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Prevent clickjacking
+    Header always set X-Frame-Options DENY
+
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Content Security Policy (adjust according to your needs)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://openrouter.ai;"
+
+    # Server signature
+    ServerTokens Prod
+
+    # Remove ETag for better caching
+    FileETag None
+</IfModule>
+
+# Rate limiting simulation (if mod_evasive is available)
+# <IfModule mod_evasive.c>
+#     DOSHashTableSize    3097
+#     DOSPageCount        2
+#     DOSSiteCount        50
+#     DOSPageInterval     1
+#     DOSSiteInterval     1
+#     DOSBlockingPeriod   3600
+#     DOSEmailNotify      admin@domainhere.com.br
+# </IfModule>
+
+# PHP configuration
+<IfModule mod_php.c>
+    # Hide PHP version
+    expose_php Off
+
+    # Maximum execution time
+    max_execution_time 30
+
+    # Maximum input time
+    max_input_time 30
+
+    # Memory limit
+    memory_limit 128M
+
+    # File uploads
+    file_uploads On
+    upload_max_filesize 1M
+
+    # Error handling
+    display_errors Off
+    log_errors On
+    error_log /dev/null
+</IfModule>
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Force HTTPS for API endpoints (uncomment for production)
+# <Files "api\.php">
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# </Files>
+
+# Prevent hotlinking to sensitive files
+<FilesMatch "\.(php|json|log)$">
+    RewriteEngine On
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://(localhost|127\.0\.0\.1) [NC]
+    RewriteRule ^ - [F]
+</FilesMatch>
+
+# Custom error pages
+ErrorDocument 400 /index.php
+ErrorDocument 401 /index.php
+ErrorDocument 403 /index.php
+ErrorDocument 404 /index.php
+ErrorDocument 500 /index.php
+
+# Compress output (if mod_deflate is available)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/javascript application/json
+    AddOutputFilterByType DEFLATE application/x-javascript application/javascript application/xml
+</IfModule>

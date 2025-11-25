@@ -55,21 +55,50 @@ function getAgents() {
  * Obter um agente específico por ID
  */
 function getAgent($id) {
-    $file = getConfig('agents_folder') . $id . '.php';
+    // Validar ID
+    if (!validateAgentId($id)) {
+        securityLog('INVALID_AGENT_ID', ['id' => $id]);
+        return null;
+    }
 
-    if (!file_exists($file)) {
+    // Sanitizar nome do arquivo
+    $filename = sanitizeFilename($id) . '.php';
+    $file = getConfig('agents_folder') . $filename;
+
+    // Verificar se o arquivo existe e está na pasta correta
+    if (!file_exists($file) || !is_file($file)) {
         return null;
     }
 
     try {
+        // Verificar tamanho do arquivo
+        if (filesize($file) > MAX_FILE_SIZE) {
+            securityLog('FILE_TOO_LARGE', ['file' => $filename, 'size' => filesize($file)]);
+            return null;
+        }
+
+        // Incluir arquivo de forma segura
         $agentData = include $file;
+
         if (is_array($agentData)) {
+            // Validar estrutura básica do agente
+            if (!isset($agentData['name']) || !isset($agentData['prompt'])) {
+                securityLog('INVALID_AGENT_STRUCTURE', ['file' => $filename]);
+                return null;
+            }
+
+            // Sanitizar dados do agente
             $agentData['id'] = $id;
             $agentData['file'] = $file;
+            $agentData['name'] = sanitizeInput($agentData['name'], 'string');
+            $agentData['description'] = sanitizeInput($agentData['description'] ?? '', 'string');
+            $agentData['prompt'] = sanitizeInput($agentData['prompt'], 'prompt');
+
             return $agentData;
         }
     } catch (Exception $e) {
         error_log("Erro ao ler agente {$id}: " . $e->getMessage());
+        securityLog('AGENT_READ_ERROR', ['id' => $id, 'error' => $e->getMessage()]);
     }
 
     return null;
