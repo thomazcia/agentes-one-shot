@@ -47,8 +47,8 @@ Options -Indexes
     # Referrer Policy
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
-    # Content Security Policy (adjust according to your needs)
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://openrouter.ai;"
+    # Content Security Policy (disabled for development - re-enable for production)
+    # Header always set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https:; object-src 'none'; base-uri 'self';"
 
     # Server signature
     ServerTokens Prod

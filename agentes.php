@@ -167,8 +167,8 @@ function callOpenRouterAPI($prompt) {
         $apiUrl = getConfig('openrouter_api_url');
         $model = getConfig('grok_model');
 
-        if (empty($apiKey) || $apiKey === 'sk-or-v1-seu-aqui') {
-            return ['success' => false, 'message' => 'Configure sua chave API Open Router no arquivo config.php'];
+        if (empty($apiKey) || strpos($apiKey, 'sk-or-v1-sua-chave-api-aqui') !== false || strpos($apiKey, 'sk-or-v1-seu-aqui') !== false) {
+            return ['success' => false, 'message' => 'Configure sua chave API Open Router no arquivo .env'];
         }
 
         $postData = [

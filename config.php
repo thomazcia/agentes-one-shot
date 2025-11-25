@@ -3,24 +3,36 @@
  * Configurações do Sistema - Agentes One-Shot v1.1
  */
 
+// Carregar variáveis de ambiente do arquivo .env
+require_once 'vendor/autoload.php';
+
 // Carregar módulo de segurança
 require_once 'security.php';
 
-// Configurações da Open Router API
-define('OPENROUTER_API_KEY', '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'); // Substitua com sua chave real
-define('OPENROUTER_API_URL', 'https://openrouter.ai/api/v1/chat/completions');
-define('GROK_MODEL', 'x-ai/grok-4.1-fast:free'); // Modelo Grok 4.1 Fast
+// Tentar carregar variáveis de ambiente
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+} catch (Exception $e) {
+    // Se não encontrar .env, usar valores padrão ou continuar sem variáveis de ambiente
+    error_log("Aviso: Arquivo .env não encontrado. Usando configurações do sistema.");
+}
+
+// Configurações da Open Router API com fallback seguro
+define('OPENROUTER_API_KEY', $_ENV['OPENROUTER_API_KEY'] ?? 'sk-or-v1-sua-chave-api-aqui');
+define('OPENROUTER_API_URL', $_ENV['OPENROUTER_API_URL'] ?? 'https://openrouter.ai/api/v1/chat/completions');
+define('GROK_MODEL', $_ENV['GROK_MODEL'] ?? 'x-ai/grok-4.1-fast:free');
 
 // Configurações do Sistema
 define('AGENTS_FOLDER', __DIR__ . '/agentes/');
-define('APP_NAME', 'Agentes One-Shot');
-define('APP_VERSION', '1.1');
+define('APP_NAME', $_ENV['APP_NAME'] ?? 'Agentes One-Shot');
+define('APP_VERSION', $_ENV['APP_VERSION'] ?? '1.1');
 
 // Configurações de Segurança
-define('MAX_REQUEST_SIZE', 1048576); // 1MB
-define('MAX_PROMPT_LENGTH', 10000);
-define('RATE_LIMIT_REQUESTS', 60); // por minuto
-define('RATE_LIMIT_WINDOW', 60); // segundos
+define('MAX_REQUEST_SIZE', intval($_ENV['MAX_REQUEST_SIZE'] ?? 1048576));
+define('MAX_PROMPT_LENGTH', intval($_ENV['MAX_PROMPT_LENGTH'] ?? 10000));
+define('RATE_LIMIT_REQUESTS', intval($_ENV['RATE_LIMIT_REQUESTS'] ?? 60));
+define('RATE_LIMIT_WINDOW', intval($_ENV['RATE_LIMIT_WINDOW'] ?? 60));
 
 // Configurações de segurança
 define('ALLOWED_ORIGINS', [
@@ -58,6 +70,9 @@ if (!checkRateLimit($clientIp, RATE_LIMIT_REQUESTS, RATE_LIMIT_WINDOW)) {
 if (isset($_SERVER['REQUEST_METHOD'])) {
     setSecurityHeaders();
 
+    // CSP relaxado para desenvolvimento (permitir Bootstrap debugging)
+    header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' data: https:; connect-src 'self' https://cdn.jsdelivr.net https://openrouter.ai; object-src 'none'; base-uri 'self';");
+
     // CORS headers
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -70,8 +85,8 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 }
 
 // Configurações dos agentes
-define('MAX_AGENTS', 100);
-define('MAX_FILE_SIZE', 1024 * 1024); // 1MB por arquivo de agente
+define('MAX_AGENTS', intval($_ENV['MAX_AGENTS'] ?? 100));
+define('MAX_FILE_SIZE', intval($_ENV['MAX_FILE_SIZE'] ?? 1048576)); // 1MB por arquivo de agente
 
 // Função para obter configuração
 function getConfig($key) {

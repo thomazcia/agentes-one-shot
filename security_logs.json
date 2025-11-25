@@ -31,5 +31,165 @@
             "action": null,
             "trace": "#0 {main}"
         }
+    },
+    {
+        "timestamp": "2025-11-25 18:08:21",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "RATE_LIMIT_EXCEEDED",
+        "details": {
+            "ip": "::1"
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:08:28",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "RATE_LIMIT_EXCEEDED",
+        "details": {
+            "ip": "::1"
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:12:17",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:13:27",
+        "ip": "::1",
+        "user_agent": "curl\/7.87.0",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 0
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:15:29",
+        "ip": "::1",
+        "user_agent": "curl\/7.87.0",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 5
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:17:37",
+        "ip": "::1",
+        "user_agent": "curl\/7.87.0",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 5
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:19:35",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:21:04",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:32:24",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:34:14",
+        "ip": "::1",
+        "user_agent": "curl\/7.87.0",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 5
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:36:48",
+        "ip": "::1",
+        "user_agent": "curl\/7.87.0",
+        "event": "API_ERROR",
+        "details": {
+            "message": "Valores dos campos inv\u00e1lidos",
+            "action": "execute_agent",
+            "trace": "#0 {main}"
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:37:10",
+        "ip": "::1",
+        "user_agent": "curl\/7.87.0",
+        "event": "API_ERROR",
+        "details": {
+            "message": "Valores dos campos inv\u00e1lidos",
+            "action": "execute_agent",
+            "trace": "#0 {main}"
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:38:58",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 18:45:06",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 19:01:55",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-25 19:03:22",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
     }
 ]

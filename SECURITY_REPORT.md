@@ -4,6 +4,12 @@
 
 Este documento detalha as medidas de segurança implementadas no sistema Agentes One-Shot v1.1 para proteger contra ataques comuns e garantir a integridade da aplicação e dos dados dos usuários.
 
+**🆕 Atualizações v1.1:**
+- ✅ Sistema de variáveis de ambiente (.env) com phpdotenv
+- ✅ CSP otimizado para desenvolvimento sem erros de console
+- ✅ Validação aprimorada de chaves API
+- ✅ Proteção contra parsing malicioso de .env
+
 ## 🛡️ Medidas de Segurança Implementadas
 
 ### 1. **Validação e Sanitização de Entrada (✅)**
@@ -227,11 +233,79 @@ Para reportar vulnerabilidades ou preocupações de segurança:
 - **Documentação**: SECURITY_REPORT.md
 - **Logs**: security_logs.json
 
+### 9. **Gestão de Variáveis de Ambiente (.env) (✅)**
+
+#### **Implementação Completa**:
+- **phpdotenv**: Biblioteca vlucas/phpdotenv para parsing seguro
+- **.gitignore**: Arquivo .env protegido contra commits
+- **Fallback**: Sistema funciona sem .env com valores padrão
+- **Validação**: Detecção de chaves API padrão/inválidas
+
+#### **Arquivos de Segurança**:
+```bash
+# .env.example - Template seguro
+OPENROUTER_API_KEY=sk-or-v1-sua-chave-api-aqui
+OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+GROK_MODEL=x-ai/grok-4.1-fast:free
+```
+
+#### **Validação de Chave API**:
+```php
+// Verificação robusta contra chaves padrão
+if (empty($apiKey) || strpos($apiKey, 'sk-or-v1-sua-chave-api-aqui') !== false) {
+    return ['success' => false, 'message' => 'Configure sua chave API real'];
+}
+```
+
+### 10. **Content Security Policy (CSP) (✅)**
+
+#### **CSP Otimizado**:
+- **PHP Native**: Configurado diretamente no PHP para melhor compatibilidade
+- **Bootstrap CDN**: Permitido explicitamente https://cdn.jsdelivr.net
+- **Open Router API**: Conexões permitidas para https://openrouter.ai
+- **Debug Mode**: Política relaxada para desenvolvimento
+
+#### **Headers de CSP**:
+```php
+header("Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:;
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        connect-src 'self' https://cdn.jsdelivr.net https://openrouter.ai;");
+```
+
 ## 🔄 Revisão
 
 **Data**: 25/11/2024
 **Versão**: v1.1
 **Status**: ✅ Segurança Implementada e Testada
+
+## 📁 Arquivo .env - Gestão Segura de Configurações
+
+**Implementado**: Suporte completo a variáveis de ambiente via arquivo `.env`
+
+### **Configuração**:
+```bash
+# Instalar dependência
+composer require vlucas/phpdotenv
+
+# Criar arquivo de ambiente
+cp .env.example .env
+# Editar .env com suas chaves reais
+```
+
+### **Segurança Adicional**:
+- ✅ `.env` no `.gitignore` (não vai para o repositório)
+- ✅ Fallback values em `config.php` (funciona sem .env)
+- ✅ Carregamento seguro com exception handling
+- ✅ Validação de parsing malicioso de .env
+- ✅ Integração completa com sistema de segurança
+
+### **Arquivos Envolvidos**:
+- `.env.example` - Template de configuração
+- `.env` - Arquivo real (excluído do Git)
+- `.gitignore` - Impede commit de .env
+- `config.php` - Carrega variáveis com fallback seguro
+- `composer.json` - Dependência phpdotenv
 
 ---
 

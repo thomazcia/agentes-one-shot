@@ -27,7 +27,7 @@ async function apiCall(action, data = {}) {
             }
         });
 
-        console.log('📤 Sending request to api.php...');
+        console.log('📤 Sending request to API...');
         const response = await fetch('api.php', {
             method: 'POST',
             body: formData
@@ -35,7 +35,8 @@ async function apiCall(action, data = {}) {
 
         console.log('📥 Response status:', response.status);
         const result = await response.json();
-        console.log('📋 Response data:', result);
+        // console.log('📋 Response data:', result); // Aqui apresenta o retorno com o número de tokens utilizado.
+        console.log('📋 Response data:', 'Sucesso no retorno');
 
         if (!result.success) {
             throw new Error(result.message || 'Erro na operação');

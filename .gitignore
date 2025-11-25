@@ -1,0 +1,45 @@
+# Environment variables - NEVER commit this file!
+.env
+
+# Security logs
+security_logs.json
+*.log
+
+# Vendor dependencies
+vendor/
+composer.lock
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Apache/IIS logs
+logs/
+error_log
+access_log
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# PHP errors
+*.php.err
+
+# Session files
+sessions/
+
+# Cache
+cache/

@@ -5,10 +5,12 @@ Sistema de gestão de agentes de IA com integração segura com Open Router API 
 ## 🆕 Versão 1.1 - Novidades
 
 - ✅ **Sistema de Arquivos PHP**: Agentes agora configurados como arquivos PHP independentes
-- ✅ **Segurança Aprimorada**: Chave API 100% protegida no backend
+- ✅ **Variáveis de Ambiente (.env)**: Gestão segura de configurações com suporte a phpdotenv
+- ✅ **Segurança Aprimorada**: Chave API 100% protegida com validação de ambiente
 - ✅ **Interface Simplificada**: Foco apenas em execução de agentes
 - ✅ **Campos Dinâmicos**: Suporte a text, textarea, number, email e select
 - ✅ **Sistema de Badges**: Exibe categoria, dificuldade e tempo estimado
+- ✅ **CSP Otimizado**: Content Security Policy configurado para desenvolvimento
 - ✅ **Debug Integrado**: Logs detalhados para facilitar diagnóstico
 
 ## 🚀 Características
@@ -17,9 +19,11 @@ Sistema de gestão de agentes de IA com integração segura com Open Router API 
 - ✅ **Interface Intuitiva**: Design baseado em Bootstrap com layout de 2 colunas
 - ✅ **Execução Segura**: Backend PHP protege 100% sua chave API da Open Router
 - ✅ **Sistema de Arquivos PHP**: Cada agente como arquivo PHP independente e configurável
+- ✅ **Gestão .env**: Variáveis de ambiente com phpdotenv para máxima segurança
 - ✅ **Campos Dinâmicos**: Suporte completo a text, textarea, number, email e select
 - ✅ **Visual Rico**: Cards com badges, cores personalizadas e ícones
 - ✅ **Grok 4.1 Fast**: Modelo rápido e eficiente da Open Router
+- ✅ **CSP Configurado**: Sem erros de console com política otimizada
 - ✅ **Debug Integrado**: Logs detalhados para troubleshooting
 
 ## 📋 Estrutura do Sistema
@@ -29,15 +33,22 @@ agentes-one-shot/
 ├── index.php              # Frontend principal (visual)
 ├── api.php                # Backend API (requisições AJAX)
 ├── agentes.php            # Funções de gestão de agentes
-├── config.php             # Configurações (chave API, etc.)
+├── config.php             # Configurações com suporte a .env
+├── security.php           # Módulo de segurança completo
 ├── app.js                 # JavaScript frontend
+├── .env.example           # Template de variáveis de ambiente
+├── .env                   # Variáveis de ambiente (chave API, etc.)
+├── .gitignore             # Arquivos ignorados pelo Git
+├── .htaccess              # Configurações Apache (CSP, headers)
 ├── agent-template.php     # Template para criar novos agentes
 ├── agentes/               # Pasta com arquivos dos agentes
 │   ├── blog-post-generator.php    # Agente exemplo: Posts para Blog
 │   ├── email-marketing.php       # Agente exemplo: E-mails Marketing
 │   ├── nome-do-agente.php        # Seus agentes personalizados
 │   └── ...
+├── vendor/                # Dependências Composer (phpdotenv)
 ├── COMO-CRIAR-AGENTES.md  # Documentação para criar agentes
+├── SECURITY_REPORT.md     # Relatório detalhado de segurança
 └── README.md
 ```
 
@@ -51,20 +62,39 @@ agentes-one-shot/
 
 ### 2. Configuração
 
-1. **Configure sua chave API Open Router**:
-   Abra o arquivo `config.php` e substitua:
-   ```php
-   define('OPENROUTER_API_KEY', 'sk-or-v1-seu-aqui'); // ← SUA CHAVE AQUI
+1. **Configure suas variáveis de ambiente**:
+   ```bash
+   cp .env.example .env
+   # Edite o arquivo .env com sua chave API Open Router e outras configurações
    ```
 
-2. **Permissões da pasta**:
+2. **Instale as dependências**:
+   ```bash
+   composer install
+   ```
+
+3. **Permissões da pasta**:
    Garanta que a pasta `/agentes` tenha permissão de escrita:
    ```bash
    chmod 755 agentes/
    ```
 
-3. **Acesse o sistema**:
+4. **Acesse o sistema**:
    Abra no navegador: `http://seuservidor.com/agentes-one-shot/`
+
+**📁 Estrutura do Ambiente (.env)**:
+```bash
+# Copie de .env.example e edite com seus valores
+OPENROUTER_API_KEY=sk-or-v1-sua-chave-api-real-aqui
+OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+GROK_MODEL=x-ai/grok-4.1-fast:free
+APP_NAME=Agentes One-Shot
+APP_VERSION=1.1
+MAX_REQUEST_SIZE=1048576
+MAX_PROMPT_LENGTH=10000
+RATE_LIMIT_REQUESTS=60
+RATE_LIMIT_WINDOW=60
+```
 
 ## 🚀 Como Rodar Localmente
 
@@ -114,20 +144,37 @@ php -m | grep curl
 
 ## 🔧 Configurações Adicionais
 
-### config.php
+### config.php e Variáveis de Ambiente
 
-```php
-// Configurações da Open Router API
-define('OPENROUTER_API_KEY', 'sk-or-v1-sua-chave-aqui');
-define('OPENROUTER_API_URL', 'https://openrouter.ai/api/v1/chat/completions');
-define('GROK_MODEL', 'x-ai/grok-4.1-fast:free');
+O sistema agora usa variáveis de ambiente via arquivo `.env` para maior segurança:
 
-// Configurações do Sistema
-define('AGENTS_FOLDER', __DIR__ . '/agentes/');
-define('APP_NAME', 'Agentes One-Shot');
-define('APP_VERSION', '1.0');
-define('MAX_AGENTS', 100);
+**📄 Arquivo .env**:
+```bash
+# Configurações da Open Router API
+OPENROUTER_API_KEY=sk-or-v1-sua-chave-api-real-aqui
+OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+GROK_MODEL=x-ai/grok-4.1-fast:free
+
+# Configurações do Sistema
+APP_NAME=Agentes One-Shot
+APP_VERSION=1.1
+AGENTS_FOLDER=__DIR__/agentes
+
+# Configurações de Segurança
+MAX_REQUEST_SIZE=1048576
+MAX_PROMPT_LENGTH=10000
+RATE_LIMIT_REQUESTS=60
+RATE_LIMIT_WINDOW=60
+
+# Ambiente
+ENVIRONMENT=development
+DEBUG=true
 ```
+
+**🔒 Segurança**:
+- ✅ `.env` está no `.gitignore` para não enviar chaves para o repositório
+- ✅ `config.php` tem fallback values para funcionar sem `.env`
+- ✅ Chaves API nunca ficam expostas no frontend
 
 ## 📖 Como Usar
 
@@ -238,7 +285,12 @@ O sistema usa os seguintes endpoints AJAX:
 ### 🔧 Problemas Comuns
 
 **Erro: "Configure sua chave API Open Router"**
-- **Solução**: Edite `config.php` e adicione sua chave real na linha 5
+- **Solução**: Crie o arquivo `.env` e configure sua chave API:
+  ```bash
+  cp .env.example .env
+  # Edite .env com OPENROUTER_API_KEY=sk-or-v1-sua-chave-real
+  composer install
+  ```
 
 **Erro: "Nenhum agente disponível"**
 - **Verifique**: Se existem arquivos `.php` na pasta `agentes/`
@@ -314,7 +366,7 @@ Para dúvidas ou problemas:
 
 ---
 
-**Versão**: 1.1
-**Modelo IA**: Grok 4.1 Fast (x-ai/grok-4.1-fast:free)
-**Framework**: Bootstrap 5 + PHP 7.4+
-**Arquitetura**: Frontend PHP + Backend PHP + Arquivos de Configuração PHP
+**Versão**: 1.1  
+**Modelo IA**: Grok 4.1 Fast (x-ai/grok-4.1-fast:free)  
+**Framework**: Bootstrap 5 + PHP 7.4+  
+**Arquitetura**: Frontend PHP + Backend PHP + Arquivos de Configuração PHP  
