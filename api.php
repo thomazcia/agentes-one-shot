@@ -38,7 +38,7 @@ try {
 
         case 'get_agent':
             // Obter um agente específico
-            $id = sanitizeInput($_GET['id'] ?? '', 'agent_id');
+            $id = sanitizeInput($_POST['id'] ?? $_GET['id'] ?? '', 'agent_id');
             if (empty($id) || !validateAgentId($id)) {
                 throw new Exception('ID do agente inválido');
             }

@@ -28,6 +28,9 @@ function getAgents() {
             continue;
         }
 
+        // Permitir arquivos que começam com números (como contador-piada.php)
+        // Mas ainda ignorar arquivos que começam com . ou _ no início
+
         try {
             // Incluir o arquivo e obter o array de configuração
             $agentData = include $file;
@@ -212,14 +215,8 @@ function callOpenRouterAPI($prompt) {
             return ['success' => false, 'message' => $errorMsg];
         }
 
-        $content = $responseData['choices'][0]['message']['content'] ?? 'Resposta vazia';
-
-        return [
-            'success' => true,
-            'response' => $content,
-            'model' => $model,
-            'tokens' => $responseData['usage']['total_tokens'] ?? 0
-        ];
+        // Retorna o sucesso e os dados brutos da API
+        return ['success' => true, 'data' => $responseData];
 
     } catch (Exception $e) {
         return ['success' => false, 'message' => 'Erro: ' . $e->getMessage()];
@@ -284,24 +281,8 @@ function getAgentCategories() {
  */
 function getAgentStats() {
     $agents = getAgents();
-    $stats = [
-        'total' => count($agents),
-        'categories' => [],
-        'by_difficulty' => ['iniciante' => 0, 'intermediário' => 0, 'avançado' => 0]
+    return [
+        'total_agents' => count($agents)
     ];
-
-    foreach ($agents as $agent) {
-        // Contar categorias
-        $category = $agent['category'] ?? 'geral';
-        $stats['categories'][$category] = ($stats['categories'][$category] ?? 0) + 1;
-
-        // Contar dificuldade
-        $difficulty = $agent['difficulty'] ?? 'iniciante';
-        if (isset($stats['by_difficulty'][$difficulty])) {
-            $stats['by_difficulty'][$difficulty]++;
-        }
-    }
-
-    return $stats;
 }
 ?>

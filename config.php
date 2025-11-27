@@ -26,7 +26,7 @@ define('GROK_MODEL', $_ENV['GROK_MODEL'] ?? 'x-ai/grok-4.1-fast:free');
 // Configurações do Sistema
 define('AGENTS_FOLDER', __DIR__ . '/agentes/');
 define('APP_NAME', $_ENV['APP_NAME'] ?? 'Agentes One-Shot');
-define('APP_VERSION', $_ENV['APP_VERSION'] ?? '1.1');
+define('APP_VERSION', $_ENV['APP_VERSION'] ?? '2.0');
 
 // Configurações de Segurança
 define('MAX_REQUEST_SIZE', intval($_ENV['MAX_REQUEST_SIZE'] ?? 1048576));

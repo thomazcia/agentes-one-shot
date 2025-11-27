@@ -14,35 +14,49 @@ return [
     // Configurações do Prompt
     'prompt' => 'Crie um e-mail de marketing persuasivo com as seguintes características:
 
-Tipo de e-mail: [tipo_email]
-Público-alvo: [publico_alvo]
-Produto/Serviço: [produto]
-Principal benefício: [beneficio_principal]
-Call-to-action: [call_to_action]
-Tom: [tom]
-Informações adicionais: [info_adicionais]
+Tipo de e-mail: [Tipo e-mail]
+Público-alvo: [Público alvo]
+Produto/Serviço: [Produto]
+Principal benefício: [Benefício principal]
+Call-to-action: [CTA (Call to action)]
+Tom de voz: [Tom de voz]
+Informações adicionais: [Informações adicionais]
 
 ESTRUTURA OBRIGATÓRIA:
 1. Assunto otimizado para alta taxa de abertura
-2. Linha de pré-cabeçalho (preheader)
+2. Linha de pré-cabeçalho (linha fina)
 3. Saudação personalizada
 4. Corpo do texto (2-3 parágrafos)
 5. Destaque do benefício principal
 6. Call-to-action claro e direto
-7. Assinatura profissional
 
 DIRETRIZES:
 - Assunto com máximo de 50 caracteres
-- Preheader com máximo de 100 caracteres
+- Linha fina com máximo de 100 caracteres
 - Linguagem persuasiva e focada em benefícios
 - Evitar spam words excessivas
 - Tom consistente com o solicitado
-- Call-to-action urgente mas não agressivo',
+- Call-to-action urgente mas não agressivo
+- Apresentar texto puro, sem markdown
+- Não apresentar o número de caracteres utilizado
+- Não apresentar "De: pessoa@email.com / Para: Nome pessoa"<div class=""></div>
+- Seguir o modelo do output abaixo
+
+OUTPUT:
+Assunto: Aqui vem o texto do assunto gerado
+
+Linha fina: Aqui vem o texto da linha fina gerado
+
+Aqui vem todo o conteúdo do e-mail gerado
+
+-----------------
+[ASSINATURA AQUI]
+',
 
     // Campos do Formulário
     'fields' => [
         [
-            'label' => 'tipo_email',
+            'label' => 'Tipo e-mail',
             'placeholder' => 'Escolha o tipo de e-mail',
             'type' => 'select',
             'required' => true,
@@ -56,26 +70,26 @@ DIRETRIZES:
             ]
         ],
         [
-            'label' => 'publico_alvo',
+            'label' => 'Público alvo',
             'placeholder' => 'Ex: Clientes B2B, consumidores finais,leads',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'produto',
+            'label' => 'Produto',
             'placeholder' => 'Ex: Curso de Marketing Digital, Software CRM',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'beneficio_principal',
+            'label' => 'Benefício principal',
             'placeholder' => 'Ex: Aumentar vendas em 30%, economizar tempo',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'call_to_action',
-            'placeholder' => 'Ex: Comprar agora, Agendar demonstração, Saiba mais',
+            'label' => 'CTA (Call to action)',
+            'placeholder' => 'Selecione uma opção',
             'type' => 'select',
             'required' => true,
             'options' => [
@@ -88,8 +102,8 @@ DIRETRIZES:
             ]
         ],
         [
-            'label' => 'tom',
-            'placeholder' => 'Escolha o tom do e-mail',
+            'label' => 'Tom de voz',
+            'placeholder' => 'Selecione uma opção',
             'type' => 'select',
             'required' => true,
             'options' => [
@@ -101,7 +115,7 @@ DIRETRIZES:
             ]
         ],
         [
-            'label' => 'info_adicionais',
+            'label' => 'Informações adicionais',
             'placeholder' => 'Ex: Desconto de 20% esta semana, bônus especial',
             'type' => 'textarea',
             'required' => false,

@@ -103,11 +103,30 @@ require_once 'agentes.php';
         .response-content {
             background: #f8f9fa;
             border-radius: 8px;
-            padding: 20px;
+            padding: 0 20px;
             min-height: 300px;
-            white-space: pre-wrap;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+        }
+
+        /* Container da resposta mantendo formatação completa */
+        .response-content .response-content_output {
+            margin: 0;
+            padding: 20px 0;
+            /* Mantém pre-wrap para preservar parágrafos e quebras de linha */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-indent: 0;
+            font-size: 15px;
+            color: #333;
+            /* Remove espaços no início do primeiro elemento */
+            margin-top: 0;
+        }
+
+        /* Remove espaços no início do primeiro parágrafo */
+        .response-content .response-content_output > *:first-child {
+            margin-top: 0;
+            padding-top: 0;
         }
 
         .loading-spinner {
@@ -175,18 +194,7 @@ require_once 'agentes.php';
                 <span class="version-badge ms-2">v1.1</span>
             </a>
             <div class="d-flex align-items-center">
-                <div class="dropdown me-2">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                        <i class="bi bi-info-circle"></i> Info
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><h6 class="dropdown-header">Estatísticas</h6></li>
-                        <li><span class="dropdown-item-text" id="stats-total">Carregando...</span></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><h6 class="dropdown-header">Como Funciona</h6></li>
-                        <li><span class="dropdown-item-text small">Selecione um agente abaixo e preencha o formulário para executar</span></li>
-                    </ul>
-                </div>
+ 
             </div>
         </div>
     </nav>
@@ -195,8 +203,8 @@ require_once 'agentes.php';
     <div id="agents-list-view" class="container mt-4">
         <div class="row mb-4">
             <div class="col">
-                <h2>Meus Agentes</h2>
-                <p class="text-muted">Gerencie seus agentes de IA personalizados</p>
+                <h2>Agentes</h2>
+                <p class="text-muted">Agentes de IA para aumentar a sua produtividade.</p>
             </div>
         </div>
 
@@ -206,11 +214,7 @@ require_once 'agentes.php';
                 <div class="empty-state">
                     <i class="bi bi-robot"></i>
                     <h4>Nenhum agente disponível</h4>
-                    <p class="text-muted">Nenhum agente foi encontrado na pasta /agentes/</p>
-                    <p class="text-muted">
-                        <i class="bi bi-info-circle me-1"></i>
-                        Os agentes são pré-configurados. Selecione um abaixo para começar.
-                    </p>
+                    <p class="text-muted">Nenhum agente foi encontrado.</p>
                 </div>
             </div>
         </div>
