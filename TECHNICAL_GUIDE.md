@@ -1,16 +1,19 @@
-# Guia Técnico - Agentes One-Shot v1.1
+# Guia Técnico - Agentes One-Shot v2.0
 
 ## 🏗️ Arquitetura do Sistema
 
 ### Visão Geral
-O Agentes One-Shot v1.1 é uma aplicação PHP moderna que combina segurança robusta com interface intuitiva para execução de agentes de IA via Open Router API.
+O Agentes One-Shot v2.0 é uma aplicação PHP enterprise com arquitetura completamente refatorada, combinando segurança multicamadas com interface responsiva moderna para execução de agentes de IA via Open Router API.
 
-### Stack Tecnológico
-- **Backend**: PHP 7.4+ com arquitetura MVC simplificada
-- **Frontend**: Bootstrap 5 + JavaScript vanilla
+### Stack Tecnológico v2.0
+- **Backend**: PHP 7.4+ com arquitetura enterprise e framework de segurança
+- **Frontend**: Bootstrap 5 + JavaScript vanilla otimizado
 - **API**: Open Router com modelo Grok 4.1 Fast
 - **Configuração**: Variáveis de ambiente (.env) com phpdotenv
-- **Segurança**: CSP, Rate Limiting, Input Sanitização
+- **Segurança**: Múltiplas camadas - CSP, Rate Limiting, Input Sanitização, Headers de segurança
+- **Logging**: Sistema completo de auditoria e monitoramento
+- **Validação**: Framework robusto de validação de dados e estrutura
+- **Performance**: Rate limiting avançado e otimizações de produção
 
 ## 📁 Estrutura de Arquivos Detalhada
 
@@ -414,7 +417,21 @@ tail -f security_logs.json
     - IPs com mais requisições
     - Tempos de resposta
 
-## 🔄 Versionamento eAtualizações
+## 🔄 Versionamento e Atualizações
+
+### Changelog v2.0
+- ✅ **Arquitetura Enterprise Refatorada**: Sistema completo reestruturado
+- ✅ **Segurança Multicamadas**: Framework avançado de proteção
+- ✅ **Sistema de Logs Completo**: Auditoria e monitoramento
+- ✅ **Rate Limiting Avançado**: Proteção contra abuso sobrecarga
+- ✅ **Content Security Policy**: Política de segurança otimizada
+- ✅ **Validação Robusta**: Framework completo de validação
+- ✅ **Interface Responsiva Moderna**: Design otimizado Bootstrap 5
+- ✅ **Sistema de Badges**: Categoria, dificuldade e tempo
+- ✅ **Novo Agente**: Contador de Piadas para entretenimento
+- ✅ **Headers de Segurança**: Proteção completa HTTP
+- ✅ **Detecção de Ameaças**: Padrões suspeitos automático
+- ✅ **Documentação Técnica**: Guias completos e relatórios
 
 ### Changelog v1.1
 - ✅ Implementado sistema .env com phpdotenv
@@ -432,6 +449,7 @@ tail -f security_logs.json
 
 ---
 
-**Última Atualização**: 25/11/2024
-**Versão**: v1.1
-**Status**: ✅ Produção Ready
+**Última Atualização**: 27/11/2025
+**Versão**: v2.0
+**Status**: ✅ Produção Ready com Security Enterprise
+**Arquitetura**: PHP Enterprise + Security Framework + Modern Frontend

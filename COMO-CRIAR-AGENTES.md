@@ -1,12 +1,26 @@
-# Como Criar Novos Agentes
+# Como Criar Novos Agentes - v2.0
 
-Este documento explica como criar novos agentes para o sistema Agentes One-Shot.
+Este documento explica como criar novos agentes para o sistema Agentes One-Shot v2.0, com recursos avançados e melhores práticas de segurança.
 
 ## 📁 Estrutura dos Arquivos
 
 Todos os agentes ficam na pasta `/agentes/` com a seguinte estrutura:
 - Nome do arquivo: `nome-do-agente.php`
 - Cada arquivo retorna um array PHP com as configurações
+- **v2.0**: Sistema de segurança reforçado valida automaticamente cada arquivo
+- **v2.0**: Suporte completo a campos dinâmicos com validação
+- **v2.0**: Badges e metadados avançados para organização
+
+## 🔧 Novidades v2.0 na Criação de Agentes
+
+### Recursos Avançados
+- **Validação Automática**: Sistema verifica estrutura e segurança do agente
+- **Sistema de Badges**: Categoria, dificuldade e tempo estimado visuais
+- **Campos Dinâmicos**: Suporte completo a text, textarea, number, email e select
+- **Segurança Integrada**: Detecção de conteúdo malicioso e validação robusta
+- **Personalização Visual**: Ícones e cores personalizadas com Bootstrap Icons
+- **Metadados Avançados**: Tags, dificuldade, categoria e outras informações
+- **Logs de Auditoria**: Registro completo de uso dos agentes
 
 ## 🔧 Como Criar um Novo Agente
 
@@ -81,32 +95,63 @@ return [
 - **difficulty**: Nível de dificuldade
 - **estimated_time**: Tempo estimado de uso
 
-## 💡 Exemplos
+## 💡 Exemplos v2.0
 
 ### Agente Simples
 ```php
+<?php
+/**
+ * Agente: Gerador de Nomes v2.0
+ * Gera nomes criativos para empresas com validação robusta
+ */
 return [
+    // Informações Básicas
     'name' => 'Gerador de Nomes',
-    'description' => 'Gera nomes criativos para empresas',
+    'description' => 'Gera nomes criativos e memoráveis para empresas e produtos',
     'icon' => 'bi-lightbulb',
-    'prompt' => 'Gere 10 nomes criativos para [tipo_empresa] no segmento de [segmento].',
+    'color' => '#FFD93D', // Cor personalizada opcional
+
+    // Configurações do Prompt
+    'prompt' => 'Como um especialista em branding, gere 10 nomes criativos e memoráveis para uma [tipo_empresa] no segmento de [segmento].
+
+DIRETRIZES:
+- Os nomes devem ser fáceis de pronunciar e lembrar
+- Evite nomes muito genéricos ou complicados
+- Considere disponibilidade de domínio e redes sociais
+- Inclua uma breve explicação para cada nome
+- Priorize nomes que transmitam confiança e profissionalismo
+
+FORMATO DE RESPOSTA:
+**1. [Nome]**
+   - *Significado/Inspiração*: Breve explicação
+   - *Disponibilidade*: Provável disponibilidade online
+
+[Continue com os outros 9 nomes]',
+
+    // Campos do Formulário
     'fields' => [
         [
             'label' => 'tipo_empresa',
-            'placeholder' => 'Ex: Startup, consultoria',
+            'placeholder' => 'Ex: Startup, consultoria, e-commerce',
             'type' => 'text',
             'required' => true
         ],
         [
             'label' => 'segmento',
-            'placeholder' => 'Ex: Tecnologia, saúde, educação',
+            'placeholder' => 'Ex: Tecnologia, saúde, educação, finanças',
             'type' => 'text',
             'required' => true
         ]
     ],
-    'category' => 'criatividade',
-    'difficulty' => 'iniciante'
+
+    // Configurações Adicionais v2.0
+    'category' => 'negocios',
+    'tags' => ['naming', 'branding', 'criatividade', 'negocios'],
+    'difficulty' => 'iniciante',
+    'estimated_time' => '3-5 min',
+    'version' => '2.0'
 ];
+?>
 ```
 
 ### Agente com Select

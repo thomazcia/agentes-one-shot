@@ -1,55 +1,65 @@
-# Agentes One-Shot v1.1
+# Agentes One-Shot v2.0
 
-Sistema de gestão de agentes de IA com integração segura com Open Router API usando modelo Grok 4.1 Fast.
+Sistema avançado de gestão de agentes de IA com integração segura com Open Router API usando modelo Grok 4.1 Fast e arquitetura completamente refatorada.
 
-## 🆕 Versão 1.1 - Novidades
+## 🆕 Versão 2.0 - Grandes Novidades
 
-- ✅ **Sistema de Arquivos PHP**: Agentes agora configurados como arquivos PHP independentes
-- ✅ **Variáveis de Ambiente (.env)**: Gestão segura de configurações com suporte a phpdotenv
-- ✅ **Segurança Aprimorada**: Chave API 100% protegida com validação de ambiente
-- ✅ **Interface Simplificada**: Foco apenas em execução de agentes
-- ✅ **Campos Dinâmicos**: Suporte a text, textarea, number, email e select
-- ✅ **Sistema de Badges**: Exibe categoria, dificuldade e tempo estimado
-- ✅ **CSP Otimizado**: Content Security Policy configurado para desenvolvimento
-- ✅ **Debug Integrado**: Logs detalhados para facilitar diagnóstico
+- ✅ **Arquitetura Refatorada**: Sistema completo com maior robustez e performance
+- ✅ **Framework de Agentes PHP**: Agentes como arquivos PHP totalmente configuráveis
+- ✅ **Sistema de Segurança Reforçado**: Múltiplas camadas de proteção com CSP e rate limiting
+- ✅ **Gestão de Variáveis de Ambiente (.env)**: Configuração segura com phpdotenv
+- ✅ **Interface Responsiva Moderna**: Design aprimorado com Bootstrap 5
+- ✅ **Sistema de Badges Avançado**: Exibe categoria, dificuldade e tempo estimado
+- ✅ **Debug e Monitoramento**: Logs detalhados e sistema de segurança completo
+- ✅ **Content Security Policy**: CSP otimizado para desenvolvimento e produção
+- ✅ **API REST Estruturada**: Endpoints bem definidos com validação robusta
 
 ## 🚀 Características
 
 - ✅ **Agentes Pré-Configurados**: Sistema focado em uso de agentes, não criação
-- ✅ **Interface Intuitiva**: Design baseado em Bootstrap com layout de 2 colunas
-- ✅ **Execução Segura**: Backend PHP protege 100% sua chave API da Open Router
-- ✅ **Sistema de Arquivos PHP**: Cada agente como arquivo PHP independente e configurável
-- ✅ **Gestão .env**: Variáveis de ambiente com phpdotenv para máxima segurança
-- ✅ **Campos Dinâmicos**: Suporte completo a text, textarea, number, email e select
-- ✅ **Visual Rico**: Cards com badges, cores personalizadas e ícones
+- ✅ **Interface Responsiva Moderna**: Design baseado em Bootstrap 5 com layout de 2 colunas
+- ✅ **Execução 100% Segura**: Backend PHP protege sua chave API da Open Router
+- ✅ **Framework de Agentes PHP**: Cada agente como arquivo PHP independente e totalmente configurável
+- ✅ **Gestão .env Avançada**: Variáveis de ambiente com phpdotenv para máxima segurança
+- ✅ **Campos Dinâmicos Completos**: Suporte a text, textarea, number, email e select
+- ✅ **Visual Rico e Profissional**: Cards com badges, cores personalizadas e ícones
 - ✅ **Grok 4.1 Fast**: Modelo rápido e eficiente da Open Router
-- ✅ **CSP Configurado**: Sem erros de console com política otimizada
-- ✅ **Debug Integrado**: Logs detalhados para troubleshooting
+- ✅ **Content Security Policy**: Política otimizada para desenvolvimento e produção
+- ✅ **Debug e Monitoramento**: Logs detalhados e sistema de segurança completo
+- ✅ **Rate Limiting**: Proteção contra abuso e sobrecarga
+- ✅ **Sistema de Logs**: Registro completo de eventos de segurança e auditoria
+- ✅ **API REST**: Endpoints bem definidos com validação robusta
 
-## 📋 Estrutura do Sistema
+## 📋 Estrutura do Sistema v2.0
 
 ```
 agentes-one-shot/
-├── index.php              # Frontend principal (visual)
-├── api.php                # Backend API (requisições AJAX)
-├── agentes.php            # Funções de gestão de agentes
-├── config.php             # Configurações com suporte a .env
-├── security.php           # Módulo de segurança completo
-├── app.js                 # JavaScript frontend
-├── .env.example           # Template de variáveis de ambiente
-├── .env                   # Variáveis de ambiente (chave API, etc.)
-├── .gitignore             # Arquivos ignorados pelo Git
-├── .htaccess              # Configurações Apache (CSP, headers)
-├── agent-template.php     # Template para criar novos agentes
-├── agentes/               # Pasta com arquivos dos agentes
-│   ├── blog-post-generator.php    # Agente exemplo: Posts para Blog
-│   ├── email-marketing.php       # Agente exemplo: E-mails Marketing
-│   ├── nome-do-agente.php        # Seus agentes personalizados
+├── 📄 index.php                 # Frontend principal (interface responsiva)
+├── 📄 api.php                   # Backend REST API (AJAX endpoints)
+├── 📄 agentes.php               # Framework de gestão de agentes
+├── 📄 config.php                # Configurações avançadas com .env
+├── 📄 security.php              # Módulo de segurança reforçado
+├── 📄 app.js                    # JavaScript frontend otimizado
+├── 📄 .env.example              # Template de variáveis de ambiente
+├── 📄 .env                      # Variáveis reais (chave API, etc.)
+├── 📄 .gitignore                # Arquivos ignorados pelo Git
+├── 📄 .htaccess                 # Configurações Apache (CSP, headers)
+├── 📄 agent-template.php        # Template para criar novos agentes
+├── 📁 agentes/                  # Pasta com arquivos dos agentes
+│   ├── 📄 blog-post-generator.php     # Agente: Posts para Blog
+│   ├── 📄 email-marketing.php         # Agente: E-mails Marketing
+│   ├── 📄 contador-piada.php          # Agente: Contador de Piadas
+│   ├── 📄 [seus-agentes].php           # Seus agentes personalizados
 │   └── ...
-├── vendor/                # Dependências Composer (phpdotenv)
-├── COMO-CRIAR-AGENTES.md  # Documentação para criar agentes
-├── SECURITY_REPORT.md     # Relatório detalhado de segurança
-└── README.md
+├── 📁 vendor/                   # Dependências Composer (phpdotenv)
+├── 📄 composer.json             # Configuração Composer
+├── 📄 composer.lock             # Lock de dependências
+├── 📄 COMO-CRIAR-AGENTES.md      # Documentação para criar agentes
+├── 📄 SECURITY_REPORT.md         # Relatório detalhado de segurança
+├── 📄 TECHNICAL_GUIDE.md         # Guia técnico completo
+├── 📄 CLAUDE.md                  # Instrunções para Claude Code
+├── 📄 security_logs.json         # Logs de segurança (criado em runtime)
+└── 📄 README.md                  # Este documento
 ```
 
 ## ⚙️ Instalação
@@ -82,18 +92,31 @@ agentes-one-shot/
 4. **Acesse o sistema**:
    Abra no navegador: `http://seuservidor.com/agentes-one-shot/`
 
-**📁 Estrutura do Ambiente (.env)**:
+**📁 Estrutura do Ambiente (.env) - v2.0**:
 ```bash
 # Copie de .env.example e edite com seus valores
 OPENROUTER_API_KEY=sk-or-v1-sua-chave-api-real-aqui
 OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
 GROK_MODEL=x-ai/grok-4.1-fast:free
-APP_NAME=Agentes One-Shot
-APP_VERSION=1.1
+
+# Configurações do Sistema
+APP_NAME=Agentes_One_Shot
+APP_VERSION=2.0
+AGENTS_FOLDER=__DIR__/agentes
+
+# Configurações de Segurança
 MAX_REQUEST_SIZE=1048576
 MAX_PROMPT_LENGTH=10000
 RATE_LIMIT_REQUESTS=60
 RATE_LIMIT_WINDOW=60
+
+# Agent Configuration
+MAX_AGENTS=100
+MAX_FILE_SIZE=1048576
+
+# Environment
+ENVIRONMENT=production
+DEBUG=false
 ```
 
 ## 🚀 Como Rodar Localmente
@@ -208,25 +231,40 @@ DEBUG=true
 4. **Clique em "Executar Agente"**
 5. **Veja a resposta** no painel direito
 
-### 3. Agentes Disponíveis
+### 3. Agentes Disponíveis v2.0
 
 **📝 Gerador de Posts para Blog**
 - Cria artigos SEO otimizados
 - 7 campos personalizados
 - Tempo estimado: 5-10 min
+- Categoria: Conteúdo
 
 **📧 Gerador de E-mails Marketing**
 - Cria e-mails persuasivos completos
 - 7 campos personalizados
 - Tempo estimado: 3-5 min
+- Categoria: Marketing
 
-## 🛡️ Segurança
+**😄 Contador de Piadas**
+- Cria piadas personalizadas sobre qualquer assunto
+- 1 campo personalizado (assunto)
+- Tempo estimado: 1-2 min
+- Categoria: Entretenimento
+
+## 🛡️ Segurança v2.0
 
 - ✅ **Chave API 100% Protegida**: A chave NUNCA sai do backend PHP
-- ✅ **Sem Exposição Frontend**: JavaScript faz apenas chamadas AJAX
-- ✅ **Validação Server-Side**: Todos os dados validados no backend
+- ✅ **Múltiplas Camadas de Segurança**: Input sanitization, CSP, rate limiting
+- ✅ **Sem Exposição Frontend**: JavaScript faz apenas chamadas AJAX seguras
+- ✅ **Validação Server-Side Robusta**: Todos os dados validados no backend
 - ✅ **Sistema de Arquivos Isolado**: Cada agente em arquivo PHP separado
 - ✅ **cURL Seguro**: Comunicação segura com Open Router API
+- ✅ **Content Security Policy**: Proteção contra XSS e injeção de conteúdo
+- ✅ **Rate Limiting**: Proteção contra ataques de força bruta e sobrecarga
+- ✅ **Sistema de Logs**: Registro completo de eventos de segurança
+- ✅ **Headers de Segurança**: X-Frame-Options, X-Content-Type-Options, etc.
+- ✅ **Detecção de Padrões Suspeitos**: Bloqueio automático de requisições maliciosas
+- ✅ **Validação de Estrutura**: Verificação completa dos arquivos de agentes
 
 ## 📝 Estrutura de Agente
 
@@ -329,15 +367,6 @@ O sistema registra erros no log de erros do PHP. Verifique:
 tail -f /var/log/php_errors.log
 ```
 
-## 🔄 Atualização
-
-Para atualizar o sistema:
-
-1. **Backup**: Use o recurso de exportar agentes
-2. **Substitua os arquivos** (menos `config.php`)
-3. **Mantenha a pasta `agentes/`**
-4. **Importe seus agentes** se necessário
-
 ## 📄 Licença
 
 Este projeto é open-source. Sinta-se livre para usar, modificar e distribuir.
@@ -351,7 +380,19 @@ Para dúvidas ou problemas:
 
 ## 🔄 Histórico de Versões
 
-### v1.1 (Atual) - Sistema de Arquivos PHP
+### v2.0 (Atual) - Sistema Refatorado
+- ✅ Arquitetura completamente refatorada com maior robustez
+- ✅ Framework de segurança reforçado com múltiplas camadas
+- ✅ Sistema avançado de variáveis de ambiente (.env)
+- ✅ Content Security Policy (CSP) otimizado
+- ✅ Rate limiting avançado e sistema de logs completo
+- ✅ Interface responsiva moderna com Bootstrap 5
+- ✅ API REST bem estruturada com validação robusta
+- ✅ Novo agente: Contador de Piadas
+- ✅ Sistema de detecção de padrões suspeitos
+- ✅ Melhorias na documentação técnica
+
+### v1.1 - Sistema de Arquivos PHP
 - ✅ Sistema de arquivos PHP para agentes
 - ✅ Interface simplificada (foco em execução)
 - ✅ Suporte completo a campos dinâmicos
@@ -366,7 +407,8 @@ Para dúvidas ou problemas:
 
 ---
 
-**Versão**: 1.1  
-**Modelo IA**: Grok 4.1 Fast (x-ai/grok-4.1-fast:free)  
-**Framework**: Bootstrap 5 + PHP 7.4+  
-**Arquitetura**: Frontend PHP + Backend PHP + Arquivos de Configuração PHP  
+**Versão**: 2.0
+**Modelo IA**: Grok 4.1 Fast (x-ai/grok-4.1-fast:free)
+**Framework**: Bootstrap 5 + PHP 7.4+
+**Arquitetura**: Frontend PHP + Backend PHP + Arquivos de Configuração PHP + Sistema de Segurança Reforçado
+**Documentação**: Guia técnico completo, relatório de segurança, guia de criação de agentes  
