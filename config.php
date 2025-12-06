@@ -18,8 +18,9 @@ try {
     error_log("Aviso: Arquivo .env não encontrado. Usando configurações do sistema.");
 }
 
-// Configurações da Groq API - Ler diretamente do arquivo .env
+// Configurações da Groq API - Ler do arquivo .env primeiro, depois das variáveis de ambiente do sistema
 function loadEnvVar($varName, $default = null) {
+    // 1. Tenta do arquivo .env local (para desenvolvimento)
     $envFile = __DIR__ . '/.env';
     if (file_exists($envFile)) {
         $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -28,13 +29,38 @@ function loadEnvVar($varName, $default = null) {
             if (strpos($trimmedLine, '=') !== false && $trimmedLine[0] !== '#') {
                 list($key, $value) = explode('=', $trimmedLine, 2);
                 if (trim($key) === $varName) {
-                    return trim($value);
+                    // Remove aspas se existirem
+                    $value = trim($value);
+                    if ((($value[0] === '"' && $value[-1] === '"') || ($value[0] === "'" && $value[-1] === "'"))) {
+                        $value = substr($value, 1, -1);
+                    }
+                    return $value;
                 }
             }
         }
     }
 
-    // Se não for GROQ_API_KEY, pode retornar o default
+    // 2. Tenta das variáveis de ambiente do sistema (para Railway.app, produção)
+    $envValue = getenv($varName);
+    if ($envValue !== false) {
+        // Remove aspas se existirem
+        if ((($envValue[0] === '"' && $envValue[-1] === '"') || ($envValue[0] === "'" && $envValue[-1] === "'"))) {
+            $envValue = substr($envValue, 1, -1);
+        }
+        return $envValue;
+    }
+
+    // 3. Tenta do $_ENV (oura forma de acessar variáveis de ambiente)
+    if (isset($_ENV[$varName])) {
+        $value = $_ENV[$varName];
+        // Remove aspas se existirem
+        if ((($value[0] === '"' && $value[-1] === '"') || ($value[0] === "'" && $value[-1] === "'"))) {
+            $value = substr($value, 1, -1);
+        }
+        return $value;
+    }
+
+    // 4. Se não for GROQ_API_KEY, pode retornar o default
     // Para API keys, sempre retorna null para forçar configuração
     if ($varName === 'GROQ_API_KEY') {
         return null;
@@ -46,6 +72,13 @@ function loadEnvVar($varName, $default = null) {
 define('GROQ_API_KEY', loadEnvVar('GROQ_API_KEY'));
 define('GROQ_API_URL', loadEnvVar('GROQ_API_URL'));
 define('GROQ_MODEL', loadEnvVar('GROQ_MODEL'));
+
+// Debug log para verificar se as variáveis foram carregadas
+error_log("DEBUG: GROQ_API_KEY = " . (GROQ_API_KEY ? "OK" : "NULL"));
+error_log("DEBUG: GROQ_API_URL = " . (GROQ_API_URL ?: "NULL"));
+error_log("DEBUG: GROQ_MODEL = " . (GROQ_MODEL ?: "NULL"));
+error_log("DEBUG: getenv('GROQ_API_KEY') = " . (getenv('GROQ_API_KEY') ?: "FALSE"));
+error_log("DEBUG: \$_ENV['GROQ_API_KEY'] = " . (isset($_ENV['GROQ_API_KEY']) ? $_ENV['GROQ_API_KEY'] : "NOT SET"));
 
 // Validação de segurança - Variáveis obrigatórias
 $required_vars = ['GROQ_API_KEY', 'GROQ_API_URL', 'GROQ_MODEL'];
