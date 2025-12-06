@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+require_once 'models.php';
 
 /**
  * Sistema de Gestão de Agentes - Agentes One-Shot v1.0
@@ -151,14 +152,33 @@ function executeAgent($id, $fieldValues = []) {
             $finalPrompt .= $context;
         }
 
-        // Fazer chamada para Open Router API
-        $response = callOpenRouterAPI($finalPrompt);
+        // Fazer chamada para Open Router API com fallback automático
+        $response = callOpenRouterAPIWithFallback($finalPrompt, [
+            'max_tokens' => 4000,
+            'temperature' => 0.7,
+            'timeout' => 60,
+            'test_models' => false // Desabilitado para performance (testa apenas se falhar)
+        ]);
 
-        // Log completo da resposta da API para debugging
+        // Log da resposta com informações de fallback
         error_log("=== API RESPONSE DEBUG ===");
-        error_log("HTTP Code: " . $httpCode);
-        error_log("cURL Error: " . $error);
-        error_log("Raw Response: " . $response);
+        if ($response['success']) {
+            $modelInfo = $response['model_used'];
+            error_log("SUCCESS - Model: " . $modelInfo['id']);
+            error_log("Fallback: " . ($modelInfo['fallback_info']['is_fallback'] ? 'YES' : 'NO'));
+            if ($modelInfo['fallback_info']['is_fallback']) {
+                error_log("Fallback Level: " . ($modelInfo['fallback_info']['fallback_level'] ?? 'unknown'));
+                error_log("Attempt: " . $modelInfo['attempt']);
+            }
+
+            // Cache do modelo que funcionou
+            cacheWorkingModel($modelInfo['id']);
+        } else {
+            error_log("FAILED - Message: " . $response['message']);
+            if (isset($response['failed_models'])) {
+                error_log("Failed Models: " . implode(', ', $response['failed_models']));
+            }
+        }
 
         return $response;
 
@@ -168,83 +188,11 @@ function executeAgent($id, $fieldValues = []) {
 }
 
 /**
- * Chamar Open Router API
+ * Função legada mantida para compatibilidade
+ * @deprecated Use callOpenRouterAPIWithFallback() instead
  */
 function callOpenRouterAPI($prompt) {
-    try {
-        $apiKey = getConfig('openrouter_api_key');
-        $apiUrl = getConfig('openrouter_api_url');
-        $model = getConfig('grok_model');
-
-        if (empty($apiKey) || strpos($apiKey, 'sk-or-v1-sua-chave-api-aqui') !== false || strpos($apiKey, 'sk-or-v1-seu-aqui') !== false) {
-            return ['success' => false, 'message' => 'Configure sua chave API Open Router no arquivo .env'];
-        }
-
-        $postData = [
-            'model' => $model,
-            'messages' => [
-                [
-                    'role' => 'user',
-                    'content' => $prompt
-                ]
-            ],
-            'max_tokens' => 4000,
-            'temperature' => 0.7,
-            'reasoning' => [
-                'enabled' => false,
-                'max_tokens' => 1000
-            ]
-        ];
-
-        $ch = curl_init($apiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer ' . $apiKey,
-            'Content-Type: application/json',
-            'HTTP-Referer: ' . (isset($_SERVER['HTTP_HOST']) ? 'https://' . $_SERVER['HTTP_HOST'] : ''),
-            'X-Title: Agentes One-Shot v1.0'
-        ]);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $error = curl_error($ch);
-
-        // Log completo para debugging - capturar tudo o que vem da API
-        error_log("=== OPENROUTER API COMPLETE DEBUG ===");
-        error_log("Request URL: " . $apiUrl);
-        error_log("Request Headers: " . json_encode([
-            'Authorization: Bearer ' . $apiKey,
-            'Content-Type: application/json',
-            'HTTP-Referer: ' . (isset($_SERVER['HTTP_HOST']) ? 'https://' . $_SERVER['HTTP_HOST'] : ''),
-            'X-Title: Agentes One-Shot v2.0'
-        ]));
-        error_log("Request Body: " . json_encode($postData));
-        error_log("Response HTTP Code: " . $httpCode);
-        error_log("Response cURL Error: " . $error);
-        error_log("Raw Response: " . $response);
-        curl_close($ch);
-
-        if ($error) {
-            return ['success' => false, 'message' => 'Erro na requisição: ' . $error];
-        }
-
-        $responseData = json_decode($response, true);
-
-        if ($httpCode !== 200) {
-            $errorMsg = $responseData['error']['message'] ?? 'Erro na API Open Router';
-            return ['success' => false, 'message' => $errorMsg];
-        }
-
-        // Retorna o sucesso e os dados brutos da API
-        return ['success' => true, 'data' => $responseData];
-
-    } catch (Exception $e) {
-        return ['success' => false, 'message' => 'Erro: ' . $e->getMessage()];
-    }
+    return callOpenRouterAPIWithFallback($prompt);
 }
 
 /**
