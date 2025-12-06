@@ -4,7 +4,8 @@
       "Bash(php:*)",
       "Bash(curl:*)",
       "Bash(netstat:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(\"https://api.groq.com/openai/v1/models\")"
     ],
     "deny": [],
     "ask": []

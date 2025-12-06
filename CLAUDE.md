@@ -4,100 +4,81 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the **agentes-one-shot** v2.0 project - a complete dashboard/panel for one-shot agents using Grok 4.1 fast via Open Router with advanced security features and modern architecture.
+**Agentes One-Shot v2.0** - Complete dashboard/panel for one-shot agents using Groq API with advanced security features and modern architecture.
 
-## Current State
-
-The repository contains a fully functional v2.0 system:
-- Complete PHP-based agent framework
-- Advanced security system with CSP and rate limiting
-- Modern Bootstrap 5 interface
-- Agent management system with PHP files
-- Environment variable management (.env)
-- Comprehensive documentation and technical guides
-- Production-ready security measures
-
-## Project Description
-
-The v2.0 system provides:
-- A modern dashboard/panel for one-shot agents
-- Integration with Grok 4.1 fast model via Open Router API
-- Advanced security features including CSP, rate limiting, and input sanitization
-- Environment variable management with phpdotenv
-- Responsive Bootstrap 5 interface
-- Complete agent management system
-- Production-ready deployment configuration
-- Comprehensive documentation
-
-## Architecture Highlights
+## Current Architecture
 
 - **Backend**: PHP 7.4+ with security framework
 - **Frontend**: Bootstrap 5 + vanilla JavaScript
-- **API**: Open Router integration with Grok 4.1 Fast
+- **API**: Groq API integration with multiple models
 - **Security**: Multiple layers including CSP, rate limiting, input validation
-- **Configuration**: Environment variables with .env support
-- **Documentation**: Complete technical guides and security reports
+- **Configuration**: Environment variables (.env) - API keys only in ENV
+- **Models**: Fallback system with multiple verified Groq models
 
-## Git Repository
+## Key Development Rules
 
-- Repository: `main` branch
-- Recent commits show v2.0 development:
-  - `2dd3d35 feat: Implementa funcionalidades e corrige erros críticos no frontend e backend`
-  - `5a1864d Release v2.0: Sistema de Agentes IA com Variáveis de Ambiente e Segurança Reforçada`
-  - `6f4d7cc Adicionando segurança na aplicação`
-- Current status: Modified files (README.md updated to v2.0)
+### Security First
+- **Never** hardcode API keys in code - only use .env variables
+- Use `loadEnvVar()` function for environment variables (consistent across all files)
+- All user input must be sanitized and validated
+- API keys are never exposed to frontend
+
+### File Structure
+- **Working Directory**: `/c/ThomazCia/Website_novo/agentes-one-shot`
+- **Agents**: PHP files in `/agentes/` folder
+- **Documentation**: Main docs in root, development guides in `/agents/`
+
+### Model Management
+- Current provider: **Groq API** (NOT Open Router anymore)
+- Models are verified and tested via `/model-status.php`
+- Available models: llama-3.1-8b-instant, llama-3.3-70b-versatile, meta-llama/llama-4-maverick-17b-128e-instruct, etc.
+- Fallback system automatically switches models if one fails
 
 ## Available Documentation
 
+### User Documentation
 - `README.md` - Complete user guide and installation instructions
 - `TECHNICAL_GUIDE.md` - Detailed technical documentation
 - `SECURITY_REPORT.md` - Comprehensive security analysis and measures
-- `COMO-CRIAR-AGENTES.md` - Guide for creating custom agents
-- `CLAUDE.md` - This file - instructions for Claude Code
 
-## Development Setup
+### Development Resources
+- `agents/COMO-CRIAR-AGENTES.md` - Guide for creating custom agents
+- `agents/TECHNICAL_GUIDE.md` - Technical specifications for agent development
+- `agents/SECURITY_REPORT.md` - Security best practices for agent creation
+- `agents/CORES_INSTRUCOES.md` - Core configuration instructions for development
 
-The system is production-ready with:
-- Complete PHP framework
-- Composer dependencies (phpdotenv)
-- Environment configuration
-- Security headers and CSP
-- Agent templates and examples
+## Important Files
 
-## Local files development
-Only read/listen/execute in the `/c/ThomazCia/Website_novo/agentes-one-shot` folder.
+### Core System
+- `config.php` - Main configuration with environment variables
+- `models.php` - Model management and fallback system
+- `agentes.php` - Main agents interface
+- `model-status.php` - Model availability dashboard
 
-## Current v2.0 Features
+### Security Files
+- `security.php` - Security functions and validation
+- `model-status-check-availability.php` - Model testing endpoint
 
-The system is complete and production-ready with:
+## Development Guidelines
 
-### Core Features
-- Complete PHP-based agent framework
-- Modern Bootstrap 5 responsive interface
-- Advanced security system with multiple protection layers
-- Environment variable management (.env)
-- Rate limiting and input sanitization
-- Content Security Policy (CSP)
-- Comprehensive logging system
+### Environment Variables
+- Use **only** `loadEnvVar()` function (not `getenv()`)
+- API keys MUST be in `.env` file only
+- Never commit `.env` or API keys to git
 
-### Available Agents
-- Blog Post Generator (SEO-optimized content creation)
-- Email Marketing Generator (persuasive email creation)
-- Joke Counter (entertainment agent for customized jokes)
+### Model Updates
+- Check model availability via API before adding new models
+- Use correct model IDs from Groq API response
+- Test all models in `/model-status.php` dashboard
 
-### Security Measures
-- API key protection (never exposed to frontend)
-- Input sanitization and validation
-- Rate limiting (60 requests/minute per IP)
-- CSP headers
-- Suspicious pattern detection
-- Security logging and monitoring
-
-## Update across development
-When set to update infos, you need update this files for development information.
+### Agent Creation
+- Follow patterns in `/agents/` documentation
+- Use Bootstrap 5 responsive components
+- Implement proper validation and security
+- Test with model fallback system
 
 ## Version Information
 - **Current Version**: 2.0
-- **Release Date**: Recent (based on git commits)
+- **API Provider**: Groq (changed from Open Router)
 - **Status**: Production-ready
-- **Next Version**: Planning phase for future enhancements  
+- **Security**: Hardened with multiple protection layers  

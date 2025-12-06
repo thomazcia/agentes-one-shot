@@ -152,8 +152,8 @@ function executeAgent($id, $fieldValues = []) {
             $finalPrompt .= $context;
         }
 
-        // Fazer chamada para Open Router API com fallback automático
-        $response = callOpenRouterAPIWithFallback($finalPrompt, [
+        // Fazer chamada para Groq API com fallback automático
+        $response = callGroqAPIWithFallback($finalPrompt, [
             'max_tokens' => 4000,
             'temperature' => 0.7,
             'timeout' => 60,
@@ -189,10 +189,10 @@ function executeAgent($id, $fieldValues = []) {
 
 /**
  * Função legada mantida para compatibilidade
- * @deprecated Use callOpenRouterAPIWithFallback() instead
+ * @deprecated Use callGroqAPIWithFallback() instead
  */
 function callOpenRouterAPI($prompt) {
-    return callOpenRouterAPIWithFallback($prompt);
+    return callGroqAPIWithFallback($prompt);
 }
 
 /**

@@ -8,7 +8,7 @@ require_once 'models.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status dos Modelos - Agentes One-Shot</title>
+    <title>Status dos Modelos Groq - Agentes One-Shot</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
@@ -24,7 +24,7 @@ require_once 'models.php';
         .category-primary { border-left: 4px solid #0d6efd; }
         .category-secondary { border-left: 4px solid #198754; }
         .category-emergency { border-left: 4px solid #ffc107; }
-        .category-paid { border-left: 4px solid #dc3545; }
+        .category-premium { border-left: 4px solid #6f42c1; }
         .test-loading {
             display: none;
         }
@@ -36,10 +36,10 @@ require_once 'models.php';
             <div class="col-md-12">
                 <h1 class="h3 mb-3">
                     <i class="bi bi-cpu"></i>
-                    Status dos Modelos de IA
+                    Status dos Modelos Groq
                 </h1>
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="text-muted mb-0">Monitoramento em tempo real da disponibilidade dos modelos</p>
+                    <p class="text-muted mb-0">Monitoramento em tempo real dos modelos Groq AI</p>
                     <button class="btn btn-primary btn-sm" onclick="testAllModels()">
                         <i class="bi bi-arrow-clockwise"></i>
                         Testar Todos
@@ -222,7 +222,7 @@ require_once 'models.php';
             logTest(`Testing ${modelId}...`);
 
             try {
-                const response = await fetch('test-model-availability.php', {
+                const response = await fetch('model-status-check-availability.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

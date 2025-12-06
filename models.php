@@ -4,91 +4,78 @@
  * Agentes One-Shot v2.0
  */
 
+// Carregar configurações do sistema (inclui função loadEnvVar)
+require_once __DIR__ . '/config.php';
+
 /**
  * Lista de modelos em ordem de prioridade (do mais preferido para o menos preferido)
- * Apenas modelos gratuitos ou com bom custo-benefício
+ * Apenas modelos disponíveis e verificados na Groq API
  */
 function getModelPriorityList() {
     return [
-        // Modelos primários (melhor performance)
+        // Modelos primários Groq (extremamente rápidos e gratuitos)
         [
-            'id' => 'z-ai/glm-4.5-air:free',
-            'name' => 'GLM-4.5 Air (Free)',
-            'provider' => 'Zhipu AI',
+            'id' => 'llama-3.1-8b-instant',
+            'name' => 'Llama 3.1 8B Instant',
+            'provider' => 'Groq',
             'category' => 'primary',
             'max_tokens' => 8192,
-            'context_length' => 128000
+            'context_length' => 131072,
+            'speed' => '~500 tokens/s'
         ],
         [
-            'id' => 'meta-llama/llama-3.1-8b-instruct:free',
-            'name' => 'Llama 3.1 8B (Free)',
+            'id' => 'llama-3.3-70b-versatile',
+            'name' => 'Llama 3.3 70B Versatile',
+            'provider' => 'Groq',
+            'category' => 'primary',
+            'max_tokens' => 8192,
+            'context_length' => 131072,
+            'speed' => '~250 tokens/s'
+        ],
+
+        // Modelos de Alta Performance (Llama 4)
+        [
+            'id' => 'meta-llama/llama-4-maverick-17b-128e-instruct',
+            'name' => 'Llama 4 Maverick 17B',
             'provider' => 'Meta',
-            'category' => 'primary',
+            'category' => 'premium',
             'max_tokens' => 4096,
-            'context_length' => 128000
+            'context_length' => 128000,
+            'speed' => '~50 tokens/s',
+            'note' => 'Modelo de última geração'
         ],
         [
-            'id' => 'microsoft/phi-3-medium-128k-instruct:free',
-            'name' => 'Phi-3 Medium 128K (Free)',
-            'provider' => 'Microsoft',
-            'category' => 'primary',
+            'id' => 'meta-llama/llama-4-scout-17b-16e-instruct',
+            'name' => 'Llama 4 Scout 17B',
+            'provider' => 'Meta',
+            'category' => 'premium',
             'max_tokens' => 4096,
-            'context_length' => 128000
+            'context_length' => 128000,
+            'speed' => '~60 tokens/s',
+            'note' => 'Modelo de última geração'
         ],
 
-        // Modelos secundários (bons fallbacks)
+        // Modelos alternativos
         [
-            'id' => 'qwen/qwen-2.5-7b-instruct:free',
-            'name' => 'Qwen 2.5 7B (Free)',
-            'provider' => 'Alibaba',
+            'id' => 'moonshotai/kimi-k2-instruct',
+            'name' => 'Kimi K2 Instruct',
+            'provider' => 'Moonshot AI',
             'category' => 'secondary',
             'max_tokens' => 8192,
-            'context_length' => 32768
-        ],
-        [
-            'id' => 'cohere/command-r-plus:free',
-            'name' => 'Command R+ (Free)',
-            'provider' => 'Cohere',
-            'category' => 'secondary',
-            'max_tokens' => 4096,
-            'context_length' => 128000
-        ],
-        [
-            'id' => 'google/gemini-flash-1.5:free',
-            'name' => 'Gemini Flash 1.5 (Free)',
-            'provider' => 'Google',
-            'category' => 'secondary',
-            'max_tokens' => 8192,
-            'context_length' => 1000000
+            'context_length' => 32768,
+            'speed' => '~180 tokens/s'
         ],
 
-        // Modelos emergência (quase sempre disponíveis)
+        // Modelo de Fala (TTS/ASR)
         [
-            'id' => 'mistralai/mistral-7b-instruct:free',
-            'name' => 'Mistral 7B (Free)',
-            'provider' => 'Mistral AI',
-            'category' => 'emergency',
-            'max_tokens' => 4096,
-            'context_length' => 32768
-        ],
-        [
-            'id' => 'huggingface/zephyr-7b-beta:free',
-            'name' => 'Zephyr 7B Beta (Free)',
-            'provider' => 'Hugging Face',
-            'category' => 'emergency',
-            'max_tokens' => 2048,
-            'context_length' => 4096
-        ],
-
-        // Último recurso (se tudo falhar)
-        [
-            'id' => 'openai/gpt-3.5-turbo',
-            'name' => 'GPT-3.5 Turbo (Paid)',
+            'id' => 'whisper-large-v3-turbo',
+            'name' => 'Whisper Large v3 Turbo',
             'provider' => 'OpenAI',
-            'category' => 'paid',
-            'max_tokens' => 4096,
-            'context_length' => 16385,
-            'note' => 'Apenas se tiver créditos OpenAI configurados'
+            'category' => 'emergency',
+            'max_tokens' => 8192,
+            'context_length' => 8192,
+            'speed' => '~100 tokens/s',
+            'note' => 'Modelo de fala/transcrição'
         ]
     ];
 }
@@ -97,8 +84,8 @@ function getModelPriorityList() {
  * Obtém o modelo atual com base nas configurações
  */
 function getCurrentModel() {
-    // Tenta obter das variáveis de ambiente primeiro
-    $envModel = getenv('GROK_MODEL');
+    // Tenta obter das variáveis de ambiente primeiro (ler do .env)
+    $envModel = loadEnvVar('GROQ_MODEL', null);
     if ($envModel && isValidModel($envModel)) {
         return [
             'id' => $envModel,
@@ -121,8 +108,8 @@ function getCurrentModel() {
 
     // Último recurso - modelo hardcoded
     return [
-        'id' => 'z-ai/glm-4.5-air:free',
-        'name' => 'GLM-4.5 Air (Free)',
+        'id' => 'llama-3.1-8b-instant',
+        'name' => 'Llama 3.1 8B Instant',
         'is_fallback' => true,
         'source' => 'hardcoded',
         'fallback_reason' => 'no_models_available'
@@ -160,7 +147,7 @@ function getModelInfo($modelId) {
  */
 function testModelAvailability($modelId, $apiKey = null) {
     if (!$apiKey) {
-        $apiKey = getenv('OPENROUTER_API_KEY');
+        $apiKey = GROQ_API_KEY;
     }
 
     $testData = [
@@ -175,15 +162,13 @@ function testModelAvailability($modelId, $apiKey = null) {
         'temperature' => 0.1
     ];
 
-    $ch = curl_init('https://openrouter.ai/api/v1/chat/completions');
+    $ch = curl_init(GROQ_API_URL);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($testData));
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Authorization: Bearer ' . $apiKey,
-        'Content-Type: application/json',
-        'HTTP-Referer: https://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'),
-        'X-Title: Agentes One-Shot v2.0'
+        'Content-Type: application/json'
     ]);
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
@@ -274,9 +259,9 @@ function getNextAvailableModel($excludeModels = [], $apiKey = null) {
 /**
  * Executa chamada à API com fallback automático
  */
-function callOpenRouterAPIWithFallback($prompt, $options = []) {
-    $apiKey = getenv('OPENROUTER_API_KEY');
-    $apiUrl = getenv('OPENROUTER_API_URL') ?: 'https://openrouter.ai/api/v1/chat/completions';
+function callGroqAPIWithFallback($prompt, $options = []) {
+    $apiKey = GROQ_API_KEY; // Usar constante definida em config.php
+    $apiUrl = GROQ_API_URL; // Usar constante definida em config.php
 
     // Opções padrão
     $defaultOptions = [
@@ -347,9 +332,7 @@ function callOpenRouterAPIWithFallback($prompt, $options = []) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $apiKey,
-            'Content-Type: application/json',
-            'HTTP-Referer: https://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'),
-            'X-Title: Agentes One-Shot v2.0'
+            'Content-Type: application/json'
         ]);
         curl_setopt($ch, CURLOPT_TIMEOUT, $options['timeout']);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
@@ -360,7 +343,7 @@ function callOpenRouterAPIWithFallback($prompt, $options = []) {
         curl_close($ch);
 
         // Log para debug
-        error_log("OpenRouter API - Attempt $attempt - Model: $modelId - HTTP: $httpCode");
+        error_log("Groq API - Attempt $attempt - Model: $modelId - HTTP: $httpCode");
 
         if ($error) {
             $failedModels[] = $modelId;

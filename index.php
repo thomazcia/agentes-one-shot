@@ -191,7 +191,7 @@ require_once 'agentes.php';
             <a class="navbar-brand d-flex align-items-center" href="#" onclick="showAgentsList()">
                 <i class="bi bi-robot me-2" style="color: #667eea;"></i>
                 <strong><?php echo getConfig('app_name'); ?></strong>
-                <span class="version-badge ms-2">v1.1</span>
+                <span class="version-badge ms-2">v<?php echo getConfig('app_version'); ?></span>
             </a>
             <div class="d-flex align-items-center">
  
