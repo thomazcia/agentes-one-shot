@@ -8,6 +8,7 @@ return [
     // Informações Básicas
     'name' => 'Contador de Piada',
     'description' => 'Cria piadas engraçadas personalizadas com base no assunto informado',
+    'url' => 'contador-piada', // URL amigável para acesso direto
     'icon' => 'bi-emoji-laughing',
     'color' => '#FFD93D',
 
@@ -53,7 +54,7 @@ IMPORTANTE:
     'category' => 'entretenimento',
     'tags' => ['piada', 'humor', 'entretenimento', 'diversão'],
     'difficulty' => 'iniciante',
-    'estimated_time' => '1-2 min',
+    'estimated_time' => '1 min',
     'version' => '1.0'
 ];
 ?>

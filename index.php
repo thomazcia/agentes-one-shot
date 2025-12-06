@@ -1,6 +1,21 @@
 <?php
 require_once 'config.php';
 require_once 'agentes.php';
+
+// Handle direct agent URLs via query parameter (set by router)
+$directAgent = null;
+if (isset($_GET['agent'])) {
+    $agentSlug = sanitizeInput($_GET['agent']);
+    $agentes = getAgents();
+
+    // Find agent by URL
+    foreach ($agentes as $agente) {
+        if (isset($agente['url']) && $agente['url'] === $agentSlug) {
+            $directAgent = $agente;
+            break;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -188,7 +203,7 @@ require_once 'agentes.php';
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="#" onclick="showAgentsList()">
+            <a class="navbar-brand d-flex align-items-center" href="/">
                 <i class="bi bi-robot me-2" style="color: #667eea;"></i>
                 <strong><?php echo getConfig('app_name'); ?></strong>
                 <span class="version-badge ms-2">v<?php echo getConfig('app_version'); ?></span>
@@ -226,7 +241,7 @@ require_once 'agentes.php';
             <!-- Back Button -->
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn back-btn" onclick="showAgentsList()">
+                    <button class="btn back-btn" onclick="window.location.href='/'">
                         <i class="bi bi-arrow-left me-2"></i>Voltar para Agentes
                     </button>
                 </div>
@@ -289,6 +304,14 @@ require_once 'agentes.php';
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php if ($directAgent): ?>
+    <script>
+        // Agente direto encontrado via URL
+        window.directAgent = <?php echo json_encode($directAgent); ?>;
+    </script>
+    <?php endif; ?>
+
     <!-- Custom JS -->
     <script src="app.js"></script>
 </body>

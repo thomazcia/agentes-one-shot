@@ -42,6 +42,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `SECURITY_REPORT.md` - Comprehensive security analysis and measures
 
 ### Development Resources
+- `agents/ROADMAP.md` - Development roadmap with future features and v2.1+ plans
 - `agents/COMO-CRIAR-AGENTES.md` - Guide for creating custom agents
 - `agents/TECHNICAL_GUIDE.md` - Technical specifications for agent development
 - `agents/SECURITY_REPORT.md` - Security best practices for agent creation

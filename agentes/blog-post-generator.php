@@ -8,6 +8,7 @@ return [
     // Informações Básicas
     'name' => 'Gerador de Posts para Blog',
     'description' => 'Cria artigos completos para blogs com estrutura SEO otimizada',
+    'url' => 'blog-post-generator', // URL amigável para acesso direto
     'icon' => 'bi-journal-text',
     'color' => '#FF6B6B',
 
@@ -92,7 +93,7 @@ IMPORTANTE:
     'category' => 'conteudo',
     'tags' => ['blog', 'conteúdo', 'seo', 'escrita'],
     'difficulty' => 'iniciante', // iniciante, intermediário, avançado
-    'estimated_time' => '5-10 min',
+    'estimated_time' => '2-3 min',
     'version' => '1.0'
 ];
 ?>

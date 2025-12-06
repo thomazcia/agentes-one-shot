@@ -25,6 +25,16 @@ function escapeHtml(unsafe) {
 
 async function loadAgents() {
     console.log('🔄 Carregando agentes...');
+
+    // Verifica se há um agente direto via URL
+    if (window.directAgent) {
+        console.log('🎯 Agente direto encontrado:', window.directAgent.name);
+        // Usa diretamente o objeto do agente sem precisar buscar via API
+        currentAgent = window.directAgent;
+        renderAgentDetail(currentAgent);
+        return; // Não carrega a lista, mostra direto o agente
+    }
+
     try {
         const response = await fetch('api.php', {
             method: 'POST',
@@ -40,7 +50,7 @@ async function loadAgents() {
             result.data.forEach(agent => {
                 const card = `
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card agent-card h-100" onclick="showAgentDetail('${agent.id}')">
+                        <div class="card agent-card h-100" onclick="window.location.href='${agent.url || agent.id}'">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="agent-icon me-3" style="background-color: ${agent.color || '#667eea'};
@@ -114,6 +124,26 @@ async function showAgentDetail(agentId) {
     } catch (error) {
         console.error('Erro ao buscar detalhes do agente:', error);
     }
+}
+
+function renderAgentDetail(agent) {
+    document.getElementById('agent-title').innerText = agent.name;
+    document.getElementById('agent-description').innerText = agent.description;
+
+    const fieldsContainer = document.getElementById('agent-fields');
+    fieldsContainer.innerHTML = '';
+    agent.fields.forEach(field => {
+        fieldsContainer.innerHTML += createFieldHtml(field);
+    });
+
+    document.getElementById('agents-list-view').style.display = 'none';
+    document.getElementById('agent-detail-view').style.display = 'block';
+    document.getElementById('response-content').innerHTML = `
+        <div class="text-center text-muted py-5">
+            <i class="bi bi-chat-dots display-4"></i>
+            <p class="mt-3">Preencha o formulário e clique em "Executar Agente" para ver a resposta aqui</p>
+        </div>`;
+    document.getElementById('response-actions').style.display = 'none';
 }
 
 function createFieldHtml(field) {

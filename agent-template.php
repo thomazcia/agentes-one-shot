@@ -9,6 +9,7 @@ return [
     // Informações Básicas
     'name' => 'Nome do Agente',
     'description' => 'Descrição do que este agente faz',
+    'url' => 'url-amigavel-do-agente', // URL amigável para acesso direto (sem espaços, use hífens)
     'icon' => 'bi-robot', // Ícone Bootstrap Icons
 
     // Configurações do Prompt

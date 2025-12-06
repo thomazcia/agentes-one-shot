@@ -40,6 +40,12 @@ function getAgents() {
                 // Adicionar ID baseado no nome do arquivo
                 $agentData['id'] = $filename;
                 $agentData['file'] = $file;
+
+                // Garantir que existe URL (usar ID como fallback)
+                if (!isset($agentData['url']) || empty($agentData['url'])) {
+                    $agentData['url'] = $filename;
+                }
+
                 $agents[] = $agentData;
             }
         } catch (Exception $e) {
