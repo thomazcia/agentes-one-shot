@@ -19,20 +19,20 @@ try {
 }
 
 // Configurações da Open Router API com fallback seguro
-define('OPENROUTER_API_KEY', $_ENV['OPENROUTER_API_KEY'] ?? 'sk-or-v1-sua-chave-api-aqui');
-define('OPENROUTER_API_URL', $_ENV['OPENROUTER_API_URL'] ?? 'https://openrouter.ai/api/v1/chat/completions');
-define('GROK_MODEL', $_ENV['GROK_MODEL'] ?? 'x-ai/grok-4.1-fast:free');
+define('OPENROUTER_API_KEY', getenv('OPENROUTER_API_KEY') ?: 'sk-or-v1-sua-chave-api-aqui');
+define('OPENROUTER_API_URL', getenv('OPENROUTER_API_URL') ?: 'https://openrouter.ai/api/v1/chat/completions');
+define('GROK_MODEL', getenv('GROK_MODEL') ?: 'x-ai/grok-4.1-fast:free');
 
 // Configurações do Sistema
 define('AGENTS_FOLDER', __DIR__ . '/agentes/');
-define('APP_NAME', $_ENV['APP_NAME'] ?? 'Agentes One-Shot');
-define('APP_VERSION', $_ENV['APP_VERSION'] ?? '2.0');
+define('APP_NAME', getenv('APP_NAME') ?: 'Agentes One-Shot');
+define('APP_VERSION', getenv('APP_VERSION') ?: '2.0');
 
 // Configurações de Segurança
-define('MAX_REQUEST_SIZE', intval($_ENV['MAX_REQUEST_SIZE'] ?? 1048576));
-define('MAX_PROMPT_LENGTH', intval($_ENV['MAX_PROMPT_LENGTH'] ?? 10000));
-define('RATE_LIMIT_REQUESTS', intval($_ENV['RATE_LIMIT_REQUESTS'] ?? 60));
-define('RATE_LIMIT_WINDOW', intval($_ENV['RATE_LIMIT_WINDOW'] ?? 60));
+define('MAX_REQUEST_SIZE', intval(getenv('MAX_REQUEST_SIZE') ?: 1048576));
+define('MAX_PROMPT_LENGTH', intval(getenv('MAX_PROMPT_LENGTH') ?: 10000));
+define('RATE_LIMIT_REQUESTS', intval(getenv('RATE_LIMIT_REQUESTS') ?: 60));
+define('RATE_LIMIT_WINDOW', intval(getenv('RATE_LIMIT_WINDOW') ?: 60));
 
 // Configurações de segurança
 define('ALLOWED_ORIGINS', [
@@ -85,8 +85,8 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 }
 
 // Configurações dos agentes
-define('MAX_AGENTS', intval($_ENV['MAX_AGENTS'] ?? 100));
-define('MAX_FILE_SIZE', intval($_ENV['MAX_FILE_SIZE'] ?? 1048576)); // 1MB por arquivo de agente
+define('MAX_AGENTS', intval(getenv('MAX_AGENTS') ?: 100));
+define('MAX_FILE_SIZE', intval(getenv('MAX_FILE_SIZE') ?: 1048576)); // 1MB por arquivo de agente
 
 // Função para obter configuração
 function getConfig($key) {
