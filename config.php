@@ -69,46 +69,33 @@ function loadEnvVar($varName, $default = null) {
     return $default;
 }
 
+// Variáveis de configuração (não-sensíveis) - definidas diretamente no código
+define('APP_NAME', 'Agentes One Shot');
+define('APP_VERSION', '2.0');
+define('GROQ_API_URL', 'https://api.groq.com/openai/v1/chat/completions');
+define('GROQ_MODEL', 'llama-3.1-8b-instant');
+
+// Apenas API keys e dados sensíveis ficam no ENV
 define('GROQ_API_KEY', loadEnvVar('GROQ_API_KEY'));
-define('GROQ_API_URL', loadEnvVar('GROQ_API_URL'));
-define('GROQ_MODEL', loadEnvVar('GROQ_MODEL'));
 
-// Debug log para verificar se as variáveis foram carregadas
-error_log("DEBUG: GROQ_API_KEY = " . (GROQ_API_KEY ? "OK" : "NULL"));
-error_log("DEBUG: GROQ_API_URL = " . (GROQ_API_URL ?: "NULL"));
-error_log("DEBUG: GROQ_MODEL = " . (GROQ_MODEL ?: "NULL"));
-error_log("DEBUG: getenv('GROQ_API_KEY') = " . (getenv('GROQ_API_KEY') ?: "FALSE"));
-error_log("DEBUG: \$_ENV['GROQ_API_KEY'] = " . (isset($_ENV['GROQ_API_KEY']) ? $_ENV['GROQ_API_KEY'] : "NOT SET"));
 
-// Validação de segurança - Variáveis obrigatórias
-$required_vars = ['GROQ_API_KEY', 'GROQ_API_URL', 'GROQ_MODEL'];
-$missing_vars = [];
-
-foreach ($required_vars as $var) {
-    if (!constant($var)) {
-        $missing_vars[] = $var;
-    }
-}
-
-if (!empty($missing_vars)) {
+// Validação de segurança - Apenas API key é obrigatória (demais variáveis estão no código)
+if (!GROQ_API_KEY) {
     if (php_sapi_name() !== 'cli') {
         http_response_code(500);
         header('Content-Type: application/json');
         echo json_encode([
             'success' => false,
-            'message' => 'Variáveis obrigatórias não configuradas: ' . implode(', ', $missing_vars),
-            'error_code' => 'MISSING_ENV_VARS',
-            'missing' => $missing_vars
+            'message' => 'API Key da Groq não configurada. Configure GROQ_API_KEY nas variáveis de ambiente.',
+            'error_code' => 'MISSING_API_KEY'
         ]);
         exit;
     }
-    error_log('ERRO CRÍTICO: Variáveis não configuradas: ' . implode(', ', $missing_vars));
+    error_log('ERRO CRÍTICO: GROQ_API_KEY não configurada');
 }
 
 // Configurações do Sistema
 define('AGENTS_FOLDER', __DIR__ . '/agentes/');
-define('APP_NAME', loadEnvVar('APP_NAME', 'Agentes One-Shot'));
-define('APP_VERSION', loadEnvVar('APP_VERSION', '2.0'));
 
 // Configurações de Segurança
 define('MAX_REQUEST_SIZE', intval(loadEnvVar('MAX_REQUEST_SIZE', '1048576')));
