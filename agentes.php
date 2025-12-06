@@ -154,6 +154,12 @@ function executeAgent($id, $fieldValues = []) {
         // Fazer chamada para Open Router API
         $response = callOpenRouterAPI($finalPrompt);
 
+        // Log completo da resposta da API para debugging
+        error_log("=== API RESPONSE DEBUG ===");
+        error_log("HTTP Code: " . $httpCode);
+        error_log("cURL Error: " . $error);
+        error_log("Raw Response: " . $response);
+
         return $response;
 
     } catch (Exception $e) {
@@ -183,7 +189,11 @@ function callOpenRouterAPI($prompt) {
                 ]
             ],
             'max_tokens' => 4000,
-            'temperature' => 0.7
+            'temperature' => 0.7,
+            'reasoning' => [
+                'enabled' => false,
+                'max_tokens' => 1000
+            ]
         ];
 
         $ch = curl_init($apiUrl);
@@ -202,6 +212,20 @@ function callOpenRouterAPI($prompt) {
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $error = curl_error($ch);
+
+        // Log completo para debugging - capturar tudo o que vem da API
+        error_log("=== OPENROUTER API COMPLETE DEBUG ===");
+        error_log("Request URL: " . $apiUrl);
+        error_log("Request Headers: " . json_encode([
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json',
+            'HTTP-Referer: ' . (isset($_SERVER['HTTP_HOST']) ? 'https://' . $_SERVER['HTTP_HOST'] : ''),
+            'X-Title: Agentes One-Shot v2.0'
+        ]));
+        error_log("Request Body: " . json_encode($postData));
+        error_log("Response HTTP Code: " . $httpCode);
+        error_log("Response cURL Error: " . $error);
+        error_log("Raw Response: " . $response);
         curl_close($ch);
 
         if ($error) {

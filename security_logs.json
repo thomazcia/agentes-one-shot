@@ -445,5 +445,75 @@
             "agent_id": "email-marketing",
             "field_count": 7
         }
+    },
+    {
+        "timestamp": "2025-11-27 17:05:12",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-27 17:13:10",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-11-27 17:18:30",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-11-27 17:18:49",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-11-27 17:21:03",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-27 17:22:22",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-11-27 17:27:22",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
     }
 ]

@@ -120,7 +120,7 @@ function createFieldHtml(field) {
     const required = field.required ? 'required' : '';
     let fieldHtml = `
         <div class="mb-3">
-            <label for="${field.label}" class="form-label">${escapeHtml(field.label)} ${field.required ? '<span class="text-danger">*</span>' : ''}</label>`;
+            <label for="${field.label}" class="form-label">${escapeHtml(field.label)}${field.required ? '<span class="text-danger">*</span>' : ''}</label>`;
 
     switch(field.type) {
         case 'select':
@@ -190,7 +190,17 @@ async function executeCurrentAgent() {
 function displayResponse(response) {
     hideLoading();
     let cleanedResponse = response.trim();
-    // Basic cleaning, can be improved
+    // Remove espaços e caracteres invisíveis no início
+    cleanedResponse = cleanedResponse.replace(/^[\u200A\u202D\u202E\u202F]+/, '');
+
+    // Remove espaços no início de cada linha
+    const lines = cleanedResponse.split('\n');
+    const cleanedLines = lines.map(line => {
+        // Remove espaços em branco no início de cada linha
+        return line.replace(/^[\s\t]+/, '');
+    });
+
+    cleanedResponse = cleanedLines.join('\n');
     cleanedResponse = cleanedResponse.replace(/^[\u202A\u202D\u202E\u202C]+/, '');
     
     // Preserve line breaks by replacing \n with <br>
