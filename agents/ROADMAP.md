@@ -1,12 +1,11 @@
 # ROADMAP - Agentes One-Shot v2.0+
 
 Roadmap de desenvolvimento com funcionalidades futuras organizadas por prioridade e complexidade.
+RD BASE agentes: https://conteudo.rdstationmentoria.com.br/copywriting
 
 ## 🚀 Próxima Versão (v2.1) - High Priority
 
 ### 📊 Ajustes visuais e acesso admin/teste agents  
-- [ ] **Ajustes visuais**  
-  - [ ] Trocar css bootstrap para https://ui.shadcn.com/  
 - [x] **Acesso admin/teste agentes**  
   - [x] Adicionar parâmetro na url ex: site.com/?sys=corps para exibir botões administrativos  
   - [x] Apresentar agentes (arquivos) que estão em modo de testes  

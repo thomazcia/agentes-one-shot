@@ -57,6 +57,7 @@ agentes-one-shot/
 │   ├── 📄 blog-post-generator.php  # Agente: Posts para Blog
 │   ├── 📄 email-marketing.php      # Agente: E-mails Marketing
 │   ├── 📄 contador-piada.php       # Agente: Contador de Piadas
+│   ├── 📄 ideias-titulos-post.php  # Agente: Ideias de Títulos de Post
 │   └── 📄 [seus-agentes].php       # Seus agentes personalizados
 ├── 📁 agents/                      # Documentação para desenvolvedores
 │   ├── 📄 ROADMAP.md               # Roadmap de desenvolvimento v2.1+
@@ -113,6 +114,7 @@ O sistema v2.0+ possui URLs amigáveis para acesso direto aos agentes:
 - **Contador de Piadas**: `http://seuservidor.com/agentes-one-shot/contador-piada`
 - **Gerador de Blog**: `http://seuservidor.com/agentes-one-shot/blog-post-generator`
 - **E-mails Marketing**: `http://seuservidor.com/agentes-one-shot/email-marketing`
+- **Ideias de Títulos**: `http://seuservidor.com/agentes-one-shot/ideias-titulos-post`
 
 ### Como Funciona:
 - **Produção (.htaccess)**: Servidores Apache usam rewrite rules automaticamente
@@ -346,6 +348,12 @@ composer --version
    - Gera piadas personalizadas
    - Campos: Tema, Estilo, Nível de humor
    - Categoria: Entretenimento
+
+4. **📝 Ideias de Títulos de Post**
+   - Gera títulos criativos e chamativos para posts
+   - Campos: Assunto (obrigatório), Público-alvo (opcional)
+   - Categoria: Marketing
+   - Funcionalidades: 10 títulos com explicações e dicas bônus
 
 ### Criar Novos Agentes
 
