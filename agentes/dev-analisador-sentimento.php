@@ -14,19 +14,7 @@ return [
     'status_public' => 'dev', // 'publico' ou 'dev' - controle de visibilidade
 
     // Configurações do Prompt
-    'prompt' => 'Analise o sentimento do seguinte texto: [texto]
-
-CLASSIFICAÇÃO:
-- Positivo: Se expressa emoções boas, satisfação, otimismo
-- Negativo: Se expressa emoções ruins, insatisfação, pessimismo
-- Neutro: Se é informativo, objetivo, sem emoções claras
-
-FORMATO:
-Sentimento: [POSITIVO/NEGATIVO/NEUTRO]
-Confiança: [ALTA/MÉDIA/BAIXA]
-Análise: [breve explicação do porquê]
-
-Texto analisado: [texto]',
+    'prompt' => 'Analise o sentimento do seguinte texto: [texto]\n\nCLASSIFICAÇÃO:\n- Positivo: Se expressa emoções boas, satisfação, otimismo\n- Negativo: Se expressa emoções ruins, insatisfação, pessimismo\n- Neutro: Se é informativo, objetivo, sem emoções claras\n\nFORMATO:\nSentimento: [POSITIVO/NEGATIVO/NEUTRO]\nConfiança: [ALTA/MÉDIA/BAIXA]\nAnálise: [breve explicação do porquê]\n\nTexto analisado: [texto]',
 
     // Campos do Formulário
     'fields' => [

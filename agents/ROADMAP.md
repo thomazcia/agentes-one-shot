@@ -1,9 +1,9 @@
-# ROADMAP - Agentes One-Shot v2.0+
+# ROADMAP - Agentes One-Shot v2.1+
 
 Roadmap de desenvolvimento com funcionalidades futuras organizadas por prioridade e complexidade.
 RD BASE agentes: https://conteudo.rdstationmentoria.com.br/copywriting
 
-## 🚀 Próxima Versão (v2.1) - High Priority
+## ✅ Versão (v2.1) - IMPLEMENTADA
 
 ### 📊 Ajustes visuais e acesso admin/teste agents  
 - [x] **Acesso admin/teste agentes**  
@@ -11,18 +11,27 @@ RD BASE agentes: https://conteudo.rdstationmentoria.com.br/copywriting
   - [x] Apresentar agentes (arquivos) que estão em modo de testes  
 - [x] **URLs exclusivas**
   - [x] Para cada agente, existir uma url específica para acesso rápido e direto
-  - [x] Remover a extensão .php dos arquivos/urls  
+  - [x] Remover a extensão .php dos arquivos/urls
+- [x] **Correção de espaços em respostas**
+  - [x] Resolvido problema de espaços visuais no início das respostas dos agentes
+  - [x] Otimização de template strings em JavaScript para evitar quebras de linha
+  - [x] Ajustes de CSS para renderização sem espaços extras
+- [x] **Novo Agente: "Ideias de Títulos de Post"**
+  - [x] Agente para criação de títulos criativos e chamativos
+  - [x] Campo "Assunto" obrigatório e "Público-alvo" opcional
+  - [x] Integração completa com sistema de agentes existente
+- [x] **Melhorias de Performance**
+  - [x] Otimizações no sistema de processamento de respostas
 
-## 🚀 Versão (v2.1.1)
+## 🚀 Versão (v2.1.1) - Planejada
 
-### 📊 Correções
-- [ ] **Correção da tag do agente**
+### 📊 Correções Pendentes
+- [ ] **Correção da tag com acentuação**
   - [ ] Tag com acentuação é apresentado sem acentuação, exemplo: "conteúdo" é apresentado como "conteudo", acento no ú.
-- [ ] **Correção de espaço do retorno da API**
-  - [ ] Remover espaço vazio inicial  
-  - [ ] Remover markdwon OU implementar visualização correta de markdown  
+- [ ] **Implementação de Markdown**
+  - [ ] Implementar visualização correta de markdown nas respostas
 - [ ] **Copyright**
-  - [ ] Acrescentar abxio de tudo, um footer em todas as páginas escrito "NOME DA APLICAÇÃO VERSÃO - Thomaz Cia / Lampejos". solicitar esclarecimentos antes de executar.
+  - [ ] Acrescentar footer em todas as páginas escrito "NOME DA APLICAÇÃO VERSÃO - Thomaz Cia / Lampejos". solicitar esclarecimentos antes de executar.
 
 ## 🚀 Versão (v2.2)
 
@@ -41,13 +50,11 @@ RD BASE agentes: https://conteudo.rdstationmentoria.com.br/copywriting
 
 ### 🎨 Melhorias na Interface
 - [ ] **Dark Mode Toggle**
-  - [ ] Switch para tema claro/escuro
+  - [ ] Switch para tema claro/escuro / Otimização de cores para modo escuro
   - [ ] Persistência da preferência do usuário
-  - [ ] Otimização de cores para modo escuro
 
 - [ ] **Advanced Agent Cards**
   - [ ] Cards animados com hover effects
-  - [ ] Indicador de "último usado"
   - [ ] Agentes favoritos (estrela)
   - [ ] Search/filter de agentes
 

@@ -1,8 +1,14 @@
-# Agentes One-Shot v2.0
+# Agentes One-Shot v2.1
 
 Sistema avançado de gestão de agentes de IA com integração segura com **Groq API** e arquitetura completamente refatorada para produção.
 
-## 🆕 Versão 2.0 - Grandes Novidades
+## 🆕 Versão 2.1 - Correções e Melhorias
+
+- ✅ **Correção de Espaços em Respostas**: Resolvido problema de espaços visuais no início das respostas dos agentes
+- ✅ **Otimização de Template Strings**: Corrigidas quebras de linha em JavaScript que geravam espaços desnecessários
+- ✅ **Ajustes de Layout**: Melhorias no CSS para renderização sem espaços extras
+- ✅ **Novo Agente**: "Ideias de Títulos de Post" para criação de títulos criativos
+- ✅ **Melhorias de Performance**: Otimizações no sistema de processamento de respostas
 
 - ✅ **Migração para Groq API**: Mais rápido e estável que Open Router
 - ✅ **Sistema de Fallback de Modelos**: Troca automática entre modelos disponíveis
@@ -474,4 +480,4 @@ Este projeto é open-source. Sinta-se à vontade para:
 
 ---
 
-**Versão**: 2.0 | **Status**: Production-Ready | **API**: Groq | **Última Atualização**: 2024
+**Versão**: 2.1 | **Status**: Production-Ready | **API**: Groq | **Última Atualização**: 2024

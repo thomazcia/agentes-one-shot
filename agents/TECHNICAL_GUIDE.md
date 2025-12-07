@@ -1,4 +1,4 @@
-# Guia Técnico - Agentes One-Shot v2.0
+# Guia Técnico - Agentes One-Shot v2.1
 
 ## 🏗️ Arquitetura do Sistema
 

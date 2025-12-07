@@ -2,6 +2,14 @@
 // Dashboard de status dos modelos
 require_once 'config.php';
 require_once 'models.php';
+
+// Detectar modo admin - se não tiver parâmetro sys=corps, redireciona para página inicial
+if (!isset($_GET['sys']) || $_GET['sys'] !== 'corps') {
+    header('Location: /');
+    exit();
+}
+
+$isAdminMode = true; // Se chegou aqui, está em modo admin
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -12,6 +20,12 @@ require_once 'models.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
+        .navbar-custom {
+            background-color: #fff;
+            border-bottom: 1px solid #dee2e6;
+            box-shadow: 0 2px 4px rgba(0,0,0,.08);
+        }
+
         .model-card {
             transition: all 0.3s ease;
         }
@@ -28,9 +42,45 @@ require_once 'models.php';
         .test-loading {
             display: none;
         }
+
+        /* Admin Button Styles */
+        .btn-admin {
+            border-color: #dc3545 !important;
+            color: #dc3545 !important;
+            font-weight: 500;
+        }
+
+        .btn-admin:hover {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Fix dropdown overflow */
+        .dropdown-menu {
+            min-width: 250px;
+            max-width: 300px;
+        }
+
+        .dropdown-menu-admin {
+            right: 0;
+            left: unset !important;
+        }
+
+        .version-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body class="bg-light">
+
+    <?php include '_inc/_header-nav.php'; // Adiciona o NAV Header ?>
+
     <div class="container py-4">
         <div class="row mb-4">
             <div class="col-md-12">
@@ -199,7 +249,7 @@ require_once 'models.php';
                             Log de Testes
                         </h5>
                         <div id="testLog" class="bg-dark text-light p-3 rounded" style="font-family: monospace; font-size: 0.875rem; max-height: 300px; overflow-y: auto;">
-                            <div class="text-muted">Aguardando testes...</div>
+                            <div class="text-warning">Aguardando testes...</div>
                         </div>
                     </div>
                 </div>
@@ -207,7 +257,9 @@ require_once 'models.php';
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         // Função para testar um modelo específico
         async function testModel(modelId, index) {
@@ -270,7 +322,7 @@ require_once 'models.php';
             const log = document.getElementById('testLog');
             const time = new Date().toLocaleTimeString();
             const entry = document.createElement('div');
-            entry.innerHTML = `<span class="text-muted">[${time}]</span> ${message}`;
+            entry.innerHTML = `<span class="text-warning">[${time}]</span> ${message}`;
             log.appendChild(entry);
             log.scrollTop = log.scrollHeight;
         }

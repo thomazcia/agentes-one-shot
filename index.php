@@ -236,35 +236,7 @@ if (isset($_GET['agent'])) {
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="/">
-                <i class="bi bi-robot me-2" style="color: #667eea;"></i>
-                <strong><?php echo getConfig('app_name'); ?></strong>
-                <span class="version-badge ms-2">v<?php echo getConfig('app_version'); ?></span>
-            </a>
-            <div class="d-flex align-items-center">
-                <?php if ($isAdminMode): ?>
-                <div class="dropdown">
-                    <button class="btn btn-admin btn-sm dropdown-toggle"
-                            type="button" id="adminDropdown" data-bs-toggle="dropdown">
-                        <i class="bi bi-shield-lock me-1"></i>Visão ADMIN
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-admin">
-                        <li><a class="dropdown-item" href="/model-status.php?sys=corps">
-                            <i class="bi bi-cpu me-2"></i>Model Status
-                        </a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" onclick="showDevAgents()">
-                            <i class="bi bi-code-square me-2"></i>Agentes em Desenvolvimento
-                        </a></li>
-                    </ul>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </nav>
+    <?php include '_inc/_header-nav.php'; // Adiciona o NAV Header ?>
 
     <!-- Agents List View -->
     <div id="agents-list-view" class="container mt-4">
@@ -293,7 +265,13 @@ if (isset($_GET['agent'])) {
             <!-- Back Button -->
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn back-btn" onclick="window.location.href='/'">
+                    <?php
+                    $backUrl = '/';
+                    if (isset($_GET['sys']) && $_GET['sys'] === 'corps') {
+                        $backUrl = '/?sys=corps';
+                    }
+                    ?>
+                    <button class="btn back-btn" onclick="window.location.href='<?php echo $backUrl; ?>'">
                         <i class="bi bi-arrow-left me-2"></i>Voltar para Agentes
                     </button>
                 </div>
