@@ -1,6 +1,27 @@
 <?php
 require_once 'config.php';
 require_once 'agentes.php';
+
+// Detectar modo admin
+$isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'corps';
+
+// Handle direct agent URLs via query parameter (set by router)
+$directAgent = null;
+if (isset($_GET['agent'])) {
+    $agentSlug = sanitizeInput($_GET['agent']);
+
+    // Se estiver em modo admin, precisamos obter TODOS os agentes inclusive DEV
+    // Para isso, passamos o parâmetro sys=corps para a função getAgents
+    $agentes = getAgents();
+
+    // Find agent by URL
+    foreach ($agentes as $agente) {
+        if (isset($agente['url']) && $agente['url'] === $agentSlug) {
+            $directAgent = $agente;
+            break;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -182,19 +203,73 @@ require_once 'agentes.php';
             margin-bottom: 12px;
             background-color: #f8f9fa;
         }
+
+        /* Admin Button Styles */
+        .btn-admin {
+            border-color: #dc3545 !important;
+            color: #dc3545 !important;
+            font-weight: 500;
+        }
+
+        .btn-admin:hover {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Fix dropdown overflow */
+        .dropdown-menu {
+            min-width: 250px;
+            max-width: 300px;
+        }
+
+        .dropdown-menu-admin {
+            right: 0;
+            left: unset !important;
+        }
+
+        /* Dev Agent Card Style */
+        .agent-card.dev {
+            border: 2px dashed #9C27B0;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f3e5f5 100%);
+        }
+
+        .agent-card.dev .agent-icon {
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+        }
+
+        .dev-badge {
+            background: #9C27B0 !important;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="#" onclick="showAgentsList()">
+            <a class="navbar-brand d-flex align-items-center" href="/">
                 <i class="bi bi-robot me-2" style="color: #667eea;"></i>
                 <strong><?php echo getConfig('app_name'); ?></strong>
                 <span class="version-badge ms-2">v<?php echo getConfig('app_version'); ?></span>
             </a>
             <div class="d-flex align-items-center">
- 
+                <?php if ($isAdminMode): ?>
+                <div class="dropdown">
+                    <button class="btn btn-admin btn-sm dropdown-toggle"
+                            type="button" id="adminDropdown" data-bs-toggle="dropdown">
+                        <i class="bi bi-shield-lock me-1"></i>Visão ADMIN
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-admin">
+                        <li><a class="dropdown-item" href="/model-status.php?sys=corps">
+                            <i class="bi bi-cpu me-2"></i>Model Status
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="showDevAgents()">
+                            <i class="bi bi-code-square me-2"></i>Agentes em Desenvolvimento
+                        </a></li>
+                    </ul>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -226,7 +301,7 @@ require_once 'agentes.php';
             <!-- Back Button -->
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn back-btn" onclick="showAgentsList()">
+                    <button class="btn back-btn" onclick="window.location.href='/'">
                         <i class="bi bi-arrow-left me-2"></i>Voltar para Agentes
                     </button>
                 </div>
@@ -289,6 +364,19 @@ require_once 'agentes.php';
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php if ($directAgent): ?>
+    <script>
+        // Agente direto encontrado via URL
+        window.directAgent = <?php echo json_encode($directAgent); ?>;
+    </script>
+    <?php endif; ?>
+
+    <script>
+        // Configurações do sistema
+        window.isAdminMode = <?php echo json_encode($isAdminMode); ?>;
+    </script>
+
     <!-- Custom JS -->
     <script src="app.js"></script>
 </body>

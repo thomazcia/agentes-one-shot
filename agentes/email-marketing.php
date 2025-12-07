@@ -8,8 +8,10 @@ return [
     // Informações Básicas
     'name' => 'Gerador de E-mails Marketing',
     'description' => 'Cria e-mails persuasivos para campanhas de marketing e vendas',
+    'url' => 'email-marketing', // URL amigável para acesso direto
     'icon' => 'bi-envelope-heart',
     'color' => '#4ECDC4',
+    'status_public' => 'publico', // 'publico' ou 'dev'
 
     // Configurações do Prompt
     'prompt' => 'Crie um e-mail de marketing persuasivo com as seguintes características:
@@ -127,7 +129,7 @@ Aqui vem todo o conteúdo do e-mail gerado
     'category' => 'marketing',
     'tags' => ['email', 'marketing', 'vendas', 'comunicação'],
     'difficulty' => 'iniciante',
-    'estimated_time' => '3-5 min',
+    'estimated_time' => '1-2 min',
     'version' => '1.0'
 ];
 ?>

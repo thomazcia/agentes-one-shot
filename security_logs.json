@@ -585,5 +585,127 @@
             "agent_id": "contador-piada",
             "field_count": 1
         }
+    },
+    {
+        "timestamp": "2025-12-06 18:51:26",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "API_ERROR",
+        "details": {
+            "message": "ID do agente inv\u00e1lido",
+            "action": "get_agent",
+            "trace": "#0 C:\\ThomazCia\\Website_novo\\agentes-one-shot\\router.php(39): include()\n#1 {main}"
+        }
+    },
+    {
+        "timestamp": "2025-12-06 18:53:44",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-06 18:58:34",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 15:36:18",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "API_ERROR",
+        "details": {
+            "message": "A\u00e7\u00e3o inv\u00e1lida: ",
+            "action": null,
+            "trace": "#0 C:\\ThomazCia\\Website_novo\\agentes-one-shot\\router.php(39): include()\n#1 {main}"
+        }
+    },
+    {
+        "timestamp": "2025-12-07 15:37:47",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "_dev-analisador-sentimento",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:14:30",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:14:43",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:19:29",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:19:42",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:20:07",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:25:11",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-07 16:25:35",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "dev-analisador-sentimento",
+            "field_count": 1
+        }
     }
 ]

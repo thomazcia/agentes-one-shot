@@ -14,6 +14,7 @@ Sistema avançado de gestão de agentes de IA com integração segura com **Groq
 - ✅ **Sistema de Segurança Reforçado**: Múltiplas camadas de proteção com CSP e rate limiting
 - ✅ **Interface Responsiva Moderna**: Design aprimorado com Bootstrap 5
 - ✅ **Sistema de Badges Avançado**: Exibe categoria, dificuldade e tempo estimado
+- ✅ **URLs Exclusivas Amigáveis**: Acesso direto via URLs limpas (/contador-piada, /blog-post-generator)
 - ✅ **Debug e Monitoramento**: Logs detalhados e sistema de segurança completo
 
 ## 🚀 Características
@@ -49,7 +50,8 @@ agentes-one-shot/
 ├── 📄 .env                         # Apenas variáveis sensíveis (API keys)
 ├── 📄 .env.example                 # Template de variáveis de ambiente
 ├── 📄 .gitignore                   # Arquivos ignorados pelo Git
-├── 📄 .htaccess                    # Configurações Apache (CSP, headers)
+├── 📄 .htaccess                    # Configurações Apache (CSP, headers, URLs)
+├── 📄 router.php                    # Router PHP para desenvolvimento local
 ├── 📄 agent-template.php           # Template para criar novos agentes
 ├── 📁 agentes/                     # Pasta com arquivos dos agentes
 │   ├── 📄 blog-post-generator.php  # Agente: Posts para Blog
@@ -57,6 +59,7 @@ agentes-one-shot/
 │   ├── 📄 contador-piada.php       # Agente: Contador de Piadas
 │   └── 📄 [seus-agentes].php       # Seus agentes personalizados
 ├── 📁 agents/                      # Documentação para desenvolvedores
+│   ├── 📄 ROADMAP.md               # Roadmap de desenvolvimento v2.1+
 │   ├── 📄 COMO-CRIAR-AGENTES.md    # Guia para criar agentes
 │   ├── 📄 TECHNICAL_GUIDE.md       # Especificações técnicas
 │   ├── 📄 SECURITY_REPORT.md       # Medidas de segurança
@@ -100,6 +103,23 @@ agentes-one-shot/
 
 4. **Acesse o sistema**:
    Abra no navegador: `http://seuservidor.com/agentes-one-shot/`
+
+## 🌐 URLs Exclusivas
+
+O sistema v2.0+ possui URLs amigáveis para acesso direto aos agentes:
+
+### URLs Disponíveis:
+- **Lista de Agentes**: `http://seuservidor.com/agentes-one-shot/`
+- **Contador de Piadas**: `http://seuservidor.com/agentes-one-shot/contador-piada`
+- **Gerador de Blog**: `http://seuservidor.com/agentes-one-shot/blog-post-generator`
+- **E-mails Marketing**: `http://seuservidor.com/agentes-one-shot/email-marketing`
+
+### Como Funciona:
+- **Produção (.htaccess)**: Servidores Apache usam rewrite rules automaticamente
+- **Desenvolvimento (router.php)**: Servidor PHP embutido usa `php -S localhost:8000 router.php`
+
+### Criar Novas URLs:
+Adicione `'url' => 'sua-url-aqui'` no array de configuração do agente PHP.
 
 ## 🔐 Variáveis de Ambiente
 
@@ -442,6 +462,7 @@ Este projeto é open-source. Sinta-se à vontade para:
 - 📧 Email: [seu-email@dominio.com]
 - 🐛 Issues: [GitHub Issues](https://github.com/seu-usuario/agentes-one-shot/issues)
 - 📖 Documentação: Ver arquivos na pasta `/agents/`
+- 🛣️ **Roadmap**: `agents/ROADMAP.md` - Veja as próximas funcionalidades planejadas
 
 ---
 
