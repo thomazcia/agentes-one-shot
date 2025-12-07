@@ -36,32 +36,70 @@ async function loadAgents() {
     }
 
     try {
+        // Constrói os parâmetros da requisição
+        const params = { action: 'get_agents' };
+
+        // Se estiver em modo admin, passa o parâmetro sys=corps
+        if (window.isAdminMode) {
+            params.sys = 'corps';
+        }
+
         const response = await fetch('api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ action: 'get_agents' })
+            body: new URLSearchParams(params)
         });
         const result = await response.json();
 
         const agentsGrid = document.getElementById('agents-grid');
         if (result.success && result.data.length > 0) {
             console.log(`✅ Agentes carregados: ${result.data.length}`);
-            agentsGrid.innerHTML = ''; // Limpa a mensagem de "nenhum agente"
+
+            // Se estiver em modo admin, mostrar seção especial
+            if (result.admin_mode && result.data.some(agent => agent.status_public === 'dev')) {
+                agentsGrid.innerHTML = `
+                    <div class="col-12 mb-4">
+                        <div class="alert alert-danger d-flex align-items-center">
+                            <i class="bi bi-shield-lock me-2"></i>
+                            <div>
+                                <strong>Modo Administrativo:</strong>
+                                Agentes em desenvolvimento (DEV) estão visíveis junto com os agentes públicos.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                agentsGrid.innerHTML = ''; // Limpa a mensagem de "nenhum agente"
+            }
+
             result.data.forEach(agent => {
+                // Verificar se é agente dev para aplicar estilo especial
+                const isDevAgent = agent.status_public === 'dev';
+                const cardClass = isDevAgent ? 'card agent-card dev h-100' : 'card agent-card h-100';
+                const iconStyle = isDevAgent
+                    ? `background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)`
+                    : `background-color: ${agent.color || '#667eea'}`;
+                const devBadge = isDevAgent ? '<span class="badge dev-badge ms-2">DEV</span>' : '';
+                const categoryBadge = isDevAgent
+                    ? '<span class="badge bg-secondary">desenvolvimento</span>'
+                    : `<span class="badge bg-primary">${escapeHtml(agent.category)}</span>`;
+
+                // Constrói URL com parâmetro sys=corps se for agente DEV e estiver em modo admin
+                const agentUrl = (agent.url || agent.id) + (isDevAgent && window.isAdminMode ? '?sys=corps' : '');
+
                 const card = `
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card agent-card h-100" onclick="window.location.href='${agent.url || agent.id}'">
+                        <div class="${cardClass}" href='${agentUrl}' onclick="window.location.href='${agentUrl}'">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
-                                    <div class="agent-icon me-3" style="background-color: ${agent.color || '#667eea'};
-">
-                                        <i class="bi ${agent.icon}"></i>
+                                    <div class="agent-icon me-3" style="${iconStyle}">
+                                        <i class="bi ${agent.icon || 'bi-robot'}"></i>
                                     </div>
                                     <div>
-                                        <h5 class="card-title mb-1">${escapeHtml(agent.name)}</h5>
+                                        <h5 class="card-title mb-1">${escapeHtml(agent.name)}${devBadge}</h5>
                                         <div class="badges-container">
-                                            <span class="badge bg-primary">${escapeHtml(agent.category)}</span>
-                                            <span class="badge bg-success">${escapeHtml(agent.difficulty)}</span>
+                                            ${categoryBadge}
+                                            <span class="badge ${isDevAgent ? 'bg-warning' : 'bg-success'}">${escapeHtml(agent.difficulty)}</span>
                                             <span class="badge bg-info">${escapeHtml(agent.estimated_time)}</span>
                                         </div>
                                     </div>
@@ -253,4 +291,103 @@ function copyResponse() {
     });
 }
 
+// Funções para Admin Mode
+function showDevAgents() {
+    if (!window.isAdminMode) {
+        alert('Acesso negado. Mode administrativo não está ativo.');
+        return;
+    }
+
+    // Carregar apenas agentes em desenvolvimento
+    fetch('api.php?action=get_admin_agents&sys=corps')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Renderizar apenas agentes dev
+                renderAgentsList(data.agents, true);
+            } else {
+                alert('Erro ao carregar agentes em desenvolvimento: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao carregar agentes em desenvolvimento');
+        });
+}
+
+
+function renderAgentsList(agents, isDevMode = false) {
+    const agentsGrid = document.getElementById('agents-grid');
+
+    if (agents.length === 0) {
+        agentsGrid.innerHTML = `
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="bi bi-robot"></i>
+                    <h4>${isDevMode ? 'Nenhum agente em desenvolvimento' : 'Nenhum agente disponível'}</h4>
+                    <p class="text-muted">${isDevMode ? 'Nenhum agente encontrado em modo desenvolvimento.' : 'Nenhum agente foi encontrado.'}</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    // Limpa o grid
+    agentsGrid.innerHTML = '';
+
+    // Se for modo DEV, mostrar alerta informativo
+    if (isDevMode) {
+        agentsGrid.innerHTML = `
+            <div class="col-12 mb-4">
+                <div class="alert alert-danger d-flex align-items-center">
+                    <i class="bi bi-code-square me-2"></i>
+                    <div>
+                        <strong>Agentes em Desenvolvimento:</strong>
+                        Exibindo apenas agentes em modo de desenvolvimento.
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    agents.forEach(agent => {
+        // Verificar se é agente dev para aplicar estilo especial
+        const isDevAgent = agent.status_public === 'dev';
+        const cardClass = isDevAgent ? 'card agent-card dev h-100' : 'card agent-card h-100';
+        const iconStyle = isDevAgent
+            ? `background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)`
+            : `background-color: ${agent.color || '#667eea'}`;
+        const devBadge = isDevAgent ? '<span class="badge dev-badge ms-2">DEV</span>' : '';
+        const categoryBadge = isDevAgent
+            ? '<span class="badge bg-secondary">desenvolvimento</span>'
+            : `<span class="badge bg-primary">${escapeHtml(agent.category || 'geral')}</span>`;
+
+        // Constrói URL com parâmetro sys=corps se for agente DEV e estiver em modo admin
+        const agentUrl = (agent.url || agent.id) + (isDevAgent && window.isAdminMode ? '?sys=corps' : '');
+
+        const card = `
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="${cardClass}" href='${agentUrl}' onclick="window.location.href='${agentUrl}'">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="agent-icon me-3" style="${iconStyle}">
+                                <i class="bi ${agent.icon || 'bi-robot'}"></i>
+                            </div>
+                            <div>
+                                <h5 class="card-title mb-1">${escapeHtml(agent.name)}${devBadge}</h5>
+                                <div class="badges-container">
+                                    ${categoryBadge}
+                                    <span class="badge ${isDevAgent ? 'bg-warning' : 'bg-success'}">${escapeHtml(agent.difficulty || 'iniciante')}</span>
+                                    <span class="badge bg-info">${escapeHtml(agent.estimated_time || '1 min')}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text">${escapeHtml(agent.description)}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        agentsGrid.innerHTML += card;
+    });
+}
  

@@ -48,6 +48,21 @@ if (empty($path) || $path === 'index.php') {
 
 // Verifica se é um agente
 require_once __DIR__ . '/agentes.php';
+
+// Preserva o parâmetro sys se existir na URL original
+if (isset($_GET['sys'])) {
+    $_SERVER['QUERY_STRING'] = preg_replace('/(^|&)sys=[^&]*/', '$1', $_SERVER['QUERY_STRING']);
+    $_SERVER['QUERY_STRING'] = ltrim($_SERVER['QUERY_STRING'], '&');
+}
+
+// Se o parâmetro sys estiver na URL original, transfere para GET
+if (isset($_GET['sys']) || (isset($parsedUrl['query']) && strpos($parsedUrl['query'], 'sys=') !== false)) {
+    parse_str($parsedUrl['query'] ?? '', $queryParams);
+    if (isset($queryParams['sys'])) {
+        $_GET['sys'] = $queryParams['sys'];
+    }
+}
+
 $agentes = getAgents();
 
 foreach ($agentes as $agente) {

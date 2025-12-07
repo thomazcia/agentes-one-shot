@@ -2,10 +2,16 @@
 require_once 'config.php';
 require_once 'agentes.php';
 
+// Detectar modo admin
+$isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'corps';
+
 // Handle direct agent URLs via query parameter (set by router)
 $directAgent = null;
 if (isset($_GET['agent'])) {
     $agentSlug = sanitizeInput($_GET['agent']);
+
+    // Se estiver em modo admin, precisamos obter TODOS os agentes inclusive DEV
+    // Para isso, passamos o parâmetro sys=corps para a função getAgents
     $agentes = getAgents();
 
     // Find agent by URL
@@ -197,6 +203,44 @@ if (isset($_GET['agent'])) {
             margin-bottom: 12px;
             background-color: #f8f9fa;
         }
+
+        /* Admin Button Styles */
+        .btn-admin {
+            border-color: #dc3545 !important;
+            color: #dc3545 !important;
+            font-weight: 500;
+        }
+
+        .btn-admin:hover {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Fix dropdown overflow */
+        .dropdown-menu {
+            min-width: 250px;
+            max-width: 300px;
+        }
+
+        .dropdown-menu-admin {
+            right: 0;
+            left: unset !important;
+        }
+
+        /* Dev Agent Card Style */
+        .agent-card.dev {
+            border: 2px dashed #9C27B0;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f3e5f5 100%);
+        }
+
+        .agent-card.dev .agent-icon {
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+        }
+
+        .dev-badge {
+            background: #9C27B0 !important;
+        }
     </style>
 </head>
 <body>
@@ -209,7 +253,23 @@ if (isset($_GET['agent'])) {
                 <span class="version-badge ms-2">v<?php echo getConfig('app_version'); ?></span>
             </a>
             <div class="d-flex align-items-center">
- 
+                <?php if ($isAdminMode): ?>
+                <div class="dropdown">
+                    <button class="btn btn-admin btn-sm dropdown-toggle"
+                            type="button" id="adminDropdown" data-bs-toggle="dropdown">
+                        <i class="bi bi-shield-lock me-1"></i>Visão ADMIN
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-admin">
+                        <li><a class="dropdown-item" href="/model-status.php?sys=corps">
+                            <i class="bi bi-cpu me-2"></i>Model Status
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="showDevAgents()">
+                            <i class="bi bi-code-square me-2"></i>Agentes em Desenvolvimento
+                        </a></li>
+                    </ul>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -311,6 +371,11 @@ if (isset($_GET['agent'])) {
         window.directAgent = <?php echo json_encode($directAgent); ?>;
     </script>
     <?php endif; ?>
+
+    <script>
+        // Configurações do sistema
+        window.isAdminMode = <?php echo json_encode($isAdminMode); ?>;
+    </script>
 
     <!-- Custom JS -->
     <script src="app.js"></script>

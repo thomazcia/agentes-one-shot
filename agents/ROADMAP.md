@@ -7,21 +7,23 @@ Roadmap de desenvolvimento com funcionalidades futuras organizadas por prioridad
 ### 📊 Ajustes visuais e acesso admin/teste agents  
 - [ ] **Ajustes visuais**  
   - [ ] Trocar css bootstrap para https://ui.shadcn.com/  
-- [ ] **Acesso admin/teste agentes**  
-  - [ ] Adicionar parâmetro na url ex: site.com/?sys=corps para exibir botões administrativos  
-  - [ ] Apresentar agentes (arquivos) que estão em modo de testes  
+- [x] **Acesso admin/teste agentes**  
+  - [x] Adicionar parâmetro na url ex: site.com/?sys=corps para exibir botões administrativos  
+  - [x] Apresentar agentes (arquivos) que estão em modo de testes  
 - [x] **URLs exclusivas**
   - [x] Para cada agente, existir uma url específica para acesso rápido e direto
   - [x] Remover a extensão .php dos arquivos/urls  
 
 ## 🚀 Versão (v2.1.1)
 
-### 📊 Correção retorno API Provider
+### 📊 Correções
+- [ ] **Correção da tag do agente**
+  - [ ] Tag com acentuação é apresentado sem acentuação, exemplo: "conteúdo" é apresentado como "conteudo", acento no ú.
 - [ ] **Correção de espaço do retorno da API**
   - [ ] Remover espaço vazio inicial  
   - [ ] Remover markdwon OU implementar visualização correta de markdown  
 - [ ] **Copyright**
-  - [ ] Acrescentar abxio de tudo, um footer em todas as páginas escrito "NOME DA APLICAÇÃO VERSÃO - Thomaz Cia / Lampejos". solciitar esclarecimentos antes de executar.
+  - [ ] Acrescentar abxio de tudo, um footer em todas as páginas escrito "NOME DA APLICAÇÃO VERSÃO - Thomaz Cia / Lampejos". solicitar esclarecimentos antes de executar.
 
 ## 🚀 Versão (v2.2)
 

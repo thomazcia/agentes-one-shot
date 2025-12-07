@@ -32,7 +32,8 @@ try {
             $agents = getAgents();
             echo json_encode([
                 'success' => true,
-                'data' => $agents
+                'data' => $agents,
+                'admin_mode' => isset($_GET['sys']) && $_GET['sys'] === 'corps' || isset($_POST['sys']) && $_POST['sys'] === 'corps'
             ]);
             break;
 
@@ -110,7 +111,23 @@ try {
         // export_agents, import_agents e clear_all removidos
         // Agentes agora são gerenciados como arquivos PHP
 
-      case 'get_config':
+        case 'get_admin_agents':
+            // Verificar se está em modo admin
+            $isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'corps';
+            if (!$isAdminMode) {
+                throw new Exception('Acesso negado');
+            }
+
+            // Obter agentes em desenvolvimento
+            $devAgents = getAdminAgents();
+            echo json_encode([
+                'success' => true,
+                'agents' => $devAgents,
+                'total' => count($devAgents)
+            ]);
+            break;
+
+        case 'get_config':
             // Obter configurações (não sensíveis)
             echo json_encode([
                 'success' => true,

@@ -11,6 +11,7 @@ return [
     'url' => 'email-marketing', // URL amigável para acesso direto
     'icon' => 'bi-envelope-heart',
     'color' => '#4ECDC4',
+    'status_public' => 'publico', // 'publico' ou 'dev'
 
     // Configurações do Prompt
     'prompt' => 'Crie um e-mail de marketing persuasivo com as seguintes características:

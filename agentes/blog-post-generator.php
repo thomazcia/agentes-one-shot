@@ -11,6 +11,7 @@ return [
     'url' => 'blog-post-generator', // URL amigável para acesso direto
     'icon' => 'bi-journal-text',
     'color' => '#FF6B6B',
+    'status_public' => 'publico', // 'publico' ou 'dev'
 
     // Configurações do Prompt
     'prompt' => 'Crie um artigo completo para blog sobre o tema: [assunto].

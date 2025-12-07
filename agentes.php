@@ -8,8 +8,8 @@ require_once 'models.php';
  */
 
 /**
- * Obter todos os agentes
- * Lê os arquivos PHP da pasta /agentes/
+ * Obter agentes (públicos ou todos se em modo admin)
+ * Lê os arquivos PHP da pasta /agentes/ filtrando por status_public
  */
 function getAgents() {
     $agents = [];
@@ -19,24 +19,33 @@ function getAgents() {
         return $agents;
     }
 
+    // Verificar se está em modo admin (verificar GET ou POST)
+    $sysParam = $_GET['sys'] ?? $_POST['sys'] ?? null;
+    $isAdminMode = $sysParam === 'corps';
+
     // Ler todos os arquivos .php da pasta agentes
     $files = glob($folder . '*.php');
 
     foreach ($files as $file) {
-        // Ignorar arquivos que começam com . ou _
+        // Ignorar arquivos que começam com . (arquivos de sistema)
         $filename = basename($file, '.php');
-        if (strpos($filename, '.') === 0 || strpos($filename, '_') === 0) {
+        if (strpos($filename, '.') === 0) {
             continue;
         }
-
-        // Permitir arquivos que começam com números (como contador-piada.php)
-        // Mas ainda ignorar arquivos que começam com . ou _ no início
 
         try {
             // Incluir o arquivo e obter o array de configuração
             $agentData = include $file;
 
             if (is_array($agentData)) {
+                // Verificar status_public - se não existir, assume 'publico' para compatibilidade
+                $statusPublic = $agentData['status_public'] ?? 'publico';
+
+                // Se não for modo admin, apenas incluir agentes públicos
+                if (!$isAdminMode && $statusPublic !== 'publico') {
+                    continue;
+                }
+
                 // Adicionar ID baseado no nome do arquivo
                 $agentData['id'] = $filename;
                 $agentData['file'] = $file;
@@ -59,6 +68,72 @@ function getAgents() {
     });
 
     return $agents;
+}
+
+/**
+ * Obter TODOS os agentes (inclusive em desenvolvimento)
+ * Usado para interface admin
+ */
+function getAllAgents() {
+    $agents = [];
+    $folder = getConfig('agents_folder');
+
+    if (!file_exists($folder)) {
+        return $agents;
+    }
+
+    // Ler todos os arquivos .php da pasta agentes
+    $files = glob($folder . '*.php');
+
+    foreach ($files as $file) {
+        // Ignorar arquivos que começam com . (arquivos de sistema)
+        $filename = basename($file, '.php');
+        if (strpos($filename, '.') === 0) {
+            continue;
+        }
+
+        try {
+            // Incluir o arquivo e obter o array de configuração
+            $agentData = include $file;
+
+            if (is_array($agentData)) {
+                // Adicionar ID baseado no nome do arquivo
+                $agentData['id'] = $filename;
+                $agentData['file'] = $file;
+
+                // Garantir que existe URL (usar ID como fallback)
+                if (!isset($agentData['url']) || empty($agentData['url'])) {
+                    $agentData['url'] = $filename;
+                }
+
+                // Garantir que existe status_public
+                $agentData['status_public'] = $agentData['status_public'] ?? 'publico';
+
+                $agents[] = $agentData;
+            }
+        } catch (Exception $e) {
+            error_log("Erro ao ler agente {$file}: " . $e->getMessage());
+        }
+    }
+
+    // Ordenar por nome (alfabético)
+    usort($agents, function($a, $b) {
+        return strcasecmp($a['name'] ?? '', $b['name'] ?? '');
+    });
+
+    return $agents;
+}
+
+/**
+ * Obter agentes em desenvolvimento (status_public = 'dev')
+ */
+function getAdminAgents() {
+    $allAgents = getAllAgents();
+    $devAgents = array_filter($allAgents, function($agent) {
+        return ($agent['status_public'] ?? 'publico') === 'dev';
+    });
+
+    return array_values($devAgents);
 }
 
 /**

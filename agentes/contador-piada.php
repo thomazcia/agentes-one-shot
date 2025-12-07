@@ -11,6 +11,7 @@ return [
     'url' => 'contador-piada', // URL amigável para acesso direto
     'icon' => 'bi-emoji-laughing',
     'color' => '#FFD93D',
+    'status_public' => 'publico', // 'publico' ou 'dev'
 
     // Configurações do Prompt
     'prompt' => 'Crie uma piada engraçada sobre o assunto: [assunto].
