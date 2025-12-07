@@ -140,14 +140,6 @@ if (isset($_GET['agent'])) {
             text-indent: 0;
             font-size: 15px;
             color: #333;
-            /* Remove espaços no início do primeiro elemento */
-            margin-top: 0;
-        }
-
-        /* Remove espaços no início do primeiro parágrafo */
-        .response-content .response-content_output > *:first-child {
-            margin-top: 0;
-            padding-top: 0;
         }
 
         .loading-spinner {

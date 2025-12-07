@@ -8,6 +8,41 @@
 require_once __DIR__ . '/config.php';
 
 /**
+ * Remove espaços em branco e caracteres invisíveis do início do texto da API
+ * Versão simples e direta
+ */
+function cleanApiResponseText($text) {
+    if (empty($text)) {
+        return $text;
+    }
+
+    // Abordagem simples: usar trim e depois remover manualmente se ainda houver espaços
+    $cleanedText = ltrim($text);
+
+    // Se ainda começar com espaços, remove caractere por caractere
+    while (preg_match('/^[ \t\r\n\0\x0B\f\x0C]/', $cleanedText)) {
+        $cleanedText = preg_replace('/^[ \t\r\n\0\x0B\f\x0C]+/', '', $cleanedText);
+    }
+
+    // Remove caracteres de controle Unicode no início (0-31)
+    while (mb_strlen($cleanedText, 'UTF-8') > 0) {
+        $first_char = mb_substr($cleanedText, 0, 1, 'UTF-8');
+        $char_code = ord($first_char);
+
+        if ($char_code >= 0 && $char_code <= 31) {
+            $cleanedText = mb_substr($cleanedText, 1, null, 'UTF-8');
+        } else {
+            break;
+        }
+    }
+
+    // Limpeza final
+    $cleanedText = ltrim($cleanedText);
+
+    return $cleanedText;
+}
+
+/**
  * Lista de modelos em ordem de prioridade (do mais preferido para o menos preferido)
  * Apenas modelos disponíveis e verificados na Groq API
  */
@@ -354,6 +389,13 @@ function callGroqAPIWithFallback($prompt, $options = []) {
 
         // Sucesso
         if ($httpCode === 200) {
+            // Limpar espaços em branco no início do texto da resposta
+            if (isset($responseData['choices'][0]['message']['content'])) {
+                $originalText = $responseData['choices'][0]['message']['content'];
+                $cleanedText = cleanApiResponseText($originalText);
+                $responseData['choices'][0]['message']['content'] = $cleanedText;
+            }
+
             return [
                 'success' => true,
                 'data' => $responseData,

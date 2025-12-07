@@ -274,11 +274,7 @@ function displayResponse(response) {
     // Preserve line breaks by replacing \n with <br>
     const formattedResponse = escapeHtml(cleanedResponse).replace(/\n/g, '<br>');
 
-    document.getElementById('response-content').innerHTML = `
-        <div class="response-content_output">
-            ${formattedResponse}
-        </div>
-    `;
+    document.getElementById('response-content').innerHTML = `<div class="response-content_output">${formattedResponse}</div>`;
 }
 
 function copyResponse() {
