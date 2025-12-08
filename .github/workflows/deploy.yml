@@ -1,0 +1,46 @@
+name: Deploy PHP App
+
+on:
+  push:
+    branches:
+      - main   # muda pra branch que você usa pra produção
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # ajusta pra sua versão
+          extensions: mbstring, intl, pdo_mysql
+          coverage: none
+
+      - name: Instalar dependências PHP (Composer)
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      - name: Instalar dependências Node
+        run: |
+          npm install
+          npm run build
+
+      - name: Remover lixo antes do deploy
+        run: |
+          rm -rf node_modules
+          rm -rf tests
+          rm -rf .git
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          protocol: ftps
+          local-dir: .
+          server-dir: /domains/thomazcia.com/public_html/agentes-one-shot/
