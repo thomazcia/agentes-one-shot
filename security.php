@@ -214,7 +214,7 @@ function setSecurityHeaders() {
     header('Referrer-Policy: strict-origin-when-cross-origin');
 
     // Content Security Policy
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://openrouter.ai; img-src 'self' data: https:;");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; img-src 'self' data: https:;");
 
     // HSTS (se for HTTPS)
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {

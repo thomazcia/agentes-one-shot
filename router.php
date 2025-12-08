@@ -46,6 +46,18 @@ if (empty($path) || $path === 'index.php') {
     exit;
 }
 
+// Verifica se é um arquivo PHP específico que deve ser servido diretamente
+$specificPhpFiles = [
+    'model-status.php',
+    'model-status-check-availability.php'
+];
+
+if (in_array($path, $specificPhpFiles) && file_exists(__DIR__ . '/' . $path)) {
+    // Preserva os parâmetros GET
+    include __DIR__ . '/' . $path;
+    exit;
+}
+
 // Verifica se é um agente
 require_once __DIR__ . '/agentes.php';
 
