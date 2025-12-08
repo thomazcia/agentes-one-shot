@@ -24,14 +24,8 @@ jobs:
         run: |
           composer install --no-dev --optimize-autoloader
 
-      - name: Instalar dependências Node
-        run: |
-          npm install
-          npm run build
-
       - name: Remover lixo antes do deploy
         run: |
-          rm -rf node_modules
           rm -rf tests
           rm -rf .git
 
