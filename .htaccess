@@ -119,7 +119,7 @@ AddDefaultCharset UTF-8
 <FilesMatch "\.(php|json|log)$">
     RewriteEngine On
     RewriteCond %{HTTP_REFERER} !^$
-    RewriteCond %{HTTP_REFERER} !^https?://(localhost|127\.0\.0\.1) [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://(localhost|127\.0\.0\.1|thomazcia\.com) [NC]
     RewriteRule ^ - [F]
 </FilesMatch>
 
