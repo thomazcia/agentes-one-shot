@@ -43,18 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if ($currentAgent) {
             // Coletar e validar valores dos campos
             foreach ($currentAgent['fields'] as $field) {
-                $fieldId = $field['label'];
-                $fieldName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $fieldId); // Nome seguro para HTML
+                $fieldLabel = $field['label'];
+                $fieldName = isset($field['name']) ? $field['name'] : preg_replace('/[^a-zA-Z0-9_-]/', '_', $fieldLabel); // Nome seguro para HTML
                 $fieldValue = $_POST[$fieldName] ?? '';
 
                 // Validar campo obrigatório
                 if ($field['required'] && empty($fieldValue)) {
-                    $executionError = "O campo '{$fieldId}' é obrigatório.";
+                    $executionError = "O campo '{$fieldLabel}' é obrigatório.";
                     break;
                 }
 
                 // Sanitizar valor
-                $fieldValues[$fieldId] = sanitizeInput($fieldValue, 'string');
+                $fieldValues[$fieldLabel] = sanitizeInput($fieldValue, 'string');
             }
 
             if (!$executionError) {
@@ -390,10 +390,10 @@ if ($directAgent && !$executionResult) {
                             <div id="agent-fields">
                                 <?php
                                 foreach ($currentAgent['fields'] as $field) {
-                                    $fieldId = $field['label'];
-                                    $fieldName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $fieldId); // Nome seguro para HTML
+                                    $fieldLabel = $field['label'];
+                                    $fieldName = isset($field['name']) ? $field['name'] : preg_replace('/[^a-zA-Z0-9_-]/', '_', $fieldLabel); // Nome seguro para HTML
                                     $required = $field['required'] ? 'required' : '';
-                                    $value = $fieldValues[$fieldId] ?? '';
+                                    $value = $fieldValues[$fieldLabel] ?? '';
                                     ?>
                                     <div class="mb-3">
                                         <label for="<?php echo $fieldName; ?>" class="form-label">

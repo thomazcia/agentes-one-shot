@@ -14,17 +14,17 @@ return [
     'status_public' => 'publico', // 'publico' ou 'dev'
 
     // Configurações do Prompt
-    'prompt' => 'Crie um artigo completo para blog sobre o tema: [assunto].
+    'prompt' => 'Crie um artigo completo para blog sobre o tema: [Assunto].
 
-Público-alvo: [publico_alvo]
-Tom de voz: [tom]
-Objetivo principal: [objetivo]
+Público-alvo: [Público Alvo]
+Tom de voz: [Tom]
+Objetivo principal: [Objetivo]
 
-Palavras-chave para SEO: [palavras_chave]
+Palavras-chave para SEO: [Palavras-chave]
 
-Estrutura solicitada: [estrutura]
+Estrutura solicitada: [Estrutura]
 
-Instruções adicionais: [instrucoes_adicionais]
+Instruções adicionais: [Instruções Adicionais]
 
 IMPORTANTE:
 - Artigo deve ter entre 800-1200 palavras
@@ -38,19 +38,22 @@ IMPORTANTE:
     // Campos do Formulário
     'fields' => [
         [
-            'label' => 'assunto',
+            'label' => 'Assunto',
+            'name' => 'assunto',
             'placeholder' => 'Ex: Marketing de Conteúdo para Pequenas Empresas',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'publico_alvo',
+            'label' => 'Público Alvo',
+            'name' => 'publico_alvo',
             'placeholder' => 'Ex: Pequenos empresários, empreendedores iniciantes',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'tom',
+            'label' => 'Tom',
+            'name' => 'tom',
             'placeholder' => 'Escolha o tom do artigo',
             'type' => 'select',
             'required' => true,
@@ -63,26 +66,30 @@ IMPORTANTE:
             ]
         ],
         [
-            'label' => 'objetivo',
+            'label' => 'Objetivo',
+            'name' => 'objetivo',
             'placeholder' => 'Ex: Educar sobre a importância do marketing de conteúdo',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'palavras_chave',
+            'label' => 'Palavras-chave',
+            'name' => 'palavras_chave',
             'placeholder' => 'Ex: marketing digital, pequenas empresas, conteúdo',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'estrutura',
+            'label' => 'Estrutura',
+            'name' => 'estrutura',
             'placeholder' => 'Ex: Introdução, 3 tópicos principais, conclusão',
             'type' => 'textarea',
             'required' => false,
             'rows' => 3
         ],
         [
-            'label' => 'instrucoes_adicionais',
+            'label' => 'Instruções Adicionais',
+            'name' => 'instrucoes_adicionais',
             'placeholder' => 'Ex: Incluir exemplos práticos, focar em ROI',
             'type' => 'textarea',
             'required' => false,
