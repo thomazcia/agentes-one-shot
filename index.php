@@ -206,9 +206,7 @@ if ($directAgent && !$executionResult) {
         /* Container da resposta mantendo formatação completa */
         .response-content .response-content_output {
             margin: 0;
-            padding: 20px 0;
-            /* Mantém pre-wrap para preservar parágrafos e quebras de linha */
-            white-space: pre-wrap;
+            white-space: pre-line;
             word-wrap: break-word;
             text-indent: 0;
             font-size: 15px;

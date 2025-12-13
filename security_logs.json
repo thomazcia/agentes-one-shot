@@ -1216,5 +1216,65 @@
             "agent_id": "analisador-sentimento",
             "field_count": 1
         }
+    },
+    {
+        "timestamp": "2025-12-13 20:47:04",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analisador-sentimento",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-13 20:48:00",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analisador-sentimento",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-13 20:48:37",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analisador-sentimento",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-13 20:48:41",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analisador-sentimento",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-13 20:48:45",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analisador-sentimento",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-13 20:48:56",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
     }
 ]
