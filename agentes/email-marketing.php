@@ -16,11 +16,11 @@ return [
     // Configurações do Prompt
     'prompt' => 'Crie um e-mail de marketing persuasivo com as seguintes características:
 
-Tipo de e-mail: [Tipo e-mail]
-Público-alvo: [Público alvo]
-Produto/Serviço: [Produto]
-Principal benefício: [Benefício principal]
-Call-to-action: [CTA (Call to action)]
+Tipo e-mail: [Tipo e-mail]
+Público alvo: [Público alvo]
+Produto: [Produto]
+Benefício principal: [Benefício principal]
+CTA (Call to action): [CTA (Call to action)]
 Tom de voz: [Tom de voz]
 Informações adicionais: [Informações adicionais]
 

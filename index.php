@@ -43,17 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if ($currentAgent) {
             // Coletar e validar valores dos campos
             foreach ($currentAgent['fields'] as $field) {
-                $fieldName = $field['label'];
+                $fieldId = $field['label'];
+                $fieldName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $fieldId); // Nome seguro para HTML
                 $fieldValue = $_POST[$fieldName] ?? '';
 
                 // Validar campo obrigatório
                 if ($field['required'] && empty($fieldValue)) {
-                    $executionError = "O campo '{$fieldName}' é obrigatório.";
+                    $executionError = "O campo '{$fieldId}' é obrigatório.";
                     break;
                 }
 
                 // Sanitizar valor
-                $fieldValues[$fieldName] = sanitizeInput($fieldValue, 'string');
+                $fieldValues[$fieldId] = sanitizeInput($fieldValue, 'string');
             }
 
             if (!$executionError) {
@@ -390,17 +391,18 @@ if ($directAgent && !$executionResult) {
                                 <?php
                                 foreach ($currentAgent['fields'] as $field) {
                                     $fieldId = $field['label'];
+                                    $fieldName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $fieldId); // Nome seguro para HTML
                                     $required = $field['required'] ? 'required' : '';
                                     $value = $fieldValues[$fieldId] ?? '';
                                     ?>
                                     <div class="mb-3">
-                                        <label for="<?php echo $fieldId; ?>" class="form-label">
+                                        <label for="<?php echo $fieldName; ?>" class="form-label">
                                             <?php echo htmlspecialchars($field['label']); ?>
                                             <?php if ($field['required']): ?><span class="text-danger">*</span><?php endif; ?>
                                         </label>
 
                                         <?php if ($field['type'] === 'select'): ?>
-                                            <select class="form-select" id="<?php echo $fieldId; ?>" name="<?php echo $fieldId; ?>" <?php echo $required; ?>>
+                                            <select class="form-select" id="<?php echo $fieldName; ?>" name="<?php echo $fieldName; ?>" <?php echo $required; ?>>
                                                 <option value="">Selecione...</option>
                                                 <?php foreach ($field['options'] as $option): ?>
                                                     <option value="<?php echo htmlspecialchars($option); ?>" <?php echo ($value === $option) ? 'selected' : ''; ?>>
@@ -410,10 +412,10 @@ if ($directAgent && !$executionResult) {
                                             </select>
 
                                         <?php elseif ($field['type'] === 'textarea'): ?>
-                                            <textarea class="form-control" id="<?php echo $fieldId; ?>" name="<?php echo $fieldId; ?>" rows="3" placeholder="<?php echo htmlspecialchars($field['placeholder']); ?>" <?php echo $required; ?>><?php echo htmlspecialchars($value); ?></textarea>
+                                            <textarea class="form-control" id="<?php echo $fieldName; ?>" name="<?php echo $fieldName; ?>" rows="3" placeholder="<?php echo htmlspecialchars($field['placeholder']); ?>" <?php echo $required; ?>><?php echo htmlspecialchars($value); ?></textarea>
 
                                         <?php else: ?>
-                                            <input type="<?php echo $field['type']; ?>" class="form-control" id="<?php echo $fieldId; ?>" name="<?php echo $fieldId; ?>" placeholder="<?php echo htmlspecialchars($field['placeholder']); ?>" value="<?php echo htmlspecialchars($value); ?>" <?php echo $required; ?>>
+                                            <input type="<?php echo $field['type']; ?>" class="form-control" id="<?php echo $fieldName; ?>" name="<?php echo $fieldName; ?>" placeholder="<?php echo htmlspecialchars($field['placeholder']); ?>" value="<?php echo htmlspecialchars($value); ?>" <?php echo $required; ?>>
 
                                         <?php endif; ?>
 

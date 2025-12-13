@@ -59,14 +59,14 @@ return [
     // Campos do Formulário
     'fields' => [
         [
-            'label' => 'Assunto',
+            'label' => 'assunto',
             'placeholder' => 'Ex: Marketing Digital, Receitas Saudáveis, Tecnologia, Moda Sustentável',
             'type' => 'text',
             'required' => true,
             'options' => []
         ],
         [
-            'label' => 'Público alvo',
+            'label' => 'publico_alvo',
             'placeholder' => 'Ex: Iniciantes, Profissionais, Jovens adultos, Mães, Empreendedores',
             'type' => 'text',
             'required' => false,
