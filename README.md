@@ -1,8 +1,17 @@
-# Agentes One-Shot v2.2
+# Agentes One-Shot v2.3
 
 Sistema avançado de gestão de agentes de IA com integração segura com **Groq API** e arquitetura completamente refatorada para produção.
 
-## 🆕 Versão 2.2 - Labels Otimizados e Experiência Aprimorada
+## 🆕 Versão 2.3 - Markdown Estilizado e Sistema de URLs Refatorado
+
+- ✅ **Respostas com Markdown**: Agentes agora renderizam markdown estilizado (headers, lists, bold, code blocks)
+- ✅ **Sistema BASE_URL Otimizado**: Configuração via .env para funcionar em qualquer ambiente (dev/produção)
+- ✅ **Router PHP Integrado**: URLs amigáveis funcionando perfeitamente com servidor PHP embutido
+- ✅ **Links Consistentes**: Todos os links usam BASE_URL (cards, botões, navegação)
+- ✅ **Renderização Avançada**: Suporte completo a markdown com formatação profissional
+- ✅ **Performance Melhorada**: Otimização no processamento e exibição das respostas
+
+## 📋 Versão 2.2 - Labels Otimizados e Experiência Aprimorada
 
 - ✅ **Labels Profissionais**: Labels com formatação correta (primeira letra maiúscula, acentuação)
 - ✅ **Separação Label/Name**: Sistema separa visualização (label) de IDs técnicos (name)
