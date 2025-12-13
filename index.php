@@ -613,17 +613,7 @@ if ($directAgent && !$executionResult) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Minimal JS - apenas para interações básicas -->
-    <script>
-        function copyResponse() {
-            const responseText = document.querySelector('.response-content_output').innerText;
-            navigator.clipboard.writeText(responseText).then(() => {
-                alert('Resposta copiada para a área de transferência!');
-            }, (err) => {
-                console.error('Erro ao copiar texto: ', err);
-                alert('Erro ao copiar a resposta.');
-            });
-        }
-    </script>
+    <!-- App JS - funções da aplicação -->
+    <script src="app.js"></script>
 </body>
 </html>

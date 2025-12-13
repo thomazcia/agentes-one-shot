@@ -15,6 +15,11 @@ function parseMarkdown($markdown) {
         return '';
     }
 
+    // Debug temporário - verificar se contém markdown
+    if (strpos($markdown, '**') !== false || strpos($markdown, '*') !== false) {
+        error_log("Markdown detectado: " . substr($markdown, 0, 100) . "...");
+    }
+
     try {
         // Pré-processar: converter quebras de linha simples em duplas para parágrafos
         $markdown = preg_replace("/([^\n])\n([^\n])/", "$1\n\n$2", $markdown);
