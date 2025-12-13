@@ -52,6 +52,7 @@ FO (usar forças para explorar oportunidades):
 FA (usar forças para mitigar ameaças):
 DO (corrigir fraquezas para aproveitar oportunidades):
 DA (reduzir fraquezas e evitar ameaças):
+
 3. Prioridades Estratégicas
 
 Liste até 5 prioridades, ordenadas por impacto no negócio.
@@ -100,7 +101,7 @@ Tom de voz: Profissional e analítico',
     'category' => 'negocios',
     'tags' => ['swot', 'análise', 'estratégia', 'negócios', 'marketing'],
     'difficulty' => 'avançado',
-    'estimated_time' => '5-10 min',
+    'estimated_time' => '3-5 min',
     'version' => '2.2'
 ];
 ?>

@@ -1376,5 +1376,105 @@
             "agent_id": "analise-swot-produto",
             "field_count": 4
         }
+    },
+    {
+        "timestamp": "2025-12-13 21:46:15",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analise-swot-produto",
+            "field_count": 4
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:48:46",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analise-swot-produto",
+            "field_count": 4
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:49:35",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "contador-piada",
+            "field_count": 1
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:50:02",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:51:14",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:51:56",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "email-marketing",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:52:45",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:58:15",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:59:12",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "blog-post-generator",
+            "field_count": 7
+        }
+    },
+    {
+        "timestamp": "2025-12-13 21:59:32",
+        "ip": "::1",
+        "user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/143.0.0.0 Safari\/537.36",
+        "event": "AGENT_EXECUTED",
+        "details": {
+            "agent_id": "analise-swot-produto",
+            "field_count": 4
+        }
     }
 ]
