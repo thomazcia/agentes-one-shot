@@ -1,6 +1,6 @@
-# Como Criar Novos Agentes - v2.1
+# Como Criar Novos Agentes - v2.2
 
-Este documento explica como criar novos agentes para o sistema Agentes One-Shot v2.1, com recursos avançados e melhores práticas de segurança.
+Este documento explica como criar novos agentes para o sistema Agentes One-Shot v2.2, com recursos avançados e melhores práticas de segurança.
 
 ## 📁 Estrutura dos Arquivos
 
@@ -78,7 +78,14 @@ return [
 - Seja específico sobre o que você espera da IA
 
 ### Campos (fields)
-- **label**: Nome que aparece no formulário
+- **label**: Nome que aparece no formulário (formatação amigável para o usuário)
+  - ✅ Use primeira letra maiúscula: "Assunto", "Público Alvo"
+  - ✅ Use acentuação correta: "Informações Adicionais"
+  - ✅ Use formatação profissional: "CTA (Call to Action)"
+- **name**: Identificador técnico do campo (opcional)
+  - ✅ Se não informado, sistema converte automaticamente o label
+  - ✅ Use apenas letras minúsculas e underscores: "publico_alvo"
+  - ✅ Sem espaços ou caracteres especiais: "tipo_email"
 - **placeholder**: Texto de ajuda no campo
 - **type**: Tipo de input:
   - `text`: Campo de texto simples
@@ -88,6 +95,46 @@ return [
   - `select`: Menu suspenso (requer `options`)
 - **required**: true/false se o campo é obrigatório
 - **options**: Array de opções (apenas para type='select')
+
+### 📝 Boas Práticas de Labels e Names
+
+**EXEMPLOS CORRETOS:**
+```php
+'fields' => [
+    [
+        'label' => 'Público Alvo',           // ✅ Amigável para usuário
+        'name' => 'publico_alvo',            // ✅ Técnico para HTML
+        'placeholder' => 'Ex: Jovens adultos',
+        'type' => 'text',
+        'required' => true
+    ],
+    [
+        'label' => 'Tipo de E-mail',         // ✅ Formatação correta
+        'name' => 'tipo_email',              // ✅ Nome seguro
+        'type' => 'select',
+        'required' => true,
+        'options' => ['Promoção', 'Newsletter']
+    ]
+]
+```
+
+**EXEMPLOS INCORRETOS:**
+```php
+// ❌ NÃO FAÇA ISSO
+[
+    'label' => 'publico_alvo',              // ❌ Nome técnico no label
+    'name' => 'Público Alvo',               // ❌ Espaços no name
+],
+[
+    'label' => 'tipo e-mail',               // ❌ Sem formatação
+    'name' => 'Tipo e-mail',                // ❌ Espaços e hífen no name
+]
+```
+
+**DICA IMPORTANTE:**
+O sistema automaticamente usa o **label** no prompt para substituição, então use:
+- No prompt: `[Público Alvo]`, `[Tipo de E-mail]`
+- No HTML: `name="publico_alvo"`, `name="tipo_email"`
 
 ### Configurações Adicionais
 - **category**: Categoria para organização
@@ -131,13 +178,15 @@ FORMATO DE RESPOSTA:
     // Campos do Formulário
     'fields' => [
         [
-            'label' => 'tipo_empresa',
+            'label' => 'Tipo de Empresa',
+            'name' => 'tipo_empresa',
             'placeholder' => 'Ex: Startup, consultoria, e-commerce',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'segmento',
+            'label' => 'Segmento',
+            'name' => 'segmento',
             'placeholder' => 'Ex: Tecnologia, saúde, educação, finanças',
             'type' => 'text',
             'required' => true
@@ -163,13 +212,15 @@ return [
     'prompt' => 'Crie um post para Instagram sobre: [assunto]. Tom: [tom]. Hashtags: [hashtags]',
     'fields' => [
         [
-            'label' => 'assunto',
+            'label' => 'Assunto',
+            'name' => 'assunto',
             'placeholder' => 'Ex: Lançamento de produto',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'tom',
+            'label' => 'Tom',
+            'name' => 'tom',
             'placeholder' => 'Escolha o tom',
             'type' => 'select',
             'required' => true,
@@ -181,7 +232,8 @@ return [
             ]
         ],
         [
-            'label' => 'hashtags',
+            'label' => 'Hashtags',
+            'name' => 'hashtags',
             'placeholder' => 'Ex: #marketing #negocios',
             'type' => 'text',
             'required' => false
@@ -240,10 +292,17 @@ No prompt, você pode usar:
 - Limite o tamanho se relevante
 
 ### Campos Otimizados
-- Use labels claros e descritivos
-- Forneça placeholders úteis
-- Marque como obrigatório apenas o essencial
-- Use selects para opções padronizadas
+- **Labels**: Use formatação amigável (primeira letra maiúscula, acentuação correta)
+- **Names**: Use nomes técnicos seguros (minúsculas e underscores)
+- **Placeholders**: Forneça exemplos úteis e claros
+- **Obrigatórios**: Marque como obrigatório apenas o essencial
+- **Selects**: Use para opções padronizadas e consistentes
+
+### 🎯 Dica de Ouro
+Sempre separe:
+- **Label** → Para o usuário ver: "Público Alvo"
+- **Name** → Para o HTML usar: `name="publico_alvo"`
+- **Prompt** → Usa o label: `[Público Alvo]`
 
 ---
 

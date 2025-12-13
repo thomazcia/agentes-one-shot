@@ -60,13 +60,15 @@ return [
     'fields' => [
         [
             'label' => 'Assunto',
+            'name' => 'assunto',
             'placeholder' => 'Ex: Marketing Digital, Receitas Saudáveis, Tecnologia, Moda Sustentável',
             'type' => 'text',
             'required' => true,
             'options' => []
         ],
         [
-            'label' => 'Público alvo',
+            'label' => 'Público Alvo',
+            'name' => 'publico_alvo',
             'placeholder' => 'Ex: Iniciantes, Profissionais, Jovens adultos, Mães, Empreendedores',
             'type' => 'text',
             'required' => false,
@@ -77,7 +79,7 @@ return [
     // Configurações Adicionais
     'category' => 'marketing',
     'color' => '#667eea',
-    'version' => '2.0',
+    'version' => '2.2',
     'difficulty' => 'iniciante',
     'estimated_time' => '2 min'
 ];

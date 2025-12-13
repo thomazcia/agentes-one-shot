@@ -49,7 +49,8 @@ if (empty($path) || $path === 'index.php') {
 // Verifica se é um arquivo PHP específico que deve ser servido diretamente
 $specificPhpFiles = [
     'model-status.php',
-    'model-status-check-availability.php'
+    'model-status-check-availability.php',
+    'viewadmin.php'
 ];
 
 if (in_array($path, $specificPhpFiles) && file_exists(__DIR__ . '/' . $path)) {
@@ -75,7 +76,16 @@ if (isset($_GET['sys']) || (isset($parsedUrl['query']) && strpos($parsedUrl['que
     }
 }
 
-$agentes = getAgents();
+// Verificar se está em modo admin para incluir agentes DEV
+$isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'admin';
+
+if ($isAdminMode) {
+    // Modo admin: busca TODOS os agentes (públicos e DEV)
+    $agentes = getAdminAgents();
+} else {
+    // Modo público: busca apenas agentes públicos
+    $agentes = getAgents();
+}
 
 foreach ($agentes as $agente) {
     if (isset($agente['url']) && $agente['url'] === $path) {

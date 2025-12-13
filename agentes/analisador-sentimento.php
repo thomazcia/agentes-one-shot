@@ -14,12 +14,13 @@ return [
     'status_public' => 'dev', // 'publico' ou 'dev' - controle de visibilidade
 
     // Configurações do Prompt
-    'prompt' => 'Analise o sentimento do seguinte texto: [texto]\n\nCLASSIFICAÇÃO:\n- Positivo: Se expressa emoções boas, satisfação, otimismo\n- Negativo: Se expressa emoções ruins, insatisfação, pessimismo\n- Neutro: Se é informativo, objetivo, sem emoções claras\n\nFORMATO:\nSentimento: [POSITIVO/NEGATIVO/NEUTRO]\nConfiança: [ALTA/MÉDIA/BAIXA]\nAnálise: [breve explicação do porquê]\n\nTexto analisado: [texto]',
+    'prompt' => 'Analise o sentimento do seguinte texto: [Texto]\n\nCLASSIFICAÇÃO:\n- Positivo: Se expressa emoções boas, satisfação, otimismo\n- Negativo: Se expressa emoções ruins, insatisfação, pessimismo\n- Neutro: Se é informativo, objetivo, sem emoções claras\n\nFORMATO:\nSentimento: [POSITIVO/NEGATIVO/NEUTRO]\nConfiança: [ALTA/MÉDIA/BAIXA]\nAnálise: [breve explicação do porquê]\n\nTexto analisado: [Texto]',
 
     // Campos do Formulário
     'fields' => [
         [
-            'label' => 'texto',
+            'label' => 'Texto',
+            'name' => 'texto',
             'placeholder' => 'Digite o texto para analisar o sentimento',
             'type' => 'textarea',
             'required' => true
@@ -31,6 +32,6 @@ return [
     'tags' => ['teste', 'sentimento', 'ia', 'dev'],
     'difficulty' => 'experimental',
     'estimated_time' => '30 segundos',
-    'version' => '0.1-dev'
+    'version' => '2.2'
 ];
 ?>

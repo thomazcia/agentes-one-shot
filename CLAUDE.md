@@ -4,7 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Agentes One-Shot v2.1** - Complete dashboard/panel for one-shot agents using Groq API with advanced security features and modern architecture.
+**Agentes One-Shot v2.2** - Complete dashboard/panel for one-shot agents using Groq API with advanced security features and modern architecture.
+
+## 🧪 Testes Automatizados
+
+### **test_system.php**
+Localização: `/agents/test_system.php`
+
+**Propósito:** Script de testes unitários automatizados para validar o funcionamento completo do sistema antes de deploy ou mudanças significativas.
+
+**Como usar:**
+```bash
+php agents/test_system.php
+```
+
+**Categorias de Testes:**
+- ✅ **Configuração** - Constants, variáveis, estrutura de arquivos
+- ✅ **Agentes** - Carregamento, estrutura, validação de dados
+- ✅ **Modelos** - Sistema de fallback, prioridade, disponibilidade
+- ✅ **Segurança** - Sanitização, validação, detecção de malware
+- ✅ **Performance** - Tempo de carregamento, otimizações
+- ✅ **Compatibilidade** - Versão PHP, extensões necessárias
+
+**Quando executar:**
+- Antes de fazer deploy
+- Após mudanças significativas
+- Para validar novas funcionalidades
+- Diagnóstico de problemas
 
 ## Current Architecture
 

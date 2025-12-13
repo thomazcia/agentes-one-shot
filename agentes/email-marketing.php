@@ -16,13 +16,13 @@ return [
     // Configurações do Prompt
     'prompt' => 'Crie um e-mail de marketing persuasivo com as seguintes características:
 
-Tipo de e-mail: [Tipo e-mail]
-Público-alvo: [Público alvo]
-Produto/Serviço: [Produto]
-Principal benefício: [Benefício principal]
-Call-to-action: [CTA (Call to action)]
-Tom de voz: [Tom de voz]
-Informações adicionais: [Informações adicionais]
+Tipo de E-mail: [Tipo de E-mail]
+Público Alvo: [Público Alvo]
+Produto: [Produto]
+Benefício Principal: [Benefício Principal]
+CTA (Call to Action): [CTA (Call to Action)]
+Tom de Voz: [Tom de Voz]
+Informações Adicionais: [Informações Adicionais]
 
 ESTRUTURA OBRIGATÓRIA:
 1. Assunto otimizado para alta taxa de abertura
@@ -58,7 +58,8 @@ Aqui vem todo o conteúdo do e-mail gerado
     // Campos do Formulário
     'fields' => [
         [
-            'label' => 'Tipo e-mail',
+            'label' => 'Tipo de E-mail',
+            'name' => 'tipo_email',
             'placeholder' => 'Escolha o tipo de e-mail',
             'type' => 'select',
             'required' => true,
@@ -72,25 +73,29 @@ Aqui vem todo o conteúdo do e-mail gerado
             ]
         ],
         [
-            'label' => 'Público alvo',
+            'label' => 'Público Alvo',
+            'name' => 'publico_alvo',
             'placeholder' => 'Ex: Clientes B2B, consumidores finais,leads',
             'type' => 'text',
             'required' => true
         ],
         [
             'label' => 'Produto',
+            'name' => 'produto',
             'placeholder' => 'Ex: Curso de Marketing Digital, Software CRM',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'Benefício principal',
+            'label' => 'Benefício Principal',
+            'name' => 'beneficio_principal',
             'placeholder' => 'Ex: Aumentar vendas em 30%, economizar tempo',
             'type' => 'text',
             'required' => true
         ],
         [
-            'label' => 'CTA (Call to action)',
+            'label' => 'CTA (Call to Action)',
+            'name' => 'cta',
             'placeholder' => 'Selecione uma opção',
             'type' => 'select',
             'required' => true,
@@ -104,7 +109,8 @@ Aqui vem todo o conteúdo do e-mail gerado
             ]
         ],
         [
-            'label' => 'Tom de voz',
+            'label' => 'Tom de Voz',
+            'name' => 'tom_voz',
             'placeholder' => 'Selecione uma opção',
             'type' => 'select',
             'required' => true,
@@ -117,7 +123,8 @@ Aqui vem todo o conteúdo do e-mail gerado
             ]
         ],
         [
-            'label' => 'Informações adicionais',
+            'label' => 'Informações Adicionais',
+            'name' => 'informacoes_adicionais',
             'placeholder' => 'Ex: Desconto de 20% esta semana, bônus especial',
             'type' => 'textarea',
             'required' => false,
@@ -130,6 +137,6 @@ Aqui vem todo o conteúdo do e-mail gerado
     'tags' => ['email', 'marketing', 'vendas', 'comunicação'],
     'difficulty' => 'iniciante',
     'estimated_time' => '1-2 min',
-    'version' => '1.0'
+    'version' => '2.2'
 ];
 ?>
