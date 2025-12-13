@@ -3,8 +3,8 @@
 require_once 'config.php';
 require_once 'models.php';
 
-// Detectar modo admin - se não tiver parâmetro sys=corps, redireciona para página inicial
-if (!isset($_GET['sys']) || $_GET['sys'] !== 'corps') {
+// Detectar modo admin - se não tiver parâmetro sys=admin, redireciona para página inicial
+if (!isset($_GET['sys']) || $_GET['sys'] !== 'admin') {
     header('Location: /');
     exit();
 }

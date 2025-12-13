@@ -2,17 +2,27 @@
 require_once 'config.php';
 require_once 'agentes.php';
 
-// Detectar modo admin
-$isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'corps';
+// Variáveis de controle
+$currentAgent = null;
+$executionResult = null;
+$executionError = null;
+$fieldValues = [];
 
 // Handle direct agent URLs via query parameter (set by router)
 $directAgent = null;
 if (isset($_GET['agent'])) {
     $agentSlug = sanitizeInput($_GET['agent']);
 
-    // Se estiver em modo admin, precisamos obter TODOS os agentes inclusive DEV
-    // Para isso, passamos o parâmetro sys=corps para a função getAgents
-    $agentes = getAgents();
+    // Verificar se está em modo admin para incluir agentes DEV
+    $isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'admin';
+
+    if ($isAdminMode) {
+        // Modo admin: busca TODOS os agentes (públicos e DEV)
+        $agentes = getAdminAgents();
+    } else {
+        // Modo público: busca apenas agentes públicos
+        $agentes = getAgents();
+    }
 
     // Find agent by URL
     foreach ($agentes as $agente) {
@@ -21,6 +31,69 @@ if (isset($_GET['agent'])) {
             break;
         }
     }
+}
+
+// Processar execução de agente via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'execute_agent') {
+    $agentId = sanitizeInput($_POST['agent_id'] ?? '', 'agent_id');
+
+    if ($agentId && validateAgentId($agentId)) {
+        $currentAgent = getAgent($agentId);
+
+        if ($currentAgent) {
+            // Coletar e validar valores dos campos
+            foreach ($currentAgent['fields'] as $field) {
+                $fieldName = $field['label'];
+                $fieldValue = $_POST[$fieldName] ?? '';
+
+                // Validar campo obrigatório
+                if ($field['required'] && empty($fieldValue)) {
+                    $executionError = "O campo '{$fieldName}' é obrigatório.";
+                    break;
+                }
+
+                // Sanitizar valor
+                $fieldValues[$fieldName] = sanitizeInput($fieldValue, 'string');
+            }
+
+            if (!$executionError) {
+                // Validar tamanho do prompt
+                if (strlen($currentAgent['prompt']) > MAX_PROMPT_LENGTH) {
+                    $executionError = 'Prompt muito longo.';
+                }
+
+                // Verificar conteúdo malicioso
+                if (!$executionError && detectMaliciousContent($currentAgent['prompt'])) {
+                    $executionError = 'Conteúdo do prompt bloqueado por segurança.';
+                }
+
+                // Executar agente se não houver erros
+                if (!$executionError) {
+                    // Log de execução
+                    securityLog('AGENT_EXECUTED', [
+                        'agent_id' => $agentId,
+                        'field_count' => count($fieldValues)
+                    ]);
+
+                    $executionResult = executeAgent($agentId, $fieldValues);
+                }
+            }
+        } else {
+            $executionError = 'Agente não encontrado.';
+        }
+    } else {
+        $executionError = 'ID do agente inválido.';
+    }
+
+    // Se temos agente direto na URL, dar prioridade a ele
+    if ($directAgent) {
+        $currentAgent = $directAgent;
+    }
+}
+
+// Se temos agente direto na URL (mas não execução via POST)
+if ($directAgent && !$executionResult) {
+    $currentAgent = $directAgent;
 }
 ?>
 <!DOCTYPE html>
@@ -220,26 +293,13 @@ if (isset($_GET['agent'])) {
             left: unset !important;
         }
 
-        /* Dev Agent Card Style */
-        .agent-card.dev {
-            border: 2px dashed #9C27B0;
-            background: linear-gradient(135deg, #f8f9ff 0%, #f3e5f5 100%);
-        }
-
-        .agent-card.dev .agent-icon {
-            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
-        }
-
-        .dev-badge {
-            background: #9C27B0 !important;
-        }
-    </style>
+      </style>
 </head>
 <body>
     <?php include '_inc/_header-nav.php'; // Adiciona o NAV Header ?>
 
     <!-- Agents List View -->
-    <div id="agents-list-view" class="container mt-4">
+    <div id="agents-list-view" class="container mt-4" <?php echo $currentAgent ? 'style="display: none;"' : ''; ?>>
         <div class="row mb-4">
             <div class="col">
                 <h2>Agentes</h2>
@@ -248,33 +308,71 @@ if (isset($_GET['agent'])) {
         </div>
 
         <div id="agents-grid" class="row g-4">
-            <!-- Agents will be loaded here -->
-            <div class="col-12">
-                <div class="empty-state">
-                    <i class="bi bi-robot"></i>
-                    <h4>Nenhum agente disponível</h4>
-                    <p class="text-muted">Nenhum agente foi encontrado.</p>
+            <?php
+            // Obter agentes públicos
+            $agents = getAgents();
+
+            if (!empty($agents)) {
+                foreach ($agents as $agent) {
+                    $iconStyle = "background-color: " . ($agent['color'] ?? '#667eea');
+                    ?>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card agent-card h-100" href='<?php echo $agent['url'] ?? $agent['id']; ?>' onclick="window.location.href='<?php echo $agent['url'] ?? $agent['id']; ?>'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="agent-icon me-3" style="<?php echo $iconStyle; ?>">
+                                        <i class="bi <?php echo $agent['icon'] ?? 'bi-robot'; ?>"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="card-title mb-1"><?php echo htmlspecialchars($agent['name']); ?></h5>
+                                        <div class="badges-container">
+                                            <span class="badge bg-primary"><?php echo htmlspecialchars($agent['category']); ?></span>
+                                            <span class="badge bg-success"><?php echo htmlspecialchars($agent['difficulty']); ?></span>
+                                            <span class="badge bg-info"><?php echo htmlspecialchars($agent['estimated_time']); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="card-text"><?php echo htmlspecialchars($agent['description']); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                ?>
+                <div class="col-12">
+                    <div class="empty-state">
+                        <i class="bi bi-robot"></i>
+                        <h4>Nenhum agente disponível</h4>
+                        <p class="text-muted">Nenhum agente foi encontrado na pasta /agentes/.</p>
+                    </div>
                 </div>
-            </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
 
     <!-- Agent Detail View -->
-    <div id="agent-detail-view" class="agent-detail-layout">
+    <?php if ($currentAgent): ?>
+    <div id="agent-detail-view" class="agent-detail-layout" style="display: block;">
         <div class="container mt-4">
             <!-- Back Button -->
             <div class="row mb-3">
                 <div class="col">
-                    <?php
-                    $backUrl = '/';
-                    if (isset($_GET['sys']) && $_GET['sys'] === 'corps') {
-                        $backUrl = '/?sys=corps';
-                    }
-                    ?>
-                    <button class="btn back-btn" onclick="window.location.href='<?php echo $backUrl; ?>'">
+                    <button class="btn back-btn" onclick="window.location.href='/'">
                         <i class="bi bi-arrow-left me-2"></i>Voltar para Agentes
                     </button>
                 </div>
+                <?php
+                    // Se tiver o parâmetro na url, apresenta o botão
+                    if (isset($_GET['sys']) && $_GET['sys'] == 'admin') {  ?>
+                    <div class="col text-end">
+                        <button class="btn btn-warning back-btn" onclick="window.location.href='/viewadmin.php?sys=admin'" style="background-color: #ffc107 !important; border-color: #ffc107 !important;">
+                            <i class="bi bi-arrow-left me-2"></i>Voltar para Admin
+                        </button>
+                    </div>
+                <?php } ?>
             </div>
 
             <div class="row g-4">
@@ -282,17 +380,63 @@ if (isset($_GET['agent'])) {
                 <div class="col-lg-5">
                     <div class="form-section">
                         <div class="mb-4">
-                            <h4 id="agent-title">Título do Agente</h4>
-                            <p id="agent-description" class="text-muted mb-0"></p>
+                            <h4><?php echo htmlspecialchars($currentAgent['name']); ?></h4>
+                            <p class="text-muted mb-0"><?php echo htmlspecialchars($currentAgent['description']); ?></p>
                         </div>
 
-                        <form id="agent-execution-form">
+                        <form method="POST">
+                            <input type="hidden" name="action" value="execute_agent">
+                            <input type="hidden" name="agent_id" value="<?php echo htmlspecialchars($currentAgent['id']); ?>">
+
                             <div id="agent-fields">
-                                <!-- Dynamic fields will be inserted here -->
+                                <?php
+                                foreach ($currentAgent['fields'] as $field) {
+                                    $fieldId = $field['label'];
+                                    $required = $field['required'] ? 'required' : '';
+                                    $value = $fieldValues[$fieldId] ?? '';
+                                    ?>
+                                    <div class="mb-3">
+                                        <label for="<?php echo $fieldId; ?>" class="form-label">
+                                            <?php echo htmlspecialchars($field['label']); ?>
+                                            <?php if ($field['required']): ?><span class="text-danger">*</span><?php endif; ?>
+                                        </label>
+
+                                        <?php if ($field['type'] === 'select'): ?>
+                                            <select class="form-select" id="<?php echo $fieldId; ?>" name="<?php echo $fieldId; ?>" <?php echo $required; ?>>
+                                                <option value="">Selecione...</option>
+                                                <?php foreach ($field['options'] as $option): ?>
+                                                    <option value="<?php echo htmlspecialchars($option); ?>" <?php echo ($value === $option) ? 'selected' : ''; ?>>
+                                                        <?php echo htmlspecialchars($option); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+
+                                        <?php elseif ($field['type'] === 'textarea'): ?>
+                                            <textarea class="form-control" id="<?php echo $fieldId; ?>" name="<?php echo $fieldId; ?>" rows="3" placeholder="<?php echo htmlspecialchars($field['placeholder']); ?>" <?php echo $required; ?>><?php echo htmlspecialchars($value); ?></textarea>
+
+                                        <?php else: ?>
+                                            <input type="<?php echo $field['type']; ?>" class="form-control" id="<?php echo $fieldId; ?>" name="<?php echo $fieldId; ?>" placeholder="<?php echo htmlspecialchars($field['placeholder']); ?>" value="<?php echo htmlspecialchars($value); ?>" <?php echo $required; ?>>
+
+                                        <?php endif; ?>
+
+                                        <?php if ($executionError && $field['required'] && empty($value)): ?>
+                                            <div class="form-text text-danger">Este campo é obrigatório.</div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
+                                <?php if ($executionError): ?>
+                                    <div class="alert alert-danger">
+                                        <i class="bi bi-exclamation-triangle me-2"></i>
+                                        <?php echo htmlspecialchars($executionError); ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="d-grid gap-2 mt-4">
-                                <button type="button" class="btn btn-execute" onclick="executeCurrentAgent()">
+                                <button type="submit" class="btn btn-execute">
                                     <i class="bi bi-play-fill me-2"></i>Executar Agente
                                 </button>
                             </div>
@@ -305,49 +449,66 @@ if (isset($_GET['agent'])) {
                     <div class="response-section">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5>Resposta</h5>
-                            <div id="response-actions" style="display: none;">
-                                <button class="btn btn-sm btn-outline-primary" onclick="copyResponse()">
-                                    <i class="bi bi-clipboard me-1"></i>Copiar
-                                </button>
-                            </div>
+                            <?php if ($executionResult && $executionResult['success']): ?>
+                                <div id="response-actions">
+                                    <button class="btn btn-sm btn-outline-primary" onclick="copyResponse()">
+                                        <i class="bi bi-clipboard me-1"></i>Copiar
+                                    </button>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
-                        <div id="loading-spinner" class="loading-spinner text-center py-5">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Carregando...</span>
+                        <?php if ($executionResult): ?>
+                            <div id="response-content" class="response-content">
+                                <?php if ($executionResult['success']): ?>
+                                    <div class="response-content_output">
+                                        <?php
+                                        $testeretorno = $executionResult;
+                                        $responseText = $executionResult['data']['choices'][0]['message']['content'];
+                                        // Limpa espaços no início
+                                        $responseText = ltrim($responseText);
+                                        echo $responseText = preg_replace('/^[\s\t]+/m', '', $responseText);
+                                        // echo nl2br(htmlspecialchars($responseText));
+                                        ?>
+                                        <script>
+                                            console.log(<?php echo json_encode($testeretorno); ?>);
+                                            </script>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="alert alert-danger">
+                                        <i class="bi bi-exclamation-triangle me-2"></i>
+                                        Erro: <?php echo htmlspecialchars($executionResult['message']); ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <p class="mt-2 text-muted">Processando sua solicitação...</p>
-                        </div>
-
-                        <div id="response-content" class="response-content">
+                        <?php else: ?>
                             <div class="text-center text-muted py-5">
                                 <i class="bi bi-chat-dots display-4"></i>
                                 <p class="mt-3">Preencha o formulário e clique em "Executar Agente" para ver a resposta aqui</p>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <?php if ($directAgent): ?>
+    <!-- Minimal JS - apenas para interações básicas -->
     <script>
-        // Agente direto encontrado via URL
-        window.directAgent = <?php echo json_encode($directAgent); ?>;
+        function copyResponse() {
+            const responseText = document.querySelector('.response-content_output').innerText;
+            navigator.clipboard.writeText(responseText).then(() => {
+                alert('Resposta copiada para a área de transferência!');
+            }, (err) => {
+                console.error('Erro ao copiar texto: ', err);
+                alert('Erro ao copiar a resposta.');
+            });
+        }
     </script>
-    <?php endif; ?>
-
-    <script>
-        // Configurações do sistema
-        window.isAdminMode = <?php echo json_encode($isAdminMode); ?>;
-    </script>
-
-    <!-- Custom JS -->
-    <script src="app.js"></script>
 </body>
 </html>

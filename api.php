@@ -33,7 +33,7 @@ try {
             echo json_encode([
                 'success' => true,
                 'data' => $agents,
-                'admin_mode' => isset($_GET['sys']) && $_GET['sys'] === 'corps' || isset($_POST['sys']) && $_POST['sys'] === 'corps'
+                'admin_mode' => false // Sempre false na nova estrutura
             ]);
             break;
 
@@ -113,7 +113,7 @@ try {
 
         case 'get_admin_agents':
             // Verificar se está em modo admin
-            $isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'corps';
+            $isAdminMode = isset($_GET['sys']) && $_GET['sys'] === 'admin';
             if (!$isAdminMode) {
                 throw new Exception('Acesso negado');
             }
