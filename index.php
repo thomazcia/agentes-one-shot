@@ -433,7 +433,7 @@ if ($directAgent && !$executionResult) {
                     $iconStyle = "background-color: " . ($agent['color'] ?? '#667eea');
                     ?>
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card agent-card h-100" href='<?php echo $agent['url'] ?? $agent['id']; ?>' onclick="window.location.href='<?php echo $agent['url'] ?? $agent['id']; ?>'">
+                        <div class="card agent-card h-100" href='<?php echo BASE_URL . ($agent['url'] ?? $agent['id']); ?>' onclick="window.location.href='<?php echo BASE_URL . ($agent['url'] ?? $agent['id']); ?>'">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="agent-icon me-3" style="<?php echo $iconStyle; ?>">
@@ -476,7 +476,7 @@ if ($directAgent && !$executionResult) {
             <!-- Back Button -->
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn back-btn" onclick="window.location.href='/'">
+                    <button class="btn back-btn" onclick="window.location.href='<?php echo BASE_URL; ?>'">
                         <i class="bi bi-arrow-left me-2"></i>Voltar para Agentes
                     </button>
                 </div>
@@ -484,7 +484,7 @@ if ($directAgent && !$executionResult) {
                     // Se tiver o parâmetro na url, apresenta o botão
                     if (isset($_GET['sys']) && $_GET['sys'] == 'admin') {  ?>
                     <div class="col text-end">
-                        <button class="btn btn-warning back-btn" onclick="window.location.href='/viewadmin.php?sys=admin'" style="background-color: #ffc107 !important; border-color: #ffc107 !important;">
+                        <button class="btn btn-warning back-btn" onclick="window.location.href='<?php echo BASE_URL . 'viewadmin.php?sys=admin'; ?>'" style="background-color: #ffc107 !important; border-color: #ffc107 !important;">
                             <i class="bi bi-arrow-left me-2"></i>Voltar para Admin
                         </button>
                     </div>

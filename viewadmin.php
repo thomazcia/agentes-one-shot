@@ -109,11 +109,11 @@ $devAgents = getAdminAgents();
 
             <!-- Links Administrativos -->
             <div class="d-flex align-items-center">
-                <a href="/model-status.php?sys=admin" class="btn btn-outline-primary me-2">
+                <a href="<?php echo BASE_URL . 'model-status.php?sys=admin'; ?>" class="btn btn-outline-primary me-2">
                     <i class="bi bi-cpu me-1"></i>
                     Status Modelos LLM
                 </a>
-                <a href="/" class="btn btn-outline-secondary">
+                <a href="<?php echo BASE_URL; ?>" class="btn btn-outline-secondary">
                     <i class="bi bi-house me-1"></i>
                     Página Inicial
                 </a>
@@ -142,7 +142,7 @@ $devAgents = getAdminAgents();
                 $iconStyle = "background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);";
                 ?>
                 <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card agent-card h-100" href='<?php echo ($agent['url'] ?? $agent['id']) . "?sys=admin"; ?>' onclick="window.location.href='<?php echo ($agent['url'] ?? $agent['id']) . "?sys=admin"; ?>'">
+                    <div class="card agent-card h-100" href='<?php echo BASE_URL . ($agent['url'] ?? $agent['id']) . "?sys=admin"; ?>' onclick="window.location.href='<?php echo BASE_URL . ($agent['url'] ?? $agent['id']) . "?sys=admin"; ?>'">
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="agent-icon me-3" style="<?php echo $iconStyle; ?>">
