@@ -45,11 +45,11 @@ DIRETRIZES:
 - Seguir o modelo do output abaixo
 
 OUTPUT:
-Assunto: Aqui vem o texto do assunto gerado
-
-Linha fina: Aqui vem o texto da linha fina gerado
-
-Aqui vem todo o conteúdo do e-mail gerado
+**Assunto:** Aqui vem o texto do assunto gerado  
+<br>
+**Linha fina:** Aqui vem o texto da linha fina gerado  
+<obrigatório pular linha>
+Aqui vem todo o conteúdo do e-mail gerado  
 
 -----------------
 [ASSINATURA AQUI]

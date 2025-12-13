@@ -2,8 +2,71 @@
 require_once 'config.php';
 require_once 'models.php';
 
+// Carregar biblioteca CommonMark (autoload já está no config.php)
+use League\CommonMark\CommonMarkConverter;
+
 /**
- * Sistema de Gestão de Agentes - Agentes One-Shot v1.0
+ * Converte texto Markdown para HTML de forma segura
+ * @param string $markdown Texto em formato Markdown
+ * @return string HTML seguro e formatado
+ */
+function parseMarkdown($markdown) {
+    if (empty($markdown)) {
+        return '';
+    }
+
+    // Debug temporário - verificar se contém markdown
+    if (strpos($markdown, '**') !== false || strpos($markdown, '*') !== false) {
+        error_log("Markdown detectado: " . substr($markdown, 0, 100) . "...");
+    }
+
+    try {
+        // Pré-processar: converter quebras de linha simples em duplas para parágrafos
+        $markdown = preg_replace("/([^\n])\n([^\n])/", "$1\n\n$2", $markdown);
+
+        // Configurar conversor CommonMark (v2.0+)
+        $converter = new CommonMarkConverter([
+            'html_input' => 'strip',  // Remove HTML perigoso
+            'allow_unsafe_links' => false,
+        ]);
+
+        // Converter markdown para HTML
+        $html = $converter->convert($markdown)->getContent();
+
+        // Sanitização básica de segurança adicional
+        $html = sanitizeMarkdownHtml($html);
+
+        return $html;
+    } catch (Exception $e) {
+        error_log("Erro ao converter markdown: " . $e->getMessage());
+        // Fallback para texto puro com quebras de linha em caso de erro
+        return nl2br(htmlspecialchars($markdown, ENT_QUOTES, 'UTF-8'));
+    }
+}
+
+
+/**
+ * Sanitização básica do HTML gerado pelo Markdown
+ * Permite apenas tags seguras para formatação de texto
+ */
+function sanitizeMarkdownHtml($html) {
+    // Lista de tags permitidas para formatação
+    $allowed_tags = '<h1><h2><h3><h4><h5><h6><p><br><strong><em><u><i><b><ul><ol><li><blockquote><code><pre><hr>';
+
+    // Remove tags não permitidas
+    $html = strip_tags($html, $allowed_tags);
+
+    // Remove atributos potencialmente perigosos
+    $html = preg_replace('/\s*on\w+="[^"]*"/i', '', $html);
+    $html = preg_replace('/\s*javascript:/i', '', $html);
+    $html = preg_replace('/\s*vbscript:/i', '', $html);
+    $html = preg_replace('/\s*data:/i', '', $html);
+
+    return $html;
+}
+
+/**
+ * Sistema de Gestão de Agentes - Agentes One-Shot v2.2
  * Funções para CRUD de agentes usando sistema de arquivos
  */
 

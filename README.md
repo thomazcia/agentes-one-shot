@@ -148,7 +148,8 @@ GROQ_API_KEY=incluir-chave
 
 # Demais configurações estão em config.php:
 # - APP_NAME = 'Agentes One Shot'
-# - APP_VERSION = '2.0'
+# - APP_VERSION = '2.2'
+# - BASE_URL = '/'  # Para local: '/', Para produção: '/agentes-one-shot'
 # - GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
 # - GROQ_MODEL = 'llama-3.1-8b-instant'
 
@@ -171,7 +172,8 @@ DEBUG=false
 ```php
 // Variáveis de configuração (não-sensíveis) - definidas diretamente no código
 define('APP_NAME', 'Agentes One Shot');
-define('APP_VERSION', '2.0');
+define('APP_VERSION', '2.2');
+define('BASE_URL', loadEnvVar('BASE_URL', '/'));  # URL base para links dinâmicos
 define('GROQ_API_URL', 'https://api.groq.com/openai/v1/chat/completions');
 define('GROQ_MODEL', 'llama-3.1-8b-instant');
 

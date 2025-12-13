@@ -207,11 +207,128 @@ if ($directAgent && !$executionResult) {
         /* Container da resposta mantendo formatação completa */
         .response-content .response-content_output {
             margin: 0;
-            white-space: pre-line;
-            word-wrap: break-word;
-            text-indent: 0;
+            padding: 20px 0;
             font-size: 15px;
             color: #333;
+            line-height: 1.7;
+        }
+
+        /* Estilos para conteúdo Markdown */
+        .markdown-content {
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content h4,
+        .markdown-content h5,
+        .markdown-content h6 {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .markdown-content h1 { font-size: 28px; border-bottom: 2px solid #e9ecef; padding-bottom: 8px; }
+        .markdown-content h2 { font-size: 24px; border-bottom: 1px solid #e9ecef; padding-bottom: 6px; }
+        .markdown-content h3 { font-size: 20px; }
+        .markdown-content h4 { font-size: 18px; }
+        .markdown-content h5 { font-size: 16px; }
+        .markdown-content h6 { font-size: 14px; color: #6c757d; }
+
+        .markdown-content p {
+            margin-bottom: 16px;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .markdown-content li {
+            margin-bottom: 6px;
+        }
+
+        .markdown-content ol li::marker {
+            /*color: #667eea;*/
+            font-weight: 600;
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 16px;
+            margin: 16px 0;
+            color: #6c757d;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .markdown-content code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #c7254e;
+        }
+
+        .markdown-content pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .markdown-content pre code {
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .markdown-content strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .markdown-content em {
+            color: #495057;
+            font-style: italic;
+        }
+
+        .markdown-content hr {
+            border: none;
+            border-top: 1px solid #e9ecef;
+            margin: 24px 0;
+        }
+
+        /* Tabelas (se necessário no futuro) */
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .markdown-content th,
+        .markdown-content td {
+            border: 1px solid #e9ecef;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .markdown-content th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
         }
 
         .loading-spinner {
@@ -316,7 +433,7 @@ if ($directAgent && !$executionResult) {
                     $iconStyle = "background-color: " . ($agent['color'] ?? '#667eea');
                     ?>
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card agent-card h-100" href='<?php echo $agent['url'] ?? $agent['id']; ?>' onclick="window.location.href='<?php echo $agent['url'] ?? $agent['id']; ?>'">
+                        <div class="card agent-card h-100" href='<?php echo BASE_URL . ($agent['url'] ?? $agent['id']); ?>' onclick="window.location.href='<?php echo BASE_URL . ($agent['url'] ?? $agent['id']); ?>'">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="agent-icon me-3" style="<?php echo $iconStyle; ?>">
@@ -359,7 +476,7 @@ if ($directAgent && !$executionResult) {
             <!-- Back Button -->
             <div class="row mb-3">
                 <div class="col">
-                    <button class="btn back-btn" onclick="window.location.href='/'">
+                    <button class="btn back-btn" onclick="window.location.href='<?php echo BASE_URL; ?>'">
                         <i class="bi bi-arrow-left me-2"></i>Voltar para Agentes
                     </button>
                 </div>
@@ -367,7 +484,7 @@ if ($directAgent && !$executionResult) {
                     // Se tiver o parâmetro na url, apresenta o botão
                     if (isset($_GET['sys']) && $_GET['sys'] == 'admin') {  ?>
                     <div class="col text-end">
-                        <button class="btn btn-warning back-btn" onclick="window.location.href='/viewadmin.php?sys=admin'" style="background-color: #ffc107 !important; border-color: #ffc107 !important;">
+                        <button class="btn btn-warning back-btn" onclick="window.location.href='<?php echo BASE_URL . 'viewadmin.php?sys=admin'; ?>'" style="background-color: #ffc107 !important; border-color: #ffc107 !important;">
                             <i class="bi bi-arrow-left me-2"></i>Voltar para Admin
                         </button>
                     </div>
@@ -461,18 +578,16 @@ if ($directAgent && !$executionResult) {
                         <?php if ($executionResult): ?>
                             <div id="response-content" class="response-content">
                                 <?php if ($executionResult['success']): ?>
-                                    <div class="response-content_output">
+                                    <div class="response-content_output markdown-content">
                                         <?php
-                                        $testeretorno = $executionResult;
                                         $responseText = $executionResult['data']['choices'][0]['message']['content'];
                                         // Limpa espaços no início
                                         $responseText = ltrim($responseText);
-                                        echo $responseText = preg_replace('/^[\s\t]+/m', '', $responseText);
-                                        // echo nl2br(htmlspecialchars($responseText));
+                                        $responseText = preg_replace('/^[\s\t]+/m', '', $responseText);
+
+                                        // Converte markdown para HTML de forma segura
+                                        echo parseMarkdown($responseText);
                                         ?>
-                                        <script>
-                                            console.log(<?php echo json_encode($testeretorno); ?>);
-                                            </script>
                                     </div>
                                 <?php else: ?>
                                     <div class="alert alert-danger">
@@ -498,17 +613,7 @@ if ($directAgent && !$executionResult) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Minimal JS - apenas para interações básicas -->
-    <script>
-        function copyResponse() {
-            const responseText = document.querySelector('.response-content_output').innerText;
-            navigator.clipboard.writeText(responseText).then(() => {
-                alert('Resposta copiada para a área de transferência!');
-            }, (err) => {
-                console.error('Erro ao copiar texto: ', err);
-                alert('Erro ao copiar a resposta.');
-            });
-        }
-    </script>
+    <!-- App JS - funções da aplicação -->
+    <script src="app.js"></script>
 </body>
 </html>
