@@ -1,6 +1,6 @@
 
 /**
- * App.js - Agentes One-Shot v2.1
+ * App.js - Agentes One-Shot v2.2
  * Funções JavaScript mínimas após migração para PHP
  */
 

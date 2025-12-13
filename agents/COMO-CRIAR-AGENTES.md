@@ -1,6 +1,6 @@
-# Como Criar Novos Agentes - v2.1
+# Como Criar Novos Agentes - v2.2
 
-Este documento explica como criar novos agentes para o sistema Agentes One-Shot v2.1, com recursos avançados e melhores práticas de segurança.
+Este documento explica como criar novos agentes para o sistema Agentes One-Shot v2.2, com recursos avançados e melhores práticas de segurança.
 
 ## 📁 Estrutura dos Arquivos
 

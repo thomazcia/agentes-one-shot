@@ -1,6 +1,6 @@
 <?php
 /**
- * Testes Unitários - Agentes One-Shot v2.1
+ * Testes Unitários - Agentes One-Shot v2.2
  * Verificação completa do sistema
  *
  * Propósito: Executar testes automatizados para validar o funcionamento
@@ -13,7 +13,7 @@ require_once '../config.php';
 require_once '../agentes.php';
 require_once '../models.php';
 
-echo "=== 🔬 INICIANDO TESTES UNITÁRIOS - AGENTES ONE-SHOT v2.1 ===\n\n";
+echo "=== 🔬 INICIANDO TESTES UNITÁRIOS - AGENTES ONE-SHOT v2.2 ===\n\n";
 
 $testResults = [];
 $totalTests = 0;

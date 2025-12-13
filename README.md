@@ -1,8 +1,17 @@
-# Agentes One-Shot v2.1
+# Agentes One-Shot v2.2
 
 Sistema avançado de gestão de agentes de IA com integração segura com **Groq API** e arquitetura completamente refatorada para produção.
 
-## 🆕 Versão 2.1 - Correções e Melhorias
+## 🆕 Versão 2.2 - Labels Otimizados e Experiência Aprimorada
+
+- ✅ **Labels Profissionais**: Labels com formatação correta (primeira letra maiúscula, acentuação)
+- ✅ **Separação Label/Name**: Sistema separa visualização (label) de IDs técnicos (name)
+- ✅ **Formulários Otimizados**: Melhor experiência do usuário com rótulos claros e profissionais
+- ✅ **Documentação Atualizada**: Guia completo para criação de agentes com boas práticas
+- ✅ **Compatibilidade Mantida**: Sistema funciona com agentes antigos e novos
+- ✅ **Correção de Bugs**: Resolvidos problemas de validação de campos com espaços
+
+## 📋 Versão 2.1 - Correções e Melhorias
 
 - ✅ **Correção de Espaços em Respostas**: Resolvido problema de espaços visuais no início das respostas dos agentes
 - ✅ **Otimização de Template Strings**: Corrigidas quebras de linha em JavaScript que geravam espaços desnecessários

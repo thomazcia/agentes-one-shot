@@ -79,7 +79,7 @@ return [
     // Configurações Adicionais
     'category' => 'marketing',
     'color' => '#667eea',
-    'version' => '2.0',
+    'version' => '2.2',
     'difficulty' => 'iniciante',
     'estimated_time' => '2 min'
 ];

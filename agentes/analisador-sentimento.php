@@ -32,6 +32,6 @@ return [
     'tags' => ['teste', 'sentimento', 'ia', 'dev'],
     'difficulty' => 'experimental',
     'estimated_time' => '30 segundos',
-    'version' => '0.1-dev'
+    'version' => '2.2'
 ];
 ?>

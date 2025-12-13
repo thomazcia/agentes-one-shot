@@ -1,6 +1,6 @@
 <?php
 /**
- * Painel Administrativo - Agentes One-Shot v2.1
+ * Painel Administrativo - Agentes One-Shot v2.2
  * Acesso restrito com parâmetro sys=admin
  */
 

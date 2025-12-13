@@ -102,6 +102,6 @@ IMPORTANTE:
     'tags' => ['blog', 'conteúdo', 'seo', 'escrita'],
     'difficulty' => 'iniciante', // iniciante, intermediário, avançado
     'estimated_time' => '2-3 min',
-    'version' => '1.0'
+    'version' => '2.2'
 ];
 ?>

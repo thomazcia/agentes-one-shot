@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Agentes One-Shot v2.1** - Complete dashboard/panel for one-shot agents using Groq API with advanced security features and modern architecture.
+**Agentes One-Shot v2.2** - Complete dashboard/panel for one-shot agents using Groq API with advanced security features and modern architecture.
 
 ## 🧪 Testes Automatizados
 

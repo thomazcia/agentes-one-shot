@@ -32,6 +32,6 @@ return [
     'tags' => ['piada', 'humor', 'entretenimento', 'diversão'],
     'difficulty' => 'iniciante',
     'estimated_time' => '1 min',
-    'version' => '1.0'
+    'version' => '2.2'
 ];
 ?>

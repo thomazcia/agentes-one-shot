@@ -137,6 +137,6 @@ Aqui vem todo o conteúdo do e-mail gerado
     'tags' => ['email', 'marketing', 'vendas', 'comunicação'],
     'difficulty' => 'iniciante',
     'estimated_time' => '1-2 min',
-    'version' => '1.0'
+    'version' => '2.2'
 ];
 ?>

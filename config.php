@@ -1,6 +1,6 @@
 <?php
 /**
- * Configurações do Sistema - Agentes One-Shot v2.1
+ * Configurações do Sistema - Agentes One-Shot v2.2
  */
 
 // Carregar variáveis de ambiente do arquivo .env
@@ -71,7 +71,7 @@ function loadEnvVar($varName, $default = null) {
 
 // Variáveis de configuração (não-sensíveis) - definidas diretamente no código
 define('APP_NAME', 'Agentes One Shot');
-define('APP_VERSION', '2.1');
+define('APP_VERSION', '2.2');
 define('GROQ_API_URL', 'https://api.groq.com/openai/v1/chat/completions');
 define('GROQ_MODEL', 'llama-3.1-8b-instant');
 
