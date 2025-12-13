@@ -71,7 +71,7 @@ function loadEnvVar($varName, $default = null) {
 
 // Variáveis de configuração (não-sensíveis) - definidas diretamente no código
 define('APP_NAME', 'Agentes One Shot');
-define('APP_VERSION', '2.2');
+define('APP_VERSION', '2.3');
 define('BASE_URL', loadEnvVar('BASE_URL', '/'));
 define('GROQ_API_URL', 'https://api.groq.com/openai/v1/chat/completions');
 define('GROQ_MODEL', 'llama-3.1-8b-instant');

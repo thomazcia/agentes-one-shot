@@ -1,7 +1,26 @@
-# ROADMAP - Agentes One-Shot v2.1+
+# ROADMAP - Agentes One-Shot v2.3+
 
 Roadmap de desenvolvimento com funcionalidades futuras organizadas por prioridade e complexidade.
 RD BASE agentes: https://conteudo.rdstationmentoria.com.br/copywriting
+
+## ✅ Versão (v2.3) - IMPLEMENTADA
+
+### 📊 Markdown e Sistema de URLs
+- [x] **Renderização Markdown**
+  - [x] Agentes agora renderizam markdown estilizado (headers, lists, bold, code blocks)
+  - [x] Suporte completo a markdown com formatação profissional
+  - [x] Melhor experiência visual nas respostas dos agentes
+- [x] **Sistema BASE_URL**
+  - [x] Configuração via .env para funcionar em qualquer ambiente
+  - [x] BASE_URL define a base para todas as URLs do sistema
+  - [x] Funciona tanto em desenvolvimento (localhost) quanto produção (subdiretórios)
+- [x] **Router PHP Refatorado**
+  - [x] URLs amigáveis funcionando perfeitamente com servidor PHP embutido
+  - [x] Todos os links consistentes usando BASE_URL
+  - [x] Navegação robusta em qualquer ambiente
+- [x] **Performance Otimizada**
+  - [x] Melhorias no processamento e exibição das respostas
+  - [x] Sistema mais rápido e eficiente
 
 ## ✅ Versão (v2.1) - IMPLEMENTADA
 
